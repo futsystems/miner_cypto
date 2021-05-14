@@ -54,10 +54,12 @@ class PlotterAdmin(admin.ModelAdmin):
         return format_html(
             '<a class="button" href="{}">Node ticket</a>&nbsp;'
             '<a class="button" href="{}">Update Nagios</a>&nbsp;'
-            '<a class="button" href="{}">Restart Hpool</a>&nbsp;',
+            '<a class="button" href="{}">Restart Hpool</a>&nbsp;'
+            '<a class="button" href="{}">Apply Plot Config</a>&nbsp;',
             reverse('admin:pki-ticket', args=[obj.pk]),
             reverse('admin:update-nagios', args=[obj.pk]),
             reverse('admin:restart-hpool', args=[obj.pk]),
+            reverse('admin:apply-plot-config', args=[obj.pk]),
         )
 
     plotter_action.allow_tags = True
@@ -81,6 +83,12 @@ class PlotterAdmin(admin.ModelAdmin):
                 r'^(?P<server_id>.+)/pki-ticket/$',
                 self.admin_site.admin_view(self.pki_ticket),
                 name='pki-ticket',
+            ),
+
+            url(
+                r'^(?P<server_id>.+)/apply-plot-config/$',
+                self.admin_site.admin_view(self.apply_plot_config),
+                name='apply-plot-config',
             ),
         ]
 
@@ -116,6 +124,15 @@ class PlotterAdmin(admin.ModelAdmin):
         query = {'id': plotter.server_number,'type': 'plotter'}
         response = requests.get('http://127.0.0.1:8080/icinga2/pki/ticket', params=query)
         messages.info(request, response.content)
+        return HttpResponseRedirect(previous_url)
+
+    def apply_plot_config(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        from .plotter_api import PlotterAPI
+        plotter = Plotter.objects.get(id=server_id)
+        api = PlotterAPI(plotter)
+        result = api.apply_plot_config()
+        messages.info(request, result['msg'])
         return HttpResponseRedirect(previous_url)
 
 

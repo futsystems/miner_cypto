@@ -15,3 +15,7 @@ class PlotterAPI(object):
         response = requests.get('http://%s:%s/service/restart' % (self._host, self._port), params=query)
 
         return response.json()
+
+    def apply_plot_config(self):
+        response = requests.get('http://%s:%s/config/plotman/apply' % (self._host, self._port))
+        return response.json()
