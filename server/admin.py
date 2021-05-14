@@ -58,7 +58,7 @@ class PlotterAdmin(admin.ModelAdmin):
 
     def restart_hpool(self, request, server_id):
         previous_url = request.META.get('HTTP_REFERER')
-        from plotter_api import PlotterAPI
+        from .plotter_api import PlotterAPI
         plotter = Plotter.objects.get(id=server_id)
         api = PlotterAPI(plotter)
         result = api.restart_service('srv.hpool')
