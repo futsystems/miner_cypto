@@ -31,6 +31,12 @@ class Plotter(models.Model):
     def server_name(self):
         return u'plotter-%s' % self.server_number
 
+    def get_plot_config_dict(self):
+        if self.plot_config is None:
+            return None
+        else:
+            return self.plot_config.to_dict()
+
     @property
     def plot_config_content(self):
         if self.plot_config is None:
