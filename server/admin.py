@@ -39,9 +39,11 @@ class PlotterAdmin(admin.ModelAdmin):
         """
         return format_html(
             '<a class="button" href="{}">Restart Hpool</a>&nbsp;'
-            '<a class="button" href="{}">Update Nagios</a>&nbsp;',
+            '<a class="button" href="{}">Update Nagios</a>&nbsp;'
+            '<a class="button" href="{}">Node ticket</a>&nbsp;',
             reverse('admin:restart-hpool', args=[obj.pk]),
             reverse('admin:update-nagios', args=[obj.pk]),
+            reverse('admin:pki-ticket', args=[obj.pk]),
         )
 
     plotter_action.allow_tags = True
@@ -60,6 +62,11 @@ class PlotterAdmin(admin.ModelAdmin):
                 r'^(?P<server_id>.+)/update-nagios/$',
                 self.admin_site.admin_view(self.update_nagios_config),
                 name='update-nagios',
+            ),
+            url(
+                r'^(?P<server_id>.+)/pki-ticket/$',
+                self.admin_site.admin_view(self.pki_ticket),
+                name='pki-ticket',
             ),
         ]
 
@@ -86,6 +93,15 @@ class PlotterAdmin(admin.ModelAdmin):
         #result = subprocess.check_call(["/opt/chia.website/deploy/scripts/config_nagios.sh",'%s' % plotter.server_number])
         #result = subprocess.check_output(["/etc/icinga2/zones.d/master/config_plotter.sh", "%s" % plotter.server_number])
         #messages.info(request, 'update plotter-%s nagios config %s' % (plotter.server_number,( 'success' if result ==0 else 'fail') ))
+        return HttpResponseRedirect(previous_url)
+
+    def pki_ticket(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        plotter = Plotter.objects.get(id=server_id)
+        import requests
+        query = {'id': plotter.server_number,'type': 'plotter'}
+        response = requests.get('http://127.0.0.1:8080/icinga2/pki/ticket', params=query)
+        messages.info(request, response.content)
         return HttpResponseRedirect(previous_url)
 
 
