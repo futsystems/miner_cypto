@@ -6,7 +6,7 @@
 
 
 WEB_APP=miner_chia
-: ${WEB_APP_PORT:=80}
+: ${WEB_APP_PORT:=8080}
 : ${WEB_APP_WORKERS:=2}
 
 set -e
