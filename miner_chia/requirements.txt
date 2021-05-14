@@ -2,6 +2,9 @@
 #mysql-python
 #python3 -m pip install mysql-connector
 
+
+django==1.11.29
+
 requests
 
 gunicorn
