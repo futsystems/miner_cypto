@@ -29,7 +29,7 @@ class PlotConfig(models.Model):
         app_label = 'server'
 
     def __unicode__(self):
-        return  self.content
+        return self.content
 
     @property
     def content(self):
