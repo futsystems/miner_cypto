@@ -78,9 +78,14 @@ class PlotterAdmin(admin.ModelAdmin):
     def update_nagios_config(self, request, server_id):
         previous_url = request.META.get('HTTP_REFERER')
         plotter = Plotter.objects.get(id=server_id)
+        import requests
+        query = {'id': plotter.server_number}
+        response = requests.get('http://127.0.0.1:8080/icinga2/config/plotter', params=query)
+
+        messages.info(request, response.content)
         #result = subprocess.check_call(["/opt/chia.website/deploy/scripts/config_nagios.sh",'%s' % plotter.server_number])
-        result = subprocess.check_output(["/etc/icinga2/zones.d/master/config_plotter.sh", "%s" % plotter.server_number])
-        messages.info(request, 'update plotter-%s nagios config %s' % (plotter.server_number,( 'success' if result ==0 else 'fail') ))
+        #result = subprocess.check_output(["/etc/icinga2/zones.d/master/config_plotter.sh", "%s" % plotter.server_number])
+        #messages.info(request, 'update plotter-%s nagios config %s' % (plotter.server_number,( 'success' if result ==0 else 'fail') ))
         return HttpResponseRedirect(previous_url)
 
 
