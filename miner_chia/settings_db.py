@@ -14,9 +14,9 @@ def get_database_setting():
     config=ConfigParser.ConfigParser()
 
     if sys.version_info.major == 2:  # Python 2
-        config.read('../config/miner_chia.conf')
+        config.read('../config/miner_chia.cfg')
     else:  # Python 3
-        config.read('../config/miner_chia.conf', encoding="utf-8")
+        config.read('../config/miner_chia.cfg', encoding="utf-8")
 
     host=config.get('db','host')
     database=config.get('db','database')
