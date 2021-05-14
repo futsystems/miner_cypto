@@ -38,8 +38,10 @@ class PlotterAdmin(admin.ModelAdmin):
 
         """
         return format_html(
-            '<a class="button" href="{}">Restart Hpool</a>&nbsp;',
+            '<a class="button" href="{}">Restart Hpool</a>&nbsp;'
+            '<a class="button" href="{}">Update Nagios</a>&nbsp;',
             reverse('admin:restart-hpool', args=[obj.pk]),
+            reverse('admin:update-nagios', args=[obj.pk]),
         )
 
     plotter_action.allow_tags = True
@@ -50,9 +52,14 @@ class PlotterAdmin(admin.ModelAdmin):
         urls = super(PlotterAdmin, self).get_urls()
         my_urls = [
             url(
-                r'^(?P<server_id>.+)/restart/hpool/$',
+                r'^(?P<server_id>.+)/restart-hpool/$',
                 self.admin_site.admin_view(self.restart_hpool),
                 name='restart-hpool',
+            ),
+            url(
+                r'^(?P<server_id>.+)/update-nagios/$',
+                self.admin_site.admin_view(self.update_nagios_config),
+                name='update-nagios',
             ),
         ]
 
@@ -68,11 +75,11 @@ class PlotterAdmin(admin.ModelAdmin):
         messages.info(request, result['msg'])
         return HttpResponseRedirect(previous_url)
 
-    def update_config_nagios(self, request, server_id):
+    def update_nagios_config(self, request, server_id):
         previous_url = request.META.get('HTTP_REFERER')
         plotter = Plotter.objects.get(id=server_id)
-        result = subprocess.check_call(["/opt/chia.website/deploy/scripts/config_nagios.sh",plotter.server_number])
-        messages.info(request, 0)
+        result = subprocess.check_call(["/opt/chia.website/deploy/scripts/config_nagios.sh",'%s' % plotter.server_number])
+        messages.info(request, 'update plotter nagios config %s' % ( 'success' if result ==0 else 'fail') )
         return HttpResponseRedirect(previous_url)
 
 
