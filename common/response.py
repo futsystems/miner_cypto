@@ -16,8 +16,6 @@ class Response(object):
         dict['code']= self._code
         dict['msg'] = self._msg
         dict['data'] = self._data
-        print dict
-
         return dict
 
 
