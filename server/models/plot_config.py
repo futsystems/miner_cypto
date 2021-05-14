@@ -29,5 +29,23 @@ class PlotConfig(models.Model):
         app_label = 'server'
 
     def __unicode__(self):
-        return u'plot config[%s]' % self.name
+        return u'%s[-k %s -e:%s -r:%s -b:%s -u:%s] [max:%s / %s stagger:%s  tmpdir: %s-%s:%s]' % (self.name, self.k,
+                      self.e, self.n_threads, self.job_buffer, self.n_buckets, self.global_max_jobs, self.tmpdir_max_jobs, self.global_stagger_m,self.tmpdir_stagger_phase_limit
+                                                                                      ,self.tmpdir_stagger_phase_major,self.tmpdir_stagger_phase_minor)
+
+    def to_dict(self):
+        return {
+            'k': self.k,
+            'e': self.e,
+            'n_threads': self.n_threads,
+            'n_buckets': self.n_buckets,
+            'job_buffer': self.job_buffer,
+
+            'global_max_jobs': self.global_max_jobs,
+            'global_stagger_m': self.global_stagger_m,
+            'tmpdir_max_jobs': self.tmpdir_max_jobs,
+            'tmpdir_stagger_phase_major': self.tmpdir_stagger_phase_major,
+            'tmpdir_stagger_phase_minor': self.tmpdir_stagger_phase_minor,
+            'tmpdir_stagger_phase_limit': self.tmpdir_stagger_phase_limit,
+        }
 

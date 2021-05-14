@@ -25,25 +25,39 @@ from server.models import Plotter, PlotConfig
 
 
 class PlotterAdmin(admin.ModelAdmin):
-    list_display = ('server_number', 'server_name', 'api_host', 'plotter_action')
+    list_display = ('server_number', 'server_name', 'plot_config', 'plotter_action')
     ordering = ('server_number',)
 
     def get_readonly_fields(self, request, obj=None):
         if obj is None:
             return []
-        return ['config', 'gateway', 'md5', 'version']
+        return ['server_number', 'plot_config_applied']
+
+    def get_fieldsets(self, request, obj=None):
+        return (
+            (None, {
+                "fields": [
+                    'server_number', 'plot_config'
+                ]
+            }),
+            ("Others", {
+                'fields': [
+                    'description'
+                ]
+            }),
+        )
 
     def plotter_action(self, obj):
         """
 
         """
         return format_html(
-            '<a class="button" href="{}">Restart Hpool</a>&nbsp;'
+            '<a class="button" href="{}">Node ticket</a>&nbsp;'
             '<a class="button" href="{}">Update Nagios</a>&nbsp;'
-            '<a class="button" href="{}">Node ticket</a>&nbsp;',
-            reverse('admin:restart-hpool', args=[obj.pk]),
-            reverse('admin:update-nagios', args=[obj.pk]),
+            '<a class="button" href="{}">Restart Hpool</a>&nbsp;',
             reverse('admin:pki-ticket', args=[obj.pk]),
+            reverse('admin:update-nagios', args=[obj.pk]),
+            reverse('admin:restart-hpool', args=[obj.pk]),
         )
 
     plotter_action.allow_tags = True
