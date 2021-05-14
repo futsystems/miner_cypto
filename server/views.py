@@ -17,8 +17,8 @@ def get_plot_config(request):
         if request.method == "POST":
             raise Exception("POST not support")
         else:
-            id = request.GET.get("id", None)
-            plotter = Plotter.objects.get(id=id)
+            server_number = request.GET.get("id", None)
+            plotter = Plotter.objects.get(server_number=server_number)
             plot_config_dict = plotter.get_plot_config_dict()
         return json_response(plot_config_dict)
     except Exception as e:
