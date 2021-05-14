@@ -25,6 +25,8 @@ from server.models import Plotter
 
 class PlotterAdmin(admin.ModelAdmin):
     list_display = ('server_number', 'server_name', 'api_host', 'plotter_action')
+    ordering = ('server_number',)
+
     def get_readonly_fields(self, request, obj=None):
         if obj is None:
             return []
