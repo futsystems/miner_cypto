@@ -27,3 +27,4 @@ class Plotter(models.Model):
     @property
     def api_port(self):
         return 8080
+

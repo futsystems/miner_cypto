@@ -20,7 +20,7 @@ from collections import OrderedDict
 import logging,traceback,json
 logger = logging.getLogger(__name__)
 
-from server.models import Plotter
+from server.models import Plotter, PlotConfig
 
 
 class PlotterAdmin(admin.ModelAdmin):
@@ -68,4 +68,30 @@ class PlotterAdmin(admin.ModelAdmin):
         return HttpResponseRedirect(previous_url)
 
 
+class PlotConfigrAdmin(admin.ModelAdmin):
+    list_display = ('name', 'k', 'e', 'n_threads', 'n_buckets', 'job_buffer', 'global_max_jobs', 'global_stagger_m',
+                    'tmpdir_max_jobs', 'tmpdir_stagger_phase_major', 'tmpdir_stagger_phase_minor', 'tmpdir_stagger_phase_limit')
+
+    def get_fieldsets(self, request, obj=None):
+        return (
+            (None, {
+                "fields": [
+                    'name', 'description'
+                ]
+            }),
+            ("Plotting", {
+                'fields': [
+                    'k', 'e', 'n_threads', 'n_buckets', 'job_buffer'
+                ]
+            }),
+
+            ("Scheduling", {
+                'fields': [
+                    'tmpdir_stagger_phase_major', 'tmpdir_stagger_phase_minor', 'tmpdir_stagger_phase_limit',
+                    'tmpdir_max_jobs', 'global_max_jobs', 'global_stagger_m'
+                ]
+            }),
+        )
+
 admin.site.register(Plotter, PlotterAdmin)
+admin.site.register(PlotConfig, PlotConfigrAdmin)
