@@ -4,7 +4,7 @@
 
 requests
 
-gunicorn==19.7.1
+gunicorn
 gevent
 
 
