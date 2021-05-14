@@ -12,12 +12,16 @@ def get_database_setting():
     通过外层配置文件获得数据库设置
     """
     config=ConfigParser.ConfigParser()
-    with open(CONFIG_FILE,'rb') as cfgfile:
-        config.readfp(cfgfile)
-        host=config.get('db','host')
-        database=config.get('db','database')
-        dbuser=config.get('db','dbuser')
-        dbpass=config.get('db','dbpass')
+
+    if sys.version_info.major == 2:  # Python 2
+        config.read('../config/plotmgr.conf')
+    else:  # Python 3
+        config.read('../config/plotmgr.conf', encoding="utf-8")
+
+    host=config.get('db','host')
+    database=config.get('db','database')
+    dbuser=config.get('db','dbuser')
+    dbpass=config.get('db','dbpass')
 
     return {
     "default": {
