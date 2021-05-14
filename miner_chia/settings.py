@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'miner_chia.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-from settings_db import get_database_setting
+from .settings_db import get_database_setting
 DATABASES = get_database_setting()
 
 
