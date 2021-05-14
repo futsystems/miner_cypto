@@ -1,7 +1,14 @@
 #mysql
-mysql-python
+#mysql-python
+#python3 -m pip install mysql-connector
 
 requests
 
 gunicorn==19.7.1
 gevent
+
+
+
+
+# install python2 in ubuntu 20.04
+# https://segmentfault.com/a/1190000022572643
