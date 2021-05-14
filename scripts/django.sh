@@ -24,7 +24,7 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
-echo "!!!!!!!!"
+echo "start miner_chia django"
 
 python manage.py migrate
 python manage.py collectstatic --noinput
