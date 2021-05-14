@@ -17,6 +17,7 @@ from django import forms
 from django.shortcuts import render_to_response
 from django.db.models import Max
 from collections import OrderedDict
+import subprocess
 import logging,traceback,json
 logger = logging.getLogger(__name__)
 
@@ -65,6 +66,13 @@ class PlotterAdmin(admin.ModelAdmin):
         api = PlotterAPI(plotter)
         result = api.restart_service('srv.hpool')
         messages.info(request, result['msg'])
+        return HttpResponseRedirect(previous_url)
+
+    def update_config_nagios(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        plotter = Plotter.objects.get(id=server_id)
+        result = subprocess.check_call(["/opt/chia.website/deploy/scripts/config_nagios.sh",plotter.server_number])
+        messages.info(request, 0)
         return HttpResponseRedirect(previous_url)
 
 
