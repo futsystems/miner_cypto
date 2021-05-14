@@ -2,11 +2,15 @@
 import sys,os
 CONFIG_FILE = "../config/miner_chia.cfg"
 
+if sys.version_info.major == 2:   # Python 2
+    import ConfigParser
+else:                             # Python 3
+    import configparser as ConfigParser
+
 def get_database_setting():
     """
     通过外层配置文件获得数据库设置
     """
-    import ConfigParser
     config=ConfigParser.ConfigParser()
     with open(CONFIG_FILE,'rb') as cfgfile:
         config.readfp(cfgfile)
