@@ -1,5 +1,7 @@
 #mysql
 mysql-python
 
-
 requests
+
+gunicorn==19.7.1
+gevent
