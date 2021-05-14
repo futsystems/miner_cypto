@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from settings import GATEWAY_DOMAIN
+from .settings import GATEWAY_DOMAIN
 
 class Plotter(models.Model):
     """
