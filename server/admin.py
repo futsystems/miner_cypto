@@ -25,7 +25,7 @@ from server.models import Plotter, PlotConfig
 
 
 class PlotterAdmin(admin.ModelAdmin):
-    list_display = ('server_number', 'server_name', 'plot_config', 'plotter_action')
+    list_display = ('server_number', 'server_name', 'plot_config_content', 'plotter_action')
     ordering = ('server_number',)
 
     def get_readonly_fields(self, request, obj=None):

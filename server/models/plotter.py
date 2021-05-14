@@ -32,6 +32,13 @@ class Plotter(models.Model):
         return u'plotter-%s' % self.server_number
 
     @property
+    def plot_config_content(self):
+        if self.plot_config is None:
+            return ''
+        else:
+            return self.plot_config.content
+
+    @property
     def api_host(self):
         return '%s.%s' % (self.server_number,GATEWAY_DOMAIN)
 
