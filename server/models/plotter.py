@@ -6,6 +6,17 @@ from .settings import GATEWAY_DOMAIN
 
 from .plot_config import PlotConfig
 
+
+CACHE_TYPE = (
+    ('3.2*1', '3.2*1'),
+    ('3.2*2', '3.2*2'),
+    ('4.0*1', '4.0*1'),
+    ('4.0*2', '4.0*2'),
+    ('6.4*1', '6.4*1'),
+)
+
+
+
 class Plotter(models.Model):
     """
     plotter server
@@ -14,6 +25,9 @@ class Plotter(models.Model):
     plot_config = models.ForeignKey(PlotConfig, verbose_name='PlotConfig', on_delete=models.SET_NULL, default=None,
                                     blank=True, null=True)
     plot_config_applied = models.BooleanField('Plot Config Applied', default=False)
+
+    cache_type = models.CharField('Cache Type', max_length=20, choices=CACHE_TYPE, default='3.2*1')
+
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
     __original_plot_config = None

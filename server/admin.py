@@ -25,8 +25,9 @@ from server.models import Plotter, PlotConfig
 
 
 class PlotterAdmin(admin.ModelAdmin):
-    list_display = ('server_number', 'server_name', 'description', 'plot_config_content', 'plotter_action')
+    list_display = ('server_number', 'server_name', 'cache_type', 'description', 'plot_config_content', 'plotter_action')
     ordering = ('server_number',)
+    list_filter = ('cache_type',)
 
     def get_readonly_fields(self, request, obj=None):
         if obj is None:
@@ -37,7 +38,7 @@ class PlotterAdmin(admin.ModelAdmin):
         return (
             (None, {
                 "fields": [
-                    'server_number', 'plot_config'
+                    'server_number', 'cache_type', 'plot_config'
                 ]
             }),
             ("Others", {
