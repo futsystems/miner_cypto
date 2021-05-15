@@ -52,10 +52,12 @@ class PlotterAdmin(admin.ModelAdmin):
 
         """
         return format_html(
+            '<a class="button" href="{}">Update System</a>&nbsp;'
             '<a class="button" href="{}">Node ticket</a>&nbsp;'
             '<a class="button" href="{}">Update Nagios</a>&nbsp;'
             '<a class="button" href="{}">Restart Hpool</a>&nbsp;'
             '<a class="button" href="{}">Apply Plot Config</a>&nbsp;',
+            reverse('admin:update-system', args=[obj.pk]),
             reverse('admin:pki-ticket', args=[obj.pk]),
             reverse('admin:update-nagios', args=[obj.pk]),
             reverse('admin:restart-hpool', args=[obj.pk]),
@@ -69,6 +71,11 @@ class PlotterAdmin(admin.ModelAdmin):
         # use get_urls for easy adding of views to the admin
         urls = super(PlotterAdmin, self).get_urls()
         my_urls = [
+            url(
+                r'^(?P<server_id>.+)/update-system/$',
+                self.admin_site.admin_view(self.update_system),
+                name='update-system',
+            ),
             url(
                 r'^(?P<server_id>.+)/restart-hpool/$',
                 self.admin_site.admin_view(self.restart_hpool),
@@ -94,6 +101,14 @@ class PlotterAdmin(admin.ModelAdmin):
 
         return my_urls + urls
 
+    def update_system(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        from .plotter_api import PlotterAPI
+        plotter = Plotter.objects.get(id=server_id)
+        api = PlotterAPI(plotter)
+        result = api.update_system()
+        messages.info(request, '%s %s' % (plotter.server_name(), result['msg']))
+        return HttpResponseRedirect(previous_url)
 
     def restart_hpool(self, request, server_id):
         previous_url = request.META.get('HTTP_REFERER')
