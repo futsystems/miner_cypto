@@ -51,14 +51,28 @@ class Plotter(models.Model):
 
     def get_plot_config_dict(self):
         if self.plot_config is None:
-            return None
+            # return default dict
+            return {
+            'k': 32,
+            'e': True,
+            'n_threads': 4,
+            'n_buckets': 128,
+            'job_buffer': 4000,
+
+            'global_max_jobs': 10,
+            'global_stagger_m': 48,
+            'tmpdir_max_jobs': 10,
+            'tmpdir_stagger_phase_major': 2,
+            'tmpdir_stagger_phase_minor': 1,
+            'tmpdir_stagger_phase_limit': 6,
+        }
         else:
             return self.plot_config.to_dict()
 
     @property
     def plot_config_content(self):
         if self.plot_config is None:
-            return ''
+            return '[10/10 | 6-2:1 | 48] [-e:True -r:4 -b:4000 ] default'
         else:
             return self.plot_config.content
 

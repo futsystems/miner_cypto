@@ -38,7 +38,7 @@ class PlotConfig(models.Model):
     def content(self):
         return u'[%s/%s | %s-%s:%s | %s] [-e:%s -r:%s -b:%s ]' % (self.global_max_jobs, self.tmpdir_max_jobs, self.tmpdir_stagger_phase_limit
                         ,self.tmpdir_stagger_phase_major, self.tmpdir_stagger_phase_minor, self.global_stagger_m,
-                      self.e, self.n_threads, self.job_buffer)
+                      not self.e, self.n_threads, self.job_buffer)
 
 
     def to_dict(self):
