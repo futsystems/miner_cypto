@@ -31,6 +31,9 @@ class PlotConfig(models.Model):
     def __unicode__(self):
         return self.content
 
+    def __str__(self):
+        return self.__unicode__()
+
     @property
     def content(self):
         return u'%s[-k %s -e:%s -r:%s -b:%s -u:%s] [max:%s / %s stagger:%s  tmpdir: %s-%s:%s]' % (self.name, self.k,

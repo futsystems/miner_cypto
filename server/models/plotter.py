@@ -28,6 +28,10 @@ class Plotter(models.Model):
     def __unicode__(self):
         return u'plotter-%s' % self.server_number
 
+    def __str__(self):
+        return self.__unicode__()
+    
+
     def server_name(self):
         return u'plotter-%s' % self.server_number
 
