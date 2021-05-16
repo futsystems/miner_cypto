@@ -21,7 +21,7 @@ import subprocess
 import logging,traceback,json
 logger = logging.getLogger(__name__)
 
-from server.models import Plotter, PlotConfig, Harvester
+from server.models import Plotter, PlotConfig, Harvester, PlotTransfer
 
 
 class PlotterAdmin(admin.ModelAdmin):
@@ -294,6 +294,12 @@ class HarvesterAdmin(admin.ModelAdmin):
         messages.info(request, '%s %s' % (harvester.server_name(), result['msg']))
         return HttpResponseRedirect(previous_url)
 
+
+class PlotTransferAdmin(admin.ModelAdmin):
+    list_display = ('plotter_server', 'plotter_ip', 'harvester_server', 'harvester_ip', 'txn_start_time', 'txn_stop_time', 'plot_check', 'plot_check_fail_reason')
+
+
 admin.site.register(Plotter, PlotterAdmin)
 admin.site.register(PlotConfig, PlotConfigAdmin)
 admin.site.register(Harvester, HarvesterAdmin)
+admin.site.register(PlotTransfer, PlotTransferAdmin)
