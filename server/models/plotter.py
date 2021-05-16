@@ -32,12 +32,12 @@ class Plotter(models.Model):
 
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
-    st_plot_process_cnt = models.IntegerField('Plot Process', default=0)
-    st_plot_output = models.IntegerField('Plot Count(Last 24 Hours)', default=0)
-    st_avg_plot_time = models.FloatField('Avg Plot Time(Last 5 Plots)', default=0)
-    st_avg_copy_time = models.FloatField('Avg Copy Time(Last 5 Plots)', default=0)
+    st_plot_process_cnt = models.IntegerField('Process', default=0)
+    st_plot_output = models.IntegerField('Output)', default=0)
+    st_avg_plot_time = models.FloatField('Plot Time', default=0)
+    st_avg_copy_time = models.FloatField('Copy Time', default=0)
 
-    st_update_time = models.DateTimeField('Statistic Update Time', default=datetime.now, blank=True)
+    st_update_time = models.DateTimeField('UpdateTime', default=datetime.now, blank=True)
 
     __original_plot_config = None
 
