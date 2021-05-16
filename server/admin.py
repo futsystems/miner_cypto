@@ -25,7 +25,8 @@ from server.models import Plotter, PlotConfig
 
 
 class PlotterAdmin(admin.ModelAdmin):
-    list_display = ('server_number', 'server_name', 'cache_type', 'description', 'plot_config_content', 'plotter_action')
+    list_display = ('server_number', 'server_name', 'cache_type', 'plot_config_content', 'st_plot_process_cnt',
+                    'st_plot_output', 'st_avg_plot_time', 'st_avg_copy_time', 'st_update_time', 'plotter_action')
     ordering = ('server_number',)
     list_filter = ('cache_type',)
 
