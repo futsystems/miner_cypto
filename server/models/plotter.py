@@ -9,13 +9,7 @@ from .settings import GATEWAY_DOMAIN
 from .plot_config import PlotConfig
 
 
-CACHE_TYPE = (
-    ('3.2*1', '3.2*1'),
-    ('3.2*2', '3.2*2'),
-    ('4.0*1', '4.0*1'),
-    ('4.0*2', '4.0*2'),
-    ('6.4*1', '6.4*1'),
-)
+from .choices import CACHE_TYPE
 
 
 

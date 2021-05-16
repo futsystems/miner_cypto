@@ -2,26 +2,30 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from .settings import GATEWAY_DOMAIN
+from .choices import CACHE_TYPE
+
+
 
 class PlotConfig(models.Model):
     """
     plot config
     """
     name = models.CharField('Name', max_length=50, default='Config Name')
+    cache_type = models.CharField('Cache Type', max_length=20, choices=CACHE_TYPE, default='3.2*1')
+
     k = models.CharField('K Size', max_length=10, default='32')
     e = models.BooleanField('Bitfield', default=True)
     n_threads = models.IntegerField('Threads', default=3)
     n_buckets = models.IntegerField('Buckets', default=128)
     job_buffer = models.IntegerField('Job Buffer', default=4200)
 
-    global_max_jobs = models.IntegerField('Global Max Jobs', default=12)
-    global_stagger_m = models.IntegerField('Global Stagger Time', default=24)
-    tmpdir_max_jobs = models.IntegerField('Tmp Max Jobs', default=12)
+    global_max_jobs = models.IntegerField('Max Jobs', default=12)
+    global_stagger_m = models.IntegerField('Stagger', default=24)
+    tmpdir_max_jobs = models.IntegerField('Max Jobs(Tmp)', default=12)
 
-    tmpdir_stagger_phase_major = models.IntegerField('Tmp Stagger Phase Major', default=2)
-    tmpdir_stagger_phase_minor = models.IntegerField('Tmp Stagger Phase Minor', default=1)
-    tmpdir_stagger_phase_limit = models.IntegerField('Tmp Stagger Phase Limit', default=5)
+    tmpdir_stagger_phase_major = models.IntegerField('Phase Major', default=2)
+    tmpdir_stagger_phase_minor = models.IntegerField('Phase Minor', default=1)
+    tmpdir_stagger_phase_limit = models.IntegerField('Phase Limit', default=5)
 
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
