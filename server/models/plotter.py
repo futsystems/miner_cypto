@@ -54,6 +54,12 @@ class Plotter(models.Model):
     def __str__(self):
         return self.__unicode__()
 
+    def plot_statistic_1(self):
+        return "%s / %s" % (self.st_plot_process_cnt, self.st_plot_output)
+
+    def plot_statistic_2(self):
+        return round((self.st_avg_plot_time + self.st_avg_copy_time)/3600, 2)
+
     def update_statistic(self, data):
         self.st_plot_process_cnt = data['plot_process_cnt']
         self.st_plot_output = data['plot_output']
