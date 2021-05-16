@@ -27,7 +27,7 @@ class Plotter(models.Model):
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
     st_plot_process_cnt = models.IntegerField('Process', default=0)
-    st_plot_output = models.IntegerField('Output)', default=0)
+    st_plot_output = models.IntegerField('Output', default=0)
     st_avg_plot_time = models.FloatField('Plot Time', default=0)
     st_avg_copy_time = models.FloatField('Copy Time', default=0)
 

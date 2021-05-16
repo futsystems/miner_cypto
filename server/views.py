@@ -4,7 +4,7 @@
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from common import json_response, Success, Error
-from server.models import Plotter
+from server.models import Plotter, Harvester
 import logging, traceback
 
 
@@ -40,6 +40,26 @@ def update_plot_statistic(request):
 
             except Plotter.DoesNotExist as e:
                 json_response(Error('Plotter do not exist'))
+        return json_response(Success(''))
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return json_response(Error(e.message))
+
+
+@csrf_exempt
+def update_harvester_info(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            logger.info(data)
+            harvester_server_name = data['name']
+            server_number = harvester_server_name.split('-')[1]
+            try:
+                harvester = Harvester.objects.get(server_number=server_number)
+                harvester.update_local_info(data['info'])
+
+            except Harvester.DoesNotExist as e:
+                json_response(Error('Harvester do not exist'))
         return json_response(Success(''))
     except Exception as e:
         logger.error(traceback.format_exc())
