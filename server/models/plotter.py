@@ -37,7 +37,7 @@ class Plotter(models.Model):
     st_avg_plot_time = models.FloatField('Avg Plot Time(Last 5 Plots)', default=0)
     st_avg_copy_time = models.FloatField('Avg Copy Time(Last 5 Plots)', default=0)
 
-    st_update_time = models.DateTimeField('Statistic Update Time',None=True, default=None)
+    st_update_time = models.DateTimeField('Statistic Update Time', default=datetime.now, blank=True)
 
     __original_plot_config = None
 
