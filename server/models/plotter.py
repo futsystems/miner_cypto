@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+
 from django.db import models
 from .settings import GATEWAY_DOMAIN
 
@@ -30,6 +32,13 @@ class Plotter(models.Model):
 
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
+    st_plot_process_cnt = models.IntegerField('Plot Process', default=0)
+    st_plot_output = models.IntegerField('Plot Count(Last 24 Hours)', default=0)
+    st_avg_plot_time = models.FloatField('Avg Plot Time(Last 5 Plots)', default=0)
+    st_avg_copy_time = models.FloatField('Avg Copy Time(Last 5 Plots)', default=0)
+
+    st_update_time = models.DateTimeField('Statistic Update Time',None=True, default=None)
+
     __original_plot_config = None
 
     def __init__(self, *args, **kwargs):
@@ -44,6 +53,14 @@ class Plotter(models.Model):
 
     def __str__(self):
         return self.__unicode__()
+
+    def update_statistic(self, data):
+        self.st_plot_process_cnt = data['plot_process_cnt']
+        self.st_plot_output = data['plot_output']
+        self.st_avg_plot_time = data['avg_plot_time']
+        self.st_avg_copy_time = data['avg_copy_time']
+        self.st_update_time = datetime.now()
+        self.save()
 
 
     def server_name(self):

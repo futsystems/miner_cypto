@@ -10,4 +10,5 @@ from server import views
 
 urlpatterns = [
     url(r'^plotter/plot-config$', views.get_plot_config, name='plotter_plot_config'),
+    url(r'^plotter/statistic/update$', views.update_plot_statistic, name='plotter_update_statistic'),
 ]
