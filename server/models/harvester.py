@@ -32,7 +32,7 @@ class Harvester(models.Model):
 
     def update_local_info(self, data):
         self.internal_ip = data['internal_ip']
-        self.plots_cnt = data['plots_cnt']
+        self.plot_cnt = data['plot_cnt']
         self.driver_cnt = data['driver_cnt']
         self.last_heartbeat_time = datetime.now()
         self.save()
