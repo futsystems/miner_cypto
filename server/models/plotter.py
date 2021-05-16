@@ -7,7 +7,7 @@ from django.db import models
 from .settings import GATEWAY_DOMAIN
 
 from .plot_config import PlotConfig
-
+from .harvester import Harvester
 
 from .choices import CACHE_TYPE
 
@@ -35,6 +35,9 @@ class Plotter(models.Model):
 
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
     is_sending_run = models.BooleanField('Sending Process', default=False)
+
+    harvester = models.ForeignKey(Harvester, verbose_name='Harvester', on_delete=models.SET_NULL, default=None,
+                                    blank=True, null=True)
 
     __original_plot_config = None
 

@@ -42,6 +42,11 @@ class PlotterAdmin(admin.ModelAdmin):
                     'server_number', 'cache_type', 'plot_config'
                 ]
             }),
+            ("Harvester", {
+                'fields': [
+                    'harvester'
+                ]
+            }),
             ("Others", {
                 'fields': [
                     'description'
@@ -64,12 +69,16 @@ class PlotterAdmin(admin.ModelAdmin):
             '<a class="button" href="{}">Ticket</a>&nbsp;'
             '<a class="button" href="{}">Nagios(U)</a>&nbsp;'
             '<a class="button" href="{}">Hpool(R)</a>&nbsp;'
-            '<a class="button" href="{}">Plot(R)</a>&nbsp;',
+            '<a class="button" href="{}">Plot(R)</a>&nbsp;'
+            '<a class="button" href="{}">StartSending</a>&nbsp;'
+            '<a class="button" href="{}">StopSending</a>&nbsp;',
             reverse('admin:update-system', args=[obj.pk]),
             reverse('admin:pki-ticket', args=[obj.pk]),
             reverse('admin:update-nagios', args=[obj.pk]),
             reverse('admin:restart-hpool', args=[obj.pk]),
             reverse('admin:apply-plot-config', args=[obj.pk]),
+            reverse('admin:plotter-start-sending', args=[obj.pk]),
+            reverse('admin:plotter-stop-sending', args=[obj.pk]),
         )
 
     plotter_action.allow_tags = True
@@ -104,6 +113,18 @@ class PlotterAdmin(admin.ModelAdmin):
                 r'^(?P<server_id>.+)/apply-plot-config/$',
                 self.admin_site.admin_view(self.apply_plot_config),
                 name='apply-plot-config',
+            ),
+
+            url(
+                r'^(?P<server_id>.+)/plotter-start-sending/$',
+                self.admin_site.admin_view(self.start_sending),
+                name='plotter-start-sending',
+            ),
+
+            url(
+                r'^(?P<server_id>.+)/plotter-stop-sending/$',
+                self.admin_site.admin_view(self.stop_sending),
+                name='plotter-stop-sending',
             ),
         ]
 
@@ -156,6 +177,33 @@ class PlotterAdmin(admin.ModelAdmin):
         api = PlotterAPI(plotter)
         result = api.apply_plot_config()
         messages.info(request,  '%s %s' % (plotter.server_name(),result['msg']))
+        return HttpResponseRedirect(previous_url)
+
+    def start_sending(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        from .plotter_api import PlotterAPI
+        plotter = Plotter.objects.get(id=server_id)
+        if plotter.harvester is None:
+            messages.info(request, '%s has not bind with harvester' % plotter.server_name())
+            return HttpResponseRedirect(previous_url)
+
+        if plotter.internal_ip is None or plotter.internal_ip == '':
+            messages.info(request, '%s ip is not avabile' % plotter.harvester.server_name())
+            return HttpResponseRedirect(previous_url)
+
+        api = PlotterAPI(plotter)
+        result = api.start_sending_process(plotter.harvester.internal_ip)
+
+        messages.info(request, '%s %s' % (plotter.server_name(), result['msg']))
+        return HttpResponseRedirect(previous_url)
+
+    def stop_sending(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        from .plotter_api import PlotterAPI
+        plotter = Plotter.objects.get(id=server_id)
+        api = PlotterAPI(plotter)
+        result = api.stop_sending_process()
+        messages.info(request, '%s %s' % (plotter.server_name(), result['msg']))
         return HttpResponseRedirect(previous_url)
 
 

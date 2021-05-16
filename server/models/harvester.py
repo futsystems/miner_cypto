@@ -21,7 +21,7 @@ class Harvester(models.Model):
         app_label = 'server'
 
     def __unicode__(self):
-        return u'plotter-%s' % self.server_number
+        return u'harvester-%s' % self.server_number
 
     def __str__(self):
         return self.__unicode__()
