@@ -91,7 +91,7 @@ class Plotter(models.Model):
         if self.plot_config is None:
             return '[10/10 | 6-2:1 | 48] [-e:True -r:4 -b:4000 ] default'
         else:
-            return self.plot_config.content
+            return '%s %s' % (self.plot_config.content, self.plot_config.name)
 
     @property
     def api_host(self):
