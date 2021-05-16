@@ -21,7 +21,7 @@ import subprocess
 import logging,traceback,json
 logger = logging.getLogger(__name__)
 
-from server.models import Plotter, PlotConfig
+from server.models import Plotter, PlotConfig, Harvester
 
 
 class PlotterAdmin(admin.ModelAdmin):
@@ -153,7 +153,7 @@ class PlotterAdmin(admin.ModelAdmin):
         return HttpResponseRedirect(previous_url)
 
 
-class PlotConfigrAdmin(admin.ModelAdmin):
+class PlotConfigAdmin(admin.ModelAdmin):
     list_display = ('name', 'cache_type', 'k', 'e', 'n_threads', 'n_buckets', 'job_buffer', 'global_max_jobs', 'global_stagger_m',
                     'tmpdir_max_jobs', 'tmpdir_stagger_phase_major', 'tmpdir_stagger_phase_minor', 'tmpdir_stagger_phase_limit')
     list_filter = ('cache_type',)
@@ -178,5 +178,18 @@ class PlotConfigrAdmin(admin.ModelAdmin):
             }),
         )
 
+class HarvesterAdmin(admin.ModelAdmin):
+    list_display = ('server_number', 'internal_ip', 'plot_cnt', 'driver_cnt')
+
+    def get_fieldsets(self, request, obj=None):
+        return (
+            (None, {
+                "fields": [
+                    'server_number', 'description'
+                ]
+            }),
+        )
+
 admin.site.register(Plotter, PlotterAdmin)
-admin.site.register(PlotConfig, PlotConfigrAdmin)
+admin.site.register(PlotConfig, PlotConfigAdmin)
+admin.site.register(Harvester, HarvesterAdmin)

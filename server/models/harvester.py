@@ -25,6 +25,11 @@ class Harvester(models.Model):
     def __str__(self):
         return self.__unicode__()
 
+
+
+    def server_name(self):
+        return u'plotter-%s' % self.server_number
+
     def update_local_info(self, data):
         self.internal_ip = data['internal_ip']
         self.plots_cnt = data['plots_cnt']
