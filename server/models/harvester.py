@@ -11,7 +11,7 @@ class Harvester(models.Model):
     """
     server_number = models.CharField('Server Id', max_length=50, default='001')
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
-    plots_cnt = models.IntegerField('Plot Count', default=0)
+    plot_cnt = models.IntegerField('Plot Count', default=0)
     driver_cnt = models.IntegerField('Driver Count', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
     last_heartbeat_time = models.DateTimeField('Heartbeat', default=datetime.now, blank=True)
