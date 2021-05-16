@@ -188,7 +188,7 @@ class PlotterAdmin(admin.ModelAdmin):
             return HttpResponseRedirect(previous_url)
 
         if plotter.harvester.internal_ip is None or plotter.harvester.internal_ip == '':
-            messages.info(request, '%s ip is not avabile' % plotter.harvester.server_name())
+            messages.info(request, '%s internal_ip is not avabile' % plotter.harvester.server_name())
             return HttpResponseRedirect(previous_url)
 
         api = PlotterAPI(plotter)
