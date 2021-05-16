@@ -45,6 +45,26 @@ def update_plot_statistic(request):
         logger.error(traceback.format_exc())
         return json_response(Error(e.message))
 
+@csrf_exempt
+def update_plot_info(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            logger.info(data)
+            plotter_server_name = data['name']
+            server_number = plotter_server_name.split('-')[1]
+
+            try:
+                plotter = Plotter.objects.get(server_number=server_number)
+                plotter.update_local_info(data['info'])
+
+            except Plotter.DoesNotExist as e:
+                json_response(Error('Plotter do not exist'))
+        return json_response(Success(''))
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return json_response(Error(e.message))
+
 
 @csrf_exempt
 def update_harvester_info(request):

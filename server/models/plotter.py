@@ -33,6 +33,9 @@ class Plotter(models.Model):
 
     st_update_time = models.DateTimeField('UpdateTime', default=datetime.now, blank=True)
 
+    internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
+    is_sending_run = models.BooleanField('Sending Process', default=False)
+
     __original_plot_config = None
 
     def __init__(self, *args, **kwargs):
@@ -60,6 +63,11 @@ class Plotter(models.Model):
         self.st_avg_plot_time = data['avg_plot_time']
         self.st_avg_copy_time = data['avg_copy_time']
         self.st_update_time = datetime.now()
+        self.save()
+
+    def update_local_info(self,data):
+        self.is_sending_run = data['is_sending_run']
+        self.internal_ip = data['internal_ip']
         self.save()
 
 

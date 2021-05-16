@@ -4,6 +4,7 @@
 
 from django.db import models
 from datetime import datetime
+from .settings import HARVESTER_GATEWAY_DOMAIN
 
 class Harvester(models.Model):
     """
@@ -25,7 +26,16 @@ class Harvester(models.Model):
     def __str__(self):
         return self.__unicode__()
 
+    def server_name(self):
+        return u'harvester-%s' % self.server_number
 
+    @property
+    def api_host(self):
+        return '%s.%s' % (self.server_number,HARVESTER_GATEWAY_DOMAIN)
+
+    @property
+    def api_port(self):
+        return 8080
 
     def server_name(self):
         return u'plotter-%s' % self.server_number

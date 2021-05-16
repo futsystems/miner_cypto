@@ -179,7 +179,7 @@ class PlotConfigAdmin(admin.ModelAdmin):
         )
 
 class HarvesterAdmin(admin.ModelAdmin):
-    list_display = ('server_number', 'internal_ip', 'plot_cnt', 'driver_cnt')
+    list_display = ('server_number', 'internal_ip', 'plot_cnt', 'driver_cnt', 'harvester_action')
 
     def get_fieldsets(self, request, obj=None):
         return (
@@ -189,6 +189,56 @@ class HarvesterAdmin(admin.ModelAdmin):
                 ]
             }),
         )
+
+    def harvester_action(self, obj):
+        """
+
+        """
+        return format_html(
+            '<a class="button" href="{}">System(U)</a>&nbsp;'
+            '<a class="button" href="{}">Hpool(R)</a>&nbsp;',
+            reverse('admin:harvester-update-system', args=[obj.pk]),
+            reverse('admin:harvester-restart-hpool', args=[obj.pk]),
+        )
+
+    harvester_action.allow_tags = True
+    harvester_action.short_description = "Action"
+
+    def get_urls(self):
+        # use get_urls for easy adding of views to the admin
+        urls = super(HarvesterAdmin, self).get_urls()
+        my_urls = [
+            url(
+                r'^(?P<server_id>.+)/update-system/$',
+                self.admin_site.admin_view(self.update_system),
+                name='harvester-update-system',
+            ),
+            url(
+                r'^(?P<server_id>.+)/restart-hpool/$',
+                self.admin_site.admin_view(self.restart_hpool),
+                name='harvester-restart-hpool',
+            ),
+        ]
+
+        return my_urls + urls
+
+    def update_system(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        from .harvester_api import HarvesterAPI
+        harvester = Harvester.objects.get(id=server_id)
+        api = HarvesterAPI(harvester)
+        result = api.update_system()
+        messages.info(request, '%s %s' % (harvester.server_name(), result['msg']))
+        return HttpResponseRedirect(previous_url)
+
+    def restart_hpool(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        from .harvester_api import HarvesterAPI
+        harvester = Harvester.objects.get(id=server_id)
+        api = HarvesterAPI(harvester)
+        result = api.restart_service('srv.hpool')
+        messages.info(request, '%s %s' % (harvester.server_name(), result['msg']))
+        return HttpResponseRedirect(previous_url)
 
 admin.site.register(Plotter, PlotterAdmin)
 admin.site.register(PlotConfig, PlotConfigAdmin)
