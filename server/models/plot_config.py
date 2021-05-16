@@ -40,9 +40,9 @@ class PlotConfig(models.Model):
 
     @property
     def content(self):
-        return u'[%s/%s | %s-%s:%s | %s] [-e:%s -r:%s -b:%s ]' % (self.global_max_jobs, self.tmpdir_max_jobs, self.tmpdir_stagger_phase_limit
+        return u'[%s/%s | %s-%s:%s | %s] [-e:%s -r:%s -b:%s ] %s' % (self.global_max_jobs, self.tmpdir_max_jobs, self.tmpdir_stagger_phase_limit
                         ,self.tmpdir_stagger_phase_major, self.tmpdir_stagger_phase_minor, self.global_stagger_m,
-                      not self.e, self.n_threads, self.job_buffer)
+                      not self.e, self.n_threads, self.job_buffer, self.name)
 
 
     def to_dict(self):
