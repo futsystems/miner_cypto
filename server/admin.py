@@ -47,6 +47,12 @@ class PlotterAdmin(admin.ModelAdmin):
                     'description'
                 ]
             }),
+
+            ("Info", {
+                'fields': [
+                    'internal_ip', 'is_sending_run'
+                ]
+            }),
         )
 
     def plotter_action(self, obj):
