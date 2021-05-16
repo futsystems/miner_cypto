@@ -54,11 +54,11 @@ class PlotterAdmin(admin.ModelAdmin):
 
         """
         return format_html(
-            '<a class="button" href="{}">Update System</a>&nbsp;'
-            '<a class="button" href="{}">Node ticket</a>&nbsp;'
-            '<a class="button" href="{}">Update Nagios</a>&nbsp;'
-            '<a class="button" href="{}">Restart Hpool</a>&nbsp;'
-            '<a class="button" href="{}">Apply Plot Config</a>&nbsp;',
+            '<a class="button" href="{}">System(U)</a>&nbsp;'
+            '<a class="button" href="{}">Ticket</a>&nbsp;'
+            '<a class="button" href="{}">Nagios(U)</a>&nbsp;'
+            '<a class="button" href="{}">Hpool(R)</a>&nbsp;'
+            '<a class="button" href="{}">Plot(R)</a>&nbsp;',
             reverse('admin:update-system', args=[obj.pk]),
             reverse('admin:pki-ticket', args=[obj.pk]),
             reverse('admin:update-nagios', args=[obj.pk]),
