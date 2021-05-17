@@ -143,8 +143,6 @@ def plot_transfer_start(request):
             nc_pid = data['nc_pid']
             nc_port = data['nc_port']
 
-            txn_start_time = data['txn_start_time']
-
             PlotTransfer.objects.create(plot_file_name=plot_file_name,
                                        plotter_server=plotter_server,
                                        plotter_ip=plotter_ip,
@@ -159,7 +157,7 @@ def plot_transfer_start(request):
 
     except Exception as e:
         logger.error(traceback.format_exc())
-        return json_response(Error(e.message))
+        return json_response(Error('plot transfer start server side error'))
 
 @csrf_exempt
 def plot_transfer_stop(request):
