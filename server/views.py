@@ -7,6 +7,7 @@ from common import json_response, Success, Error
 from server.models import Plotter, Harvester, PlotTransfer
 import logging, traceback
 import requests
+from datetime import datetime
 
 import json
 logger = logging.getLogger(__name__)
@@ -130,21 +131,32 @@ def plot_transfer_start(request):
             logger.info(data)
 
             plot_file_name = data['plot_file_name']
+
             plotter_server = data['plotter_server']
+            plotter_path = data['plotter_ip']
             plotter_ip = data['plotter_ip']
+
             harvester_server = data['harvester_server']
             harvester_ip = data['harvester_ip']
+            harvester_path = data['harvester_path']
+
+            nc_pid = data['nc_pid']
+            nc_port = data['nc_port']
+
             txn_start_time = data['txn_start_time']
 
             PlotTransfer.objects.create(plot_file_name=plot_file_name,
                                        plotter_server=plotter_server,
                                        plotter_ip=plotter_ip,
+                                        plotter_path=plotter_path,
                                        harvester_server=harvester_server,
                                        harvester_ip=harvester_ip,
-                                       txn_start_time=txn_start_time)
-
-
+                                        harvester_path=harvester_path,
+                                        nc_pid=nc_pid,
+                                        nc_port=nc_port,
+                                       txn_start_time= datetime.now())
         return json_response(Success(''))
+
     except Exception as e:
         logger.error(traceback.format_exc())
         return json_response(Error(e.message))
@@ -157,18 +169,16 @@ def plot_transfer_stop(request):
             logger.info(data)
 
             plot_file_name = data['plot_file_name']
-            txn_stop_time = data['txn_stop_time']
             plot_check = data['plot_check']
             plot_check_fail_reason = data['plot_check_fail_reason']
 
             try:
                 txn = PlotTransfer.objects.get(plot_file_name=plot_file_name)
-                txn.txn_stop_time = txn_stop_time
+                txn.txn_stop_time = datetime.now()
                 txn.plot_check = plot_check
                 txn.plot_check_fail_reason = plot_check_fail_reason
             except PlotTransfer.DoesNotExist as e:
                 json_response(Error('Plot Transfer do not exist'))
-
         return json_response(Success(''))
     except Exception as e:
         logger.error(traceback.format_exc())
