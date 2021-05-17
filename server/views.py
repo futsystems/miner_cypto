@@ -133,7 +133,7 @@ def plot_transfer_start(request):
             plot_file_name = data['plot_file_name']
 
             plotter_server = data['plotter_server']
-            plotter_path = data['plotter_ip']
+            plotter_path = data['plotter_path']
             plotter_ip = data['plotter_ip']
 
             harvester_server = data['harvester_server']
