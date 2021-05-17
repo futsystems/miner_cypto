@@ -296,7 +296,7 @@ class HarvesterAdmin(admin.ModelAdmin):
 
 
 class PlotTransferAdmin(admin.ModelAdmin):
-    list_display = ('plotter_server', 'plotter_ip', 'harvester_server', 'harvester_ip', 'txn_start_time', 'txn_stop_time', 'plot_check', 'plot_check_fail_reason')
+    list_display = ('get_file_title', 'plotter_server', 'plotter_ip', 'harvester_server', 'harvester_ip', 'txn_start_time', 'txn_stop_time', 'plot_check', 'plot_check_fail_reason')
 
 
 admin.site.register(Plotter, PlotterAdmin)

@@ -45,4 +45,7 @@ class PlotTransfer(models.Model):
     def __str__(self):
         return self.__unicode__()
 
+    def get_file_title(self):
+        return '%s.....%s' % (self.plot_file_name[0:40],self.plot_file_name[-10:])
+
 
