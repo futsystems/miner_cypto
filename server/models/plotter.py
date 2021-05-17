@@ -39,6 +39,9 @@ class Plotter(models.Model):
     harvester = models.ForeignKey(Harvester, verbose_name='Harvester', on_delete=models.SET_NULL, default=None,
                                     blank=True, null=True)
 
+
+    is_plotting_run = models.BooleanField('Is Plotting run', default=False)
+
     __original_plot_config = None
 
     def __init__(self, *args, **kwargs):
@@ -73,6 +76,12 @@ class Plotter(models.Model):
         self.internal_ip = data['internal_ip']
         self.save()
 
+    def get_info(self):
+        return {
+
+            'name': self.server_name(),
+            'is_plotting_run': self.is_plotting_run
+        }
 
     def server_name(self):
         return u'plotter-%s' % self.server_number

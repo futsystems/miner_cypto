@@ -49,7 +49,7 @@ class PlotterAdmin(admin.ModelAdmin):
             }),
             ("Others", {
                 'fields': [
-                    'description'
+                    'is_plotting_run', 'description'
                 ]
             }),
 

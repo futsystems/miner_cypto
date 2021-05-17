@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from common import json_response, Success, Error
 from server.models import Plotter, Harvester, PlotTransfer
 import logging, traceback
-
+import requests
 
 import json
 logger = logging.getLogger(__name__)
@@ -24,6 +24,42 @@ def get_plot_config(request):
     except Exception as e:
         logger.error(traceback.format_exc())
         return json_response(e.message)
+
+
+def get_plotter_info(request):
+    try:
+        if request.method == "POST":
+            raise Exception("POST not support")
+        else:
+            server_number = request.GET.get("id", None)
+            plotter = Plotter.objects.get(server_number=server_number)
+        return json_response(Success(plotter.get_info()))
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return json_response(e.message)
+
+
+@csrf_exempt
+def register_plotter(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            logger.info(data)
+            plotter_server_name = data['name']
+            server_number = plotter_server_name.split('-')[1]
+            try:
+                plotter = Plotter.objects.get(server_number=server_number)
+                #plotter 注册上线后 执行nagios配置更新
+                query = {'id': plotter.server_number}
+                response = requests.get('http://127.0.0.1:8080/icinga2/config/plotter', params=query)
+                logger.info('%s is online' % plotter_server_name)
+            except Plotter.DoesNotExist as e:
+                json_response(Error('Plotter do not exist'))
+        return json_response(Success(''))
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return json_response(Error(e.message))
+
 
 @csrf_exempt
 def update_plot_statistic(request):
