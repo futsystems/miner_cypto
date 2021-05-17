@@ -192,7 +192,7 @@ class PlotterAdmin(admin.ModelAdmin):
             return HttpResponseRedirect(previous_url)
 
         api = PlotterAPI(plotter)
-        result = api.start_sending_process(plotter.harvester.internal_ip)
+        result = api.start_sending_process(plotter.harvester)
 
         messages.info(request, '%s %s' % (plotter.server_name(), result['msg']))
         return HttpResponseRedirect(previous_url)
