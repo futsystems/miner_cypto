@@ -37,9 +37,6 @@ class Harvester(models.Model):
     def api_port(self):
         return 8080
 
-    def server_name(self):
-        return u'plotter-%s' % self.server_number
-
     def update_local_info(self, data):
         self.internal_ip = data['internal_ip']
         self.plot_cnt = data['plot_cnt']
