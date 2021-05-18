@@ -34,13 +34,12 @@ class Plotter(models.Model):
     st_update_time = models.DateTimeField('UpdateTime', default=datetime.now, blank=True)
 
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
-    is_sending_run = models.BooleanField('Sending Process', default=False)
+    is_sending_run = models.BooleanField('Sending', default=False)
 
     harvester = models.ForeignKey(Harvester, verbose_name='Harvester', on_delete=models.SET_NULL, default=None,
                                     blank=True, null=True)
 
-
-    is_plotting_run = models.BooleanField('Is Plotting run', default=False)
+    is_plotting_run = models.BooleanField('Plotting', default=False)
 
     __original_plot_config = None
 

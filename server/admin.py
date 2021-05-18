@@ -26,7 +26,7 @@ from server.models import Plotter, PlotConfig, Harvester, PlotTransfer
 
 class PlotterAdmin(admin.ModelAdmin):
     list_display = ('server_number', 'cache_type', 'plot_config_content', 'plot_statistic_1',
-                    'plot_statistic_2', 'st_update_time', 'plotter_action')
+                    'plot_statistic_2', 'is_plotting_run', 'is_sending_run', 'plotter_action')
     ordering = ('server_number',)
     list_filter = ('cache_type',)
 
@@ -65,9 +65,9 @@ class PlotterAdmin(admin.ModelAdmin):
 
         """
         return format_html(
-            '<a class="button" href="{}">System(U)</a>&nbsp;'
-            '<a class="button" href="{}">Ticket</a>&nbsp;'
-            '<a class="button" href="{}">Nagios(U)</a>&nbsp;'
+            '<a class="button" href="{}">U</a>&nbsp;'
+            '<a class="button" href="{}">T</a>&nbsp;'
+            '<a class="button" href="{}">N</a>&nbsp;'
             '<a class="button" href="{}">Hpool(R)</a>&nbsp;'
             '<a class="button" href="{}">Plot(R)</a>&nbsp;'
             '<a class="button" href="{}">StartSending</a>&nbsp;'
@@ -250,9 +250,11 @@ class HarvesterAdmin(admin.ModelAdmin):
         """
         return format_html(
             '<a class="button" href="{}">System(U)</a>&nbsp;'
-            '<a class="button" href="{}">Hpool(R)</a>&nbsp;',
+            '<a class="button" href="{}">Hpool(R)</a>&nbsp;'
+            '<a class="button" href="{}">StopNC</a>&nbsp;',
             reverse('admin:harvester-update-system', args=[obj.pk]),
             reverse('admin:harvester-restart-hpool', args=[obj.pk]),
+            reverse('admin:harvester-stop-nc', args=[obj.pk]),
         )
 
     harvester_action.allow_tags = True
@@ -271,6 +273,11 @@ class HarvesterAdmin(admin.ModelAdmin):
                 r'^(?P<server_id>.+)/restart-hpool/$',
                 self.admin_site.admin_view(self.restart_hpool),
                 name='harvester-restart-hpool',
+            ),
+            url(
+                r'^(?P<server_id>.+)/stop-nc/$',
+                self.admin_site.admin_view(self.stop_nc),
+                name='harvester-stop-nc',
             ),
         ]
 
@@ -291,6 +298,15 @@ class HarvesterAdmin(admin.ModelAdmin):
         harvester = Harvester.objects.get(id=server_id)
         api = HarvesterAPI(harvester)
         result = api.restart_service('srv.hpool')
+        messages.info(request, '%s %s' % (harvester.server_name(), result['msg']))
+        return HttpResponseRedirect(previous_url)
+
+    def stop_nc(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        from .harvester_api import HarvesterAPI
+        harvester = Harvester.objects.get(id=server_id)
+        api = HarvesterAPI(harvester)
+        result = api.stop_nc()
         messages.info(request, '%s %s' % (harvester.server_name(), result['msg']))
         return HttpResponseRedirect(previous_url)
 

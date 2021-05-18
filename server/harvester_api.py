@@ -28,3 +28,12 @@ class HarvesterAPI(object):
         """
         response = requests.get('http://%s:%s/update' % (self._host, self._port))
         return response.json()
+
+
+    def stop_nc(self):
+        """
+        stop nc process
+        :return:
+        """
+        response = requests.get('http://%s:%s/nc/stop' % (self._host, self._port))
+        return response.json()
