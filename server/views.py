@@ -42,12 +42,13 @@ def get_plotter_info(request):
 
 @csrf_exempt
 def register_plotter(request):
-    logger.info('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     try:
         if request.method == "POST":
             data = json.loads(request.body)
 
             plotter_server_name = data['name']
+            plotter_boot_time = data['boot_time']
+
             logger.info('%s register to manager node,data:%s' % (plotter_server_name, data))
             server_number = plotter_server_name.split('-')[1]
             try:
@@ -55,7 +56,7 @@ def register_plotter(request):
                 #plotter 注册上线后 执行nagios配置更新
                 query = {'id': plotter.server_number}
                 response = requests.get('http://127.0.0.1:8080/icinga2/config/plotter', params=query)
-                plotter.boot_time = datetime.now()
+                plotter.boot_time = plotter_boot_time
                 plotter.save()
 
                 logger.info('%s is online' % plotter_server_name)
