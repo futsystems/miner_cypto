@@ -41,6 +41,8 @@ class Plotter(models.Model):
 
     is_plotting_run = models.BooleanField('Plotting', default=False)
 
+    boot_time = models.DateTimeField('Boot Time', default=datetime.now, blank=True)#server boot at this time
+
     __original_plot_config = None
 
     def __init__(self, *args, **kwargs):
@@ -56,11 +58,23 @@ class Plotter(models.Model):
     def __str__(self):
         return self.__unicode__()
 
-    def plot_statistic_1(self):
+    def output(self):
         return "%s / %s" % (self.st_plot_process_cnt, self.st_plot_output)
 
-    def plot_statistic_2(self):
+    def time(self):
         return round((self.st_avg_plot_time + self.st_avg_copy_time)/3600, 2)
+
+    def statistic(self):
+        avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time)/3600
+        out_put_process = 24/avg_plot_hour if avg_plot_hour>0 else 0
+        out_put = self.st_plot_process_cnt * out_put_process
+        stagger = 0
+        if self.plot_config is not  None:
+            stagger = self.plot_config.global_stagger_m
+        else:
+            stagger = 48
+
+        return '%s-%s / %s' % (round(out_put_process, 2), round(out_put, 2), round(float(24*60)/stagger,2))
 
     def update_statistic(self, data):
         self.st_plot_process_cnt = data['plot_process_cnt']
@@ -77,7 +91,6 @@ class Plotter(models.Model):
 
     def get_info(self):
         return {
-
             'name': self.server_name(),
             'is_plotting_run': self.is_plotting_run
         }
@@ -119,7 +132,6 @@ class Plotter(models.Model):
     @property
     def api_port(self):
         return 8080
-
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         config_change = False

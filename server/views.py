@@ -53,6 +53,9 @@ def register_plotter(request):
                 #plotter 注册上线后 执行nagios配置更新
                 query = {'id': plotter.server_number}
                 response = requests.get('http://127.0.0.1:8080/icinga2/config/plotter', params=query)
+                plotter.boot_time = datetime.now()
+                plotter.save()
+
                 logger.info('%s is online' % plotter_server_name)
             except Plotter.DoesNotExist as e:
                 json_response(Error('Plotter do not exist'))
