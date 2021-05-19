@@ -249,10 +249,14 @@ class HarvesterAdmin(admin.ModelAdmin):
 
         """
         return format_html(
-            '<a class="button" href="{}">System(U)</a>&nbsp;'
+            '<a class="button" href="{}">U</a>&nbsp;'
+            '<a class="button" href="{}">T</a>&nbsp;'
+            '<a class="button" href="{}">N</a>&nbsp;'
             '<a class="button" href="{}">Hpool(R)</a>&nbsp;'
             '<a class="button" href="{}">StopNC</a>&nbsp;',
             reverse('admin:harvester-update-system', args=[obj.pk]),
+            reverse('admin:harvester-pki-ticket', args=[obj.pk]),
+            reverse('admin:harvester-update-nagios', args=[obj.pk]),
             reverse('admin:harvester-restart-hpool', args=[obj.pk]),
             reverse('admin:harvester-stop-nc', args=[obj.pk]),
         )
@@ -279,6 +283,17 @@ class HarvesterAdmin(admin.ModelAdmin):
                 self.admin_site.admin_view(self.stop_nc),
                 name='harvester-stop-nc',
             ),
+
+            url(
+                r'^(?P<server_id>.+)/update-nagios/$',
+                self.admin_site.admin_view(self.update_nagios_config),
+                name='harvester-update-nagios',
+            ),
+            url(
+                r'^(?P<server_id>.+)/pki-ticket/$',
+                self.admin_site.admin_view(self.pki_ticket),
+                name='harvester-pki-ticket',
+            ),
         ]
 
         return my_urls + urls
@@ -290,6 +305,22 @@ class HarvesterAdmin(admin.ModelAdmin):
         api = HarvesterAPI(harvester)
         result = api.update_system()
         messages.info(request, '%s %s' % (harvester.server_name(), result['msg']))
+        return HttpResponseRedirect(previous_url)
+
+    def update_nagios_config(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        harvester = Harvester.objects.get(id=server_id)
+        subprocess.check_output(["/etc/icinga2/zones.d/master/config_plotter.sh", "%s" % harvester.server_number])
+        msg = "update config for plotter-%s success" % server_id
+        messages.info(request, '%s %s' % (harvester.server_name(), msg))
+        return HttpResponseRedirect(previous_url)
+
+    def pki_ticket(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        harvester = Harvester.objects.get(id=server_id)
+        logger.info("generate ticket for %s" % harvester.server_name())
+        result = subprocess.check_output(["icinga2", "pki", "ticket", "--cn", harvester.server_name()])
+        messages.info(request, '%s ticket: %s' % (harvester.server_name(), result))
         return HttpResponseRedirect(previous_url)
 
     def restart_hpool(self, request, server_id):

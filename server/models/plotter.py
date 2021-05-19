@@ -59,22 +59,25 @@ class Plotter(models.Model):
         return self.__unicode__()
 
     def output(self):
+        avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time) / 3600
         return "%s / %s" % (self.st_plot_process_cnt, self.st_plot_output)
 
     def time(self):
-        return round((self.st_avg_plot_time + self.st_avg_copy_time)/3600, 2)
+        avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time) / 3600
+        round_process = 24 / avg_plot_hour if avg_plot_hour > 0 else 0
+        return '%s/%s' % (round((self.st_avg_plot_time + self.st_avg_copy_time)/3600, 2),round_process)
 
     def statistic(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time)/3600
-        out_put_process = 24/avg_plot_hour if avg_plot_hour>0 else 0
-        out_put = self.st_plot_process_cnt * out_put_process
+        round_process = 24/avg_plot_hour if avg_plot_hour > 0 else 0
+        out_put = self.st_plot_process_cnt * round_process
         stagger = 0
         if self.plot_config is not  None:
             stagger = self.plot_config.global_stagger_m
         else:
             stagger = 48
 
-        return '%s-%s / %s' % (round(out_put_process, 2), round(out_put, 2), round(float(24*60)/stagger,2))
+        return '%s / %s' % (round(out_put, 2), round(float(24*60)/stagger,2))
 
     def update_statistic(self, data):
         self.st_plot_process_cnt = data['plot_process_cnt']

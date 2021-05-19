@@ -49,7 +49,7 @@ def register_plotter(request):
             plotter_server_name = data['name']
             plotter_boot_time = data['boot_time']
 
-            logger.info('%s register to manager node,data:%s' % (plotter_server_name, data))
+            logger.info('%s register to manager node, data:%s' % (plotter_server_name, data))
             server_number = plotter_server_name.split('-')[1]
             try:
                 plotter = Plotter.objects.get(server_number=server_number)
