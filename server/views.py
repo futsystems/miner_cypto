@@ -42,10 +42,11 @@ def get_plotter_info(request):
 
 @csrf_exempt
 def register_plotter(request):
+    logger.info('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     try:
         if request.method == "POST":
             data = json.loads(request.body)
-            
+
             plotter_server_name = data['name']
             logger.info('%s register to manager node,data:%s' % (plotter_server_name, data))
             server_number = plotter_server_name.split('-')[1]
