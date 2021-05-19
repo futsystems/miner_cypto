@@ -64,8 +64,8 @@ class Plotter(models.Model):
 
     def time(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time) / 3600
-        round_process = 24 / avg_plot_hour if avg_plot_hour > 0 else 0
-        return '%s/%s' % (round((self.st_avg_plot_time + self.st_avg_copy_time)/3600, 2),round_process)
+        round_process = round(24 / avg_plot_hour if avg_plot_hour > 0 else 0,2)
+        return '%s/%s' % (round((self.st_avg_plot_time + self.st_avg_copy_time)/3600, 2), round_process)
 
     def statistic(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time)/3600
