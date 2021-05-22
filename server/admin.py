@@ -42,11 +42,13 @@ class PlotterAdmin(admin.ModelAdmin):
                     'server_number', 'cache_type', 'plot_config'
                 ]
             }),
+            
             ("Harvester", {
                 'fields': [
                     'harvester'
                 ]
             }),
+
             ("Others", {
                 'fields': [
                     'is_plotting_run', 'boot_time', 'description'
@@ -61,7 +63,7 @@ class PlotterAdmin(admin.ModelAdmin):
 
             ("Hardware", {
                 'fields': [
-                    'cpu_model', 'cpu_cnt', 'memory_total', 'memory_used',
+                    'cpu_model', 'cpu_cnt', 'cpu_used_percent', 'memory_total', 'memory_used',
                 ]
             }),
         )
