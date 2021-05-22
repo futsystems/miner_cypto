@@ -10,6 +10,7 @@ from .plot_config import PlotConfig
 from .harvester import Harvester
 
 from .choices import CACHE_TYPE
+from common.helper import get_human_readable_size
 
 
 
@@ -86,6 +87,12 @@ class Plotter(models.Model):
             stagger = 48
 
         return '%s / %s' % (round(out_put, 2), round(float(24*60)/stagger,2))
+
+    def cpu(self):
+        return '%s' % round(self.cpu_used_percent, 2)
+
+    def mem(self):
+        return '%s %s' % (get_human_readable_size(self.memory_total),  round((float(self.memory_used*100)/self.memory_total),2) if self.memory_total>0 else '--')
 
     def update_statistic(self, data):
         self.st_plot_process_cnt = data['plot_process_cnt']

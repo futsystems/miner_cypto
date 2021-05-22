@@ -26,7 +26,7 @@ from server.models import Plotter, PlotConfig, Harvester, PlotTransfer
 
 class PlotterAdmin(admin.ModelAdmin):
     list_display = ('server_number', 'cache_type', 'plot_config_content', 'output',
-                    'time', 'statistic', 'is_plotting_run', 'is_sending_run', 'plotter_action')
+                    'time', 'statistic', 'cpu', 'mem', 'is_plotting_run', 'is_sending_run', 'plotter_action')
     ordering = ('server_number',)
     list_filter = ('cache_type',)
 
@@ -42,7 +42,7 @@ class PlotterAdmin(admin.ModelAdmin):
                     'server_number', 'cache_type', 'plot_config'
                 ]
             }),
-            
+
             ("Harvester", {
                 'fields': [
                     'harvester'
