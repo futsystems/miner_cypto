@@ -43,6 +43,14 @@ class Plotter(models.Model):
 
     boot_time = models.DateTimeField('Boot Time', default=datetime.now, blank=True)#server boot at this time
 
+    cpu_model = models.CharField('CPU', max_length=100, default='', blank=True)
+    cpu_cnt = models.IntegerField('CPU Count', default=0)
+
+    memory_total = models.IntegerField('Memory Total', default=0)
+    memory_used = models.IntegerField('Memory Used', default=0)
+
+
+
     __original_plot_config = None
 
     def __init__(self, *args, **kwargs):

@@ -58,6 +58,12 @@ class PlotterAdmin(admin.ModelAdmin):
                     'internal_ip', 'is_sending_run'
                 ]
             }),
+
+            ("Hardware", {
+                'fields': [
+                    'cpu_model', 'cpu_cnt', 'memory_total', 'memory_used',
+                ]
+            }),
         )
 
     def plotter_action(self, obj):

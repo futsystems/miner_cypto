@@ -57,6 +57,12 @@ def register_plotter(request):
                 query = {'id': plotter.server_number}
                 response = requests.get('http://127.0.0.1:8080/icinga2/config/plotter', params=query)
                 plotter.boot_time = plotter_boot_time
+                if data.has_key('cpu'):
+                    plotter.cpu_model = data['cpu']['brand']
+                    plotter.cpu_cnt = data['cpu']['count']
+                if data.has_key('memory'):
+                    plotter.memory_total = data['memory']['total']
+                    plotter.memory_used = data['memory']['used']
                 plotter.save()
 
                 logger.info('%s is online' % plotter_server_name)

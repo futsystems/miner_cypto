@@ -5,7 +5,6 @@ from django.db import models
 from .choices import CACHE_TYPE
 
 
-
 class PlotConfig(models.Model):
     """
     plot config
@@ -17,7 +16,7 @@ class PlotConfig(models.Model):
     e = models.BooleanField('Bitfield', default=True)
     n_threads = models.IntegerField('Threads', default=3)
     n_buckets = models.IntegerField('Buckets', default=128)
-    job_buffer = models.IntegerField('Job Buffer', default=4200)
+    job_buffer = models.IntegerField('Job Buffer', default=4000)
 
     global_max_jobs = models.IntegerField('Max Jobs', default=12)
     global_stagger_m = models.IntegerField('Stagger', default=24)
