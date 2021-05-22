@@ -106,7 +106,7 @@ def update_plot_info(request):
 
             try:
                 plotter = Plotter.objects.get(server_number=server_number)
-                plotter.update_local_info(data['info'])
+                plotter.update_local_info(data)
 
             except Plotter.DoesNotExist as e:
                 json_response(Error('Plotter do not exist'))

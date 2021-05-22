@@ -95,9 +95,20 @@ class Plotter(models.Model):
         self.st_update_time = datetime.now()
         self.save()
 
-    def update_local_info(self,data):
-        self.is_sending_run = data['is_sending_run']
-        self.internal_ip = data['internal_ip']
+    def update_local_info(self, data):
+        if 'info' in data:
+            self.is_sending_run = data['info']['is_sending_run']
+            self.internal_ip = data['info']['internal_ip']
+
+        if 'cpu' in data:
+            self.cpu_model = data['cpu']['brand']
+            self.cpu_cnt = data['cpu']['count']
+            self.cpu_used_percent = data['cpu']['used_percent']
+
+        if 'memory' in data:
+            self.memory_total = data['memory']['total']
+            self.memory_used = data['memory']['used']
+
         self.save()
 
     def get_info(self):
