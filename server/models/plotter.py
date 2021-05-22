@@ -45,7 +45,7 @@ class Plotter(models.Model):
 
     cpu_model = models.CharField('CPU', max_length=100, default='', blank=True)
     cpu_cnt = models.IntegerField('CPU Count', default=0)
-
+    cpu_used_percent = models.FloatField('CPU Used Percnet', default=0)
     memory_total = models.BigIntegerField('Memory Total', default=0)
     memory_used = models.BigIntegerField('Memory Used', default=0)
 

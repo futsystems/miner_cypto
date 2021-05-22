@@ -60,6 +60,7 @@ def register_plotter(request):
                 if 'cpu' in data:
                     plotter.cpu_model = data['cpu']['brand']
                     plotter.cpu_cnt = data['cpu']['count']
+                    plotter.cpu_used_percent = data['cpu']['used_percent']
                 if 'memory' in data:
                     plotter.memory_total = data['memory']['total']
                     plotter.memory_used = data['memory']['used']
