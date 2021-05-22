@@ -76,8 +76,8 @@ class PlotterAdmin(admin.ModelAdmin):
             '<a class="button" href="{}">U</a>&nbsp;'
             '<a class="button" href="{}">T</a>&nbsp;'
             '<a class="button" href="{}">N</a>&nbsp;'
-            '<a class="button" href="{}">Hpool(R)</a>&nbsp;'
-            '<a class="button" href="{}">Plot(R)</a>&nbsp;'
+            '<a class="button" href="{}">H(R)</a>&nbsp;'
+            '<a class="button" href="{}">P(R)</a>&nbsp;'
             '<a class="button" href="{}">StartSending</a>&nbsp;'
             '<a class="button" href="{}">StopSending</a>&nbsp;',
             reverse('admin:update-system', args=[obj.pk]),
