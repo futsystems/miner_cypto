@@ -46,6 +46,7 @@ class PlotConfig(models.Model):
 
     def to_dict(self):
         return {
+            'name': self.name,
             'k': self.k,
             'e': not self.e,
             'n_threads': self.n_threads,
