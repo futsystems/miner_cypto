@@ -39,7 +39,7 @@ class PlotterAdmin(admin.ModelAdmin):
         return (
             (None, {
                 "fields": [
-                    'server_number', 'cache_cnt', 'cache_type', 'is_cache_raid0', 'plot_config' ,'exclude_dst_paths'
+                    'server_number', 'cache_cnt', 'cache_type', 'is_cache_raid0', 'plot_config', 'exclude_plot_dst_path'
                 ]
             }),
 

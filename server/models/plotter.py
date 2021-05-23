@@ -52,7 +52,7 @@ class Plotter(models.Model):
 
     cache_cnt = models.IntegerField('SSD Count', default=1)
     is_cache_raid0 = models.BooleanField('Cache Raid0', default=False)
-    exclude_dst_paths = models.CharField('Exclude Dst Paths', max_length=1000, default='', blank=True)
+    exclude_plot_dst_path = models.CharField('Exclude Dst Paths', max_length=1000, default='', blank=True)
 
 
 
@@ -159,11 +159,11 @@ class Plotter(models.Model):
             'tmpdir_stagger_phase_major': 2,
             'tmpdir_stagger_phase_minor': 1,
             'tmpdir_stagger_phase_limit': 6,
-            'exclude_dst_paths': self.exclude_dst_paths,
+            'exclude_plot_dst_path': self.exclude_plot_dst_path,
         }
         else:
             data =  self.plot_config.to_dict()
-            data['exclude_dst_paths'] = self.exclude_dst_paths
+            data['exclude_plot_dst_path'] = self.exclude_plot_dst_path
             return data
 
     @property
