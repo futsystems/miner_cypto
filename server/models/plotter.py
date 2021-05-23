@@ -50,6 +50,10 @@ class Plotter(models.Model):
     memory_total = models.BigIntegerField('Memory Total', default=0)
     memory_used = models.BigIntegerField('Memory Used', default=0)
 
+    cache_cnt = models.IntegerField('SSD Count', default=1)
+    is_cache_raid0 = models.BooleanField('Cache Raid0', default=False)
+    exclude_dst_paths = models.CharField('Exclude Dst Paths', max_length=1000, default='', blank=True)
+
 
 
     __original_plot_config = None
@@ -91,8 +95,20 @@ class Plotter(models.Model):
     def cpu(self):
         return '%s' % round(self.cpu_used_percent, 2)
 
+    def cache_raid(self):
+        return self.is_cache_raid0
+
     def mem(self):
         return '%s %s' % (get_human_readable_size(self.memory_total),  round((float(self.memory_used*100)/self.memory_total),2) if self.memory_total>0 else '--')
+
+    def thread(self):
+        if self.plot_config is not None:
+            real_cache_cnt=self.cache_cnt
+            if self.is_cache_raid0 :
+                real_cache_cnt = 1
+            return (self.plot_config.global_max_jobs - self.plot_config.tmpdir_stagger_phase_limit * real_cache_cnt) + (real_cache_cnt * self.plot_config.tmpdir_stagger_phase_limit *  self.plot_config.n_threads)
+        else:
+            return '--'
 
     def update_statistic(self, data):
         self.st_plot_process_cnt = data['plot_process_cnt']
@@ -143,9 +159,12 @@ class Plotter(models.Model):
             'tmpdir_stagger_phase_major': 2,
             'tmpdir_stagger_phase_minor': 1,
             'tmpdir_stagger_phase_limit': 6,
+            'exclude_dst_paths': self.exclude_dst_paths,
         }
         else:
-            return self.plot_config.to_dict()
+            data =  self.plot_config.to_dict()
+            data['exclude_dst_paths'] = self.exclude_dst_paths
+            return data
 
     @property
     def plot_config_content(self):
