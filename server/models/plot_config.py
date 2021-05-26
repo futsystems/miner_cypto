@@ -43,6 +43,8 @@ class PlotConfig(models.Model):
                         ,self.tmpdir_stagger_phase_major, self.tmpdir_stagger_phase_minor, self.global_stagger_m,
                       not self.e, self.n_threads, self.job_buffer, self.name)
 
+    def jobs_per_day(self):
+        return round(float(24*60)/self.global_stagger_m,2)
 
     def to_dict(self):
         return {
