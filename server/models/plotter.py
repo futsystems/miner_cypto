@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+import pytz
+
 
 from django.db import models
 from .settings import GATEWAY_DOMAIN
@@ -34,6 +36,7 @@ class Plotter(models.Model):
 
     st_update_time = models.DateTimeField('UpdateTime', default=datetime.now, blank=True)
 
+
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
     is_sending_run = models.BooleanField('Sending', default=False)
 
@@ -43,6 +46,7 @@ class Plotter(models.Model):
     is_plotting_run = models.BooleanField('Plotting', default=False)
 
     boot_time = models.DateTimeField('Boot Time', default=datetime.now, blank=True)#server boot at this time
+    uptime = models.IntegerField('Uptime', default=0, blank=True)
 
     cpu_model = models.CharField('CPU', max_length=100, default='', blank=True)
     cpu_cnt = models.IntegerField('CPU Count', default=0)
@@ -95,6 +99,12 @@ class Plotter(models.Model):
     def cpu(self):
         return '%s' % round(self.cpu_used_percent, 2)
 
+    def up_time(self):
+        if self.uptime < 3600:
+            return '%s minutes' % round(df.total_seconds()/60,2)
+        else:
+            return '%s hours' % round(df.total_seconds()/3600,2)
+
     def cache_raid(self):
         return self.is_cache_raid0
 
@@ -122,6 +132,7 @@ class Plotter(models.Model):
         if 'info' in data:
             self.is_sending_run = data['info']['is_sending_run']
             self.internal_ip = data['info']['internal_ip']
+            self.uptime = data['info']['uptime']
 
         if 'cpu' in data:
             self.cpu_model = data['cpu']['brand']
