@@ -101,9 +101,9 @@ class Plotter(models.Model):
 
     def up_time(self):
         if self.uptime < 3600:
-            return '%s minutes' % round(df.total_seconds()/60,2)
+            return '%s minutes' % round(self.uptime/60,2)
         else:
-            return '%s hours' % round(df.total_seconds()/3600,2)
+            return '%s hours' % round(self.uptime/3600,2)
 
     def cache_raid(self):
         return self.is_cache_raid0
