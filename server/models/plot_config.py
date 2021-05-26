@@ -44,7 +44,10 @@ class PlotConfig(models.Model):
                       not self.e, self.n_threads, self.job_buffer, self.name)
 
     def jobs_per_day(self):
-        return round(float(24*60)/self.global_stagger_m,2)
+        return round(float(24*60)/self.global_stagger_m, 2)
+
+    def max_threads(self):
+        return (self.global_max_jobs-self.tmpdir_stagger_phase_limit) * self.tmpdir_stagger_phase_limit*self.n_threads
 
     def to_dict(self):
         return {

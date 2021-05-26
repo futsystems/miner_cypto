@@ -216,8 +216,8 @@ class PlotterAdmin(admin.ModelAdmin):
 
 
 class PlotConfigAdmin(admin.ModelAdmin):
-    list_display = ('name', 'cache_type', 'k', 'e', 'n_threads', 'n_buckets', 'job_buffer', 'global_max_jobs', 'global_stagger_m',
-                    'tmpdir_max_jobs', 'tmpdir_stagger_phase_major', 'tmpdir_stagger_phase_minor', 'tmpdir_stagger_phase_limit', 'jobs_per_day')
+    list_display = ('name', 'k', 'e', 'n_threads', 'n_buckets', 'job_buffer', 'global_max_jobs', 'global_stagger_m',
+                    'tmpdir_max_jobs', 'tmpdir_stagger_phase_major', 'tmpdir_stagger_phase_minor', 'tmpdir_stagger_phase_limit', 'jobs_per_day','max_threads')
     list_filter = ('cache_type',)
     def get_fieldsets(self, request, obj=None):
         return (
