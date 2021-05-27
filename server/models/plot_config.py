@@ -39,9 +39,9 @@ class PlotConfig(models.Model):
 
     @property
     def content(self):
-        return u'[%s/%s | %s-%s:%s | %s] [-e:%s -r:%s -b:%s ] %s' % (self.global_max_jobs, self.tmpdir_max_jobs, self.tmpdir_stagger_phase_limit
-                        ,self.tmpdir_stagger_phase_major, self.tmpdir_stagger_phase_minor, self.global_stagger_m,
-                      not self.e, self.n_threads, self.job_buffer, self.name)
+        return u'[%s/%s/%s | %s/%s]\r\n [%s | %s | %s ] %s' % (self.global_max_jobs, self.tmpdir_max_jobs, self.tmpdir_stagger_phase_limit,
+                         self.global_stagger_m, round(float(24*60)/self.global_stagger_m,2),
+                                                             ('F' if not self.e else 'T'), self.n_threads, self.job_buffer, self.name)
 
     def jobs_per_day(self):
         return round(float(24*60)/self.global_stagger_m, 2)

@@ -75,16 +75,16 @@ class Plotter(models.Model):
     def __str__(self):
         return self.__unicode__()
 
-    def output(self):
+    def job_plot(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time) / 3600
         return "%s / %s" % (self.st_plot_process_cnt, self.st_plot_output)
 
-    def time(self):
+    def time_round(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time) / 3600
         round_process = round(24 / avg_plot_hour if avg_plot_hour > 0 else 0,2)
         return '%s/%s' % (round((self.st_avg_plot_time + self.st_avg_copy_time)/3600, 2), round_process)
 
-    def statistic(self):
+    def output(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time)/3600
         round_process = 24/avg_plot_hour if avg_plot_hour > 0 else 0
         out_put = self.st_plot_process_cnt * round_process
@@ -94,10 +94,10 @@ class Plotter(models.Model):
         else:
             stagger = 48
 
-        return '%s / %s' % (round(out_put, 2), round(float(24*60)/stagger,2))
+        return round(out_put, 2)
 
     def cpu(self):
-        return '%s' % round(self.cpu_used_percent, 2)
+        return '{:.0f}%'.format(round(self.cpu_used_percent, 2))
 
     def up_time(self):
         if self.uptime < 3600:
@@ -109,7 +109,7 @@ class Plotter(models.Model):
         return self.is_cache_raid0
 
     def mem(self):
-        return '%s %s' % (get_human_readable_size(self.memory_total),  round((float(self.memory_used*100)/self.memory_total),2) if self.memory_total>0 else '--')
+        return '{:.0f}%'.format(round((float(self.memory_used*100)/self.memory_total),2) if self.memory_total>0 else 0)
 
     def thread(self):
         if self.plot_config is not None:
