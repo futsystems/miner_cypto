@@ -214,7 +214,7 @@ LOGGING = {
             'propagate': True,
         },
 
-        'app_config': {
+        'server': {
             'handlers': ['tinyconsole','default'],
             'level': 'DEBUG',
             'propagate': False

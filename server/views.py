@@ -64,6 +64,11 @@ def register_plotter(request):
                 if 'memory' in data:
                     plotter.memory_total = data['memory']['total']
                     plotter.memory_used = data['memory']['used']
+
+                if 'nvme' in data:
+                    plotter.nvme_size = data['nvme']['nvme_size']
+                    plotter.nvme_cnt = data['nvme']['nvme_cnt']
+
                 plotter.save()
 
                 logger.info('%s is online' % plotter_server_name)
