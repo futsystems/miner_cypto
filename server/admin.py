@@ -64,7 +64,7 @@ class PlotterAdmin(admin.ModelAdmin):
 
             ("Hardware", {
                 'fields': [
-                    'cpu_model', 'cpu_cnt', 'cpu_used_percent', 'memory_total', 'memory_used',
+                    'cpu_model', 'cpu_cnt', 'cpu_used_percent', 'memory_total', 'memory_used', 'nvme_cnt', 'nvme_size'
                 ]
             }),
         )

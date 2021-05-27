@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-import pytz
-
 
 from django.db import models
 from .settings import GATEWAY_DOMAIN
@@ -50,11 +48,14 @@ class Plotter(models.Model):
 
     cpu_model = models.CharField('CPU', max_length=100, default='', blank=True)
     cpu_cnt = models.IntegerField('CPU Count', default=0)
-    cpu_used_percent = models.FloatField('CPU Used Percnet', default=0)
+    cpu_used_percent = models.FloatField('CPU Used Percent', default=0)
     memory_total = models.BigIntegerField('Memory Total', default=0)
     memory_used = models.BigIntegerField('Memory Used', default=0)
 
     cache_cnt = models.IntegerField('SSD Count', default=1)
+    nvme_size = models.FloatField('NVME Size', default=0)
+    nvme_cnt = models.IntegerField('NVME Count', default=1)
+
     is_cache_raid0 = models.BooleanField('Cache Raid0', default=False)
     exclude_plot_dst_path = models.CharField('Exclude Dst Paths', max_length=1000, default='', blank=True)
 
@@ -133,6 +134,8 @@ class Plotter(models.Model):
             self.is_sending_run = data['info']['is_sending_run']
             self.internal_ip = data['info']['internal_ip']
             self.uptime = data['info']['uptime']
+            self.nvme_size = data['info']['nvme_size']
+            self.nvme_cnt = data['info']['nvme_cnt']
 
         if 'cpu' in data:
             self.cpu_model = data['cpu']['brand']
