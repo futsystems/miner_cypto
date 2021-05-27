@@ -134,8 +134,10 @@ class Plotter(models.Model):
             self.is_sending_run = data['info']['is_sending_run']
             self.internal_ip = data['info']['internal_ip']
             self.uptime = data['info']['uptime']
-            self.nvme_size = data['info']['nvme_size']
-            self.nvme_cnt = data['info']['nvme_cnt']
+            
+            if 'nvme_size' in data['info']:
+                self.nvme_size = data['info']['nvme_size']
+                self.nvme_cnt = data['info']['nvme_cnt']
 
         if 'cpu' in data:
             self.cpu_model = data['cpu']['brand']
