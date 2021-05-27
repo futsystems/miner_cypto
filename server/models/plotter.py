@@ -76,6 +76,8 @@ class Plotter(models.Model):
     def __str__(self):
         return self.__unicode__()
 
+    def cache(self):
+        return '%s*%s' % (self.nvme_size, self.nvme_cnt)
     def job_plot(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time) / 3600
         return "%s / %s" % (self.st_plot_process_cnt, self.st_plot_output)
