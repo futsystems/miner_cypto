@@ -23,8 +23,6 @@ class Plotter(models.Model):
                                     blank=True, null=True)
     plot_config_applied = models.BooleanField('Plot Config Applied', default=False)
 
-    cache_type = models.CharField('Cache Type', max_length=20, choices=CACHE_TYPE, default='3.2*1')
-
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
     st_plot_process_cnt = models.IntegerField('Process', default=0)
@@ -52,7 +50,6 @@ class Plotter(models.Model):
     memory_total = models.BigIntegerField('Memory Total', default=0)
     memory_used = models.BigIntegerField('Memory Used', default=0)
 
-    cache_cnt = models.IntegerField('SSD Count', default=1)
     nvme_size = models.FloatField('NVME Size', default=0)
     nvme_cnt = models.IntegerField('NVME Count', default=1)
 
@@ -123,7 +120,7 @@ class Plotter(models.Model):
 
     def thread(self):
         if self.plot_config is not None:
-            real_cache_cnt=self.cache_cnt
+            real_cache_cnt = self.nvme_cnt
             if self.is_cache_raid :
                 real_cache_cnt = 1
             return (self.plot_config.global_max_jobs - self.plot_config.tmpdir_stagger_phase_limit * real_cache_cnt) + (real_cache_cnt * self.plot_config.tmpdir_stagger_phase_limit *  self.plot_config.n_threads)

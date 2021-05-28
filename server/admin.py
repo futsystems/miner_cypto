@@ -34,13 +34,13 @@ class PlotterAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         if obj is None:
             return []
-        return ['server_number', 'plot_config_applied']
+        return ['server_number', 'plot_config_applied', 'internal_ip', 'boot_time', 'last_heartbeat', 'cpu_model', 'cpu_cnt', 'cpu_used_percent', 'memory_total', 'memory_used', 'nvme_cnt', 'nvme_size', 'is_cache_raid']
 
     def get_fieldsets(self, request, obj=None):
         return (
             (None, {
                 "fields": [
-                    'server_number', 'cache_cnt', 'cache_type', 'plot_config', 'exclude_plot_dst_path'
+                    'server_number', 'plot_config', 'exclude_plot_dst_path','description'
                 ]
             }),
 
@@ -52,13 +52,13 @@ class PlotterAdmin(admin.ModelAdmin):
 
             ("Others", {
                 'fields': [
-                    'is_plotting_run', 'boot_time', 'last_heartbeat', 'description'
+                    'is_plotting_run'
                 ]
             }),
 
             ("Info", {
                 'fields': [
-                    'internal_ip', 'is_sending_run'
+                    'internal_ip', 'boot_time', 'last_heartbeat',
                 ]
             }),
 
