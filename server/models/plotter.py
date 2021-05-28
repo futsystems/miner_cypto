@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-
+from django.utils import timezone
 from django.db import models
 from .settings import GATEWAY_DOMAIN
 
@@ -59,7 +59,7 @@ class Plotter(models.Model):
     is_cache_raid0 = models.BooleanField('Cache Raid0', default=False)
     exclude_plot_dst_path = models.CharField('Exclude Dst Paths', max_length=1000, default='', blank=True)
 
-
+    last_heartbeat = models.DateTimeField('HeartBeat', default=timezone.now, blank=True)
 
     __original_plot_config = None
 
@@ -123,12 +123,46 @@ class Plotter(models.Model):
         else:
             return '--'
 
+    def is_online(self):
+        """
+        if server do not receive info in 2 minutes, we think it is gone
+        :return:
+        """
+        now = timezone.now()
+        if (now - self.last_heartbeat).total_seconds()>120:
+            return False
+        return True
+
+    def _update_heartbeat(self, need_save=False):
+        self.last_heartbeat = timezone.now()
+        if need_save:
+            self.save()
+
     def update_statistic(self, data):
         self.st_plot_process_cnt = data['plot_process_cnt']
         self.st_plot_output = data['plot_output']
         self.st_avg_plot_time = data['avg_plot_time']
         self.st_avg_copy_time = data['avg_copy_time']
         self.st_update_time = datetime.now()
+        self._update_heartbeat()
+        self.save()
+
+    def update_register(self,data):
+        self.boot_time = data['boot_time']
+
+        if 'cpu' in data:
+            self.cpu_model = data['cpu']['brand']
+            self.cpu_cnt = data['cpu']['count']
+            self.cpu_used_percent = data['cpu']['used_percent']
+
+        if 'memory' in data:
+            self.memory_total = data['memory']['total']
+            self.memory_used = data['memory']['used']
+
+        if 'nvme' in data:
+            self.nvme_size = data['nvme']['nvme_size']
+            self.nvme_cnt = data['nvme']['nvme_cnt']
+        self._update_heartbeat()
         self.save()
 
     def update_local_info(self, data):
@@ -145,7 +179,7 @@ class Plotter(models.Model):
         if 'memory' in data:
             self.memory_total = data['memory']['total']
             self.memory_used = data['memory']['used']
-
+        self._update_heartbeat()
         self.save()
 
     def get_info(self):

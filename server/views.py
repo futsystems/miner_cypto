@@ -47,7 +47,7 @@ def register_plotter(request):
             data = json.loads(request.body)
 
             plotter_server_name = data['name']
-            plotter_boot_time = data['boot_time']
+
 
             logger.info('%s register to manager node, data:%s' % (plotter_server_name, data))
             server_number = plotter_server_name.split('-')[1]
@@ -56,21 +56,7 @@ def register_plotter(request):
                 #plotter 注册上线后 执行nagios配置更新
                 query = {'id': plotter.server_number}
                 response = requests.get('http://127.0.0.1:8080/icinga2/config/plotter', params=query)
-                plotter.boot_time = plotter_boot_time
-                if 'cpu' in data:
-                    plotter.cpu_model = data['cpu']['brand']
-                    plotter.cpu_cnt = data['cpu']['count']
-                    plotter.cpu_used_percent = data['cpu']['used_percent']
-                if 'memory' in data:
-                    plotter.memory_total = data['memory']['total']
-                    plotter.memory_used = data['memory']['used']
-
-                if 'nvme' in data:
-                    plotter.nvme_size = data['nvme']['nvme_size']
-                    plotter.nvme_cnt = data['nvme']['nvme_cnt']
-
-                plotter.save()
-
+                plotter.update_register(data)
                 logger.info('%s is online' % plotter_server_name)
             except Plotter.DoesNotExist as e:
                 json_response(Error('Plotter do not exist'))
