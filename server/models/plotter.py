@@ -56,7 +56,7 @@ class Plotter(models.Model):
     nvme_size = models.FloatField('NVME Size', default=0)
     nvme_cnt = models.IntegerField('NVME Count', default=1)
 
-    is_cache_raid0 = models.BooleanField('Cache Raid0', default=False)
+    is_cache_raid = models.BooleanField('Cache Raid', default=False)
     exclude_plot_dst_path = models.CharField('Exclude Dst Paths', max_length=1000, default='', blank=True)
 
     last_heartbeat = models.DateTimeField('HeartBeat', default=timezone.now, blank=True)
@@ -77,6 +77,8 @@ class Plotter(models.Model):
         return self.__unicode__()
 
     def cache(self):
+        if self.is_cache_raid:
+            return '%s*%s-R' % (self.nvme_size, self.nvme_cnt)
         return '%s*%s' % (self.nvme_size, self.nvme_cnt)
 
     def job_plot(self):
@@ -112,7 +114,7 @@ class Plotter(models.Model):
             return '%sh' % round(self.uptime/3600,2)
 
     def cache_raid(self):
-        return self.is_cache_raid0
+        return self.is_cache_raid
 
     def mem(self):
         return '{:.0f}%'.format(round((float(self.memory_used*100)/self.memory_total),2) if self.memory_total>0 else 0)
@@ -120,7 +122,7 @@ class Plotter(models.Model):
     def thread(self):
         if self.plot_config is not None:
             real_cache_cnt=self.cache_cnt
-            if self.is_cache_raid0 :
+            if self.is_cache_raid :
                 real_cache_cnt = 1
             return (self.plot_config.global_max_jobs - self.plot_config.tmpdir_stagger_phase_limit * real_cache_cnt) + (real_cache_cnt * self.plot_config.tmpdir_stagger_phase_limit *  self.plot_config.n_threads)
         else:
@@ -170,6 +172,8 @@ class Plotter(models.Model):
         if 'nvme' in data:
             self.nvme_size = data['nvme']['nvme_size']
             self.nvme_cnt = data['nvme']['nvme_cnt']
+            if 'is_cache_raid' in data['nvme']:
+                self.is_cache_raid = data['is_cache_raid']
         self._update_heartbeat()
         self.save()
 
