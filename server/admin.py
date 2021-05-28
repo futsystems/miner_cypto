@@ -40,7 +40,7 @@ class PlotterAdmin(admin.ModelAdmin):
         return (
             (None, {
                 "fields": [
-                    'server_number', 'cache_cnt', 'cache_type', 'is_cache_raid0', 'plot_config', 'exclude_plot_dst_path'
+                    'server_number', 'cache_cnt', 'cache_type', 'plot_config', 'exclude_plot_dst_path'
                 ]
             }),
 
@@ -64,7 +64,7 @@ class PlotterAdmin(admin.ModelAdmin):
 
             ("Hardware", {
                 'fields': [
-                    'cpu_model', 'cpu_cnt', 'cpu_used_percent', 'memory_total', 'memory_used', 'nvme_cnt', 'nvme_size'
+                    'cpu_model', 'cpu_cnt', 'cpu_used_percent', 'memory_total', 'memory_used', 'nvme_cnt', 'nvme_size', 'is_cache_raid'
                 ]
             }),
         )
