@@ -18,7 +18,7 @@ class Plotter(models.Model):
     """
     plotter server
     """
-    server_number = models.CharField('Server Id', max_length=50, default='001')
+    server_number = models.CharField('Id', max_length=50, default='001')
     plot_config = models.ForeignKey(PlotConfig, verbose_name='PlotConfig', on_delete=models.SET_NULL, default=None,
                                     blank=True, null=True)
     plot_config_applied = models.BooleanField('Plot Config Applied', default=False)
@@ -78,14 +78,17 @@ class Plotter(models.Model):
 
     def cache(self):
         return '%s*%s' % (self.nvme_size, self.nvme_cnt)
+
     def job_plot(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time) / 3600
         return "%s / %s" % (self.st_plot_process_cnt, self.st_plot_output)
+    job_plot.short_description = 'Job/Plot'
 
     def time_round(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time) / 3600
         round_process = round(24 / avg_plot_hour if avg_plot_hour > 0 else 0,2)
         return '%s/%s' % (round((self.st_avg_plot_time + self.st_avg_copy_time)/3600, 2), round_process)
+    time_round.short_description = 'Time/Round'
 
     def output(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time)/3600
@@ -104,9 +107,9 @@ class Plotter(models.Model):
 
     def up_time(self):
         if self.uptime < 3600:
-            return '%s minutes' % round(self.uptime/60,2)
+            return '%sm' % round(self.uptime/60,2)
         else:
-            return '%s hours' % round(self.uptime/3600,2)
+            return '%sh' % round(self.uptime/3600,2)
 
     def cache_raid(self):
         return self.is_cache_raid0
@@ -134,8 +137,9 @@ class Plotter(models.Model):
         return True
 
     _is_online.boolean = True
+    _is_online.short_description = 'Online'
     is_online = property(_is_online)
-    
+
 
     def _update_heartbeat(self, need_save=False):
         self.last_heartbeat = timezone.now()
