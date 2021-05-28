@@ -123,7 +123,7 @@ class Plotter(models.Model):
         else:
             return '--'
 
-    def is_online(self):
+    def _is_online(self):
         """
         if server do not receive info in 2 minutes, we think it is gone
         :return:
@@ -132,6 +132,10 @@ class Plotter(models.Model):
         if (now - self.last_heartbeat).total_seconds()>120:
             return False
         return True
+
+    _is_online.boolean = True
+    is_online = property(_is_online)
+    
 
     def _update_heartbeat(self, need_save=False):
         self.last_heartbeat = timezone.now()
