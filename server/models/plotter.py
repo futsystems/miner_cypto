@@ -173,7 +173,7 @@ class Plotter(models.Model):
             self.nvme_size = data['nvme']['nvme_size']
             self.nvme_cnt = data['nvme']['nvme_cnt']
             if 'is_cache_raid' in data['nvme']:
-                self.is_cache_raid = data['is_cache_raid']
+                self.is_cache_raid = data['nvme']['is_cache_raid']
         self._update_heartbeat()
         self.save()
 
