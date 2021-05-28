@@ -78,8 +78,10 @@ class Plotter(models.Model):
 
     def cache(self):
         if self.is_cache_raid:
-            return '%s*%s-R' % (self.nvme_size, self.nvme_cnt)
+            return '%s*%s/r' % (self.nvme_size, self.nvme_cnt)
         return '%s*%s' % (self.nvme_size, self.nvme_cnt)
+
+    cache.short_description = 'nvme/raid'
 
     def job_plot(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time) / 3600
