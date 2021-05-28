@@ -24,12 +24,20 @@ logger = logging.getLogger(__name__)
 from server.models import Plotter, PlotConfig, Harvester, PlotTransfer
 
 
+
+def update_plotter(modeladmin, request, queryset):
+    for plotter in queryset.all():
+        if plotter.is_online:
+            plotter.update_system()
+update_plotter.short_description = "Update Plotter"
+
 class PlotterAdmin(admin.ModelAdmin):
     list_display = ('server_number', 'cache', 'plot_config_content', 'job_plot',
                     'time_round', 'output', 'cpu', 'mem', 'thread', '_is_online', 'up_time', 'is_plotting_run', 'is_sending_run', 'plotter_action')
     ordering = ('server_number',)
     list_filter = ('nvme_size', 'nvme_cnt', )
     search_fields = ('server_number', 'description')
+    actions = [update_plotter]
 
     def get_readonly_fields(self, request, obj=None):
         if obj is None:

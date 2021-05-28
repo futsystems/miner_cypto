@@ -8,7 +8,8 @@ from .settings import GATEWAY_DOMAIN
 
 from .plot_config import PlotConfig
 from .harvester import Harvester
-
+import logging,traceback,json
+logger = logging.getLogger(__name__)
 from .choices import CACHE_TYPE
 from common.helper import get_human_readable_size
 
@@ -201,6 +202,13 @@ class Plotter(models.Model):
 
     def server_name(self):
         return u'plotter-%s' % self.server_number
+
+    def update_system(self):
+        from server.plotter_api import PlotterAPI
+        api = PlotterAPI(self)
+        result = api.update_system()
+        logging.info('update plotter:%s result:%s' % (self.server_name(), result))
+
 
     def get_plot_config_dict(self):
         if self.plot_config is None:
