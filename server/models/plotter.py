@@ -78,7 +78,7 @@ class Plotter(models.Model):
 
     def cache(self):
         if self.is_cache_raid:
-            return '%s*%s/r' % (self.nvme_size, self.nvme_cnt)
+            return '%s*%s-R' % (self.nvme_size, self.nvme_cnt)
         return '%s*%s' % (self.nvme_size, self.nvme_cnt)
 
     cache.short_description = 'nvme/raid'
