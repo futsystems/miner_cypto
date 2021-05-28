@@ -129,11 +129,11 @@ class Plotter(models.Model):
 
     def _is_online(self):
         """
-        if server do not receive info in 2 minutes, we think it is gone
+        if server do not receive info in 3 minutes, we think it is gone
         :return:
         """
         now = timezone.now()
-        if (now - self.last_heartbeat).total_seconds()>120:
+        if (now - self.last_heartbeat).total_seconds() > 60*3:
             return False
         return True
 
