@@ -77,6 +77,13 @@ class Harvester(models.Model):
         else:
             return '%sh' % round(self.uptime/3600,2)
 
+    def power(self):
+        """
+        1gib = 0.0009765625 tib
+        :return:
+        """
+        return self.plot_cnt * 101.4 * 0.0009765625
+
     def update_register(self,data):
         self.boot_time = data['boot_time']
 
