@@ -28,6 +28,9 @@ class Harvester(models.Model):
     memory_total = models.BigIntegerField('Memory Total', default=0)
     memory_used = models.BigIntegerField('Memory Used', default=0)
 
+
+
+
     class Meta:
         app_label = 'server'
 
@@ -85,6 +88,8 @@ class Harvester(models.Model):
         if 'info' in data:
             self.internal_ip = data['info']['internal_ip']
             self.uptime = data['info']['uptime']
+            self.plot_cnt = data['info']['plot_cnt']
+            self.driver_cnt = data['info']['driver_cnt']
 
         if 'cpu' in data:
             self.cpu_model = data['cpu']['brand']

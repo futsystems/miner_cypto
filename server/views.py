@@ -47,8 +47,6 @@ def register_plotter(request):
             data = json.loads(request.body)
 
             plotter_server_name = data['name']
-
-
             logger.info('%s register to manager node, data:%s' % (plotter_server_name, data))
             server_number = plotter_server_name.split('-')[1]
             try:
