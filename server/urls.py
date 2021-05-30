@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^plotter/statistic/update$', views.update_plot_statistic, name='plotter_update_statistic'),#更新统计信息
     url(r'^plotter/local-info/update$', views.update_plot_info, name='plotter_update_info'),#更新本地状态信息
 
-    url(r'^harvester/register$', views.register_plotter, name='harvester_register'),
+    url(r'^harvester/register$', views.register_harvester, name='harvester_register'),
     url(r'^harvester/local-info/update$', views.update_harvester_info, name='harvester_update_info'),
 
     url(r'^transfer/start$', views.plot_transfer_start, name='plot_transfer_start'),
