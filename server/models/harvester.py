@@ -82,7 +82,7 @@ class Harvester(models.Model):
         1gib = 0.0009765625 tib
         :return:
         """
-        return self.plot_cnt * 101.4 * 0.0009765625
+        return round(self.plot_cnt * 101.4 * 0.0009765625, 2)
 
     def update_register(self,data):
         self.boot_time = data['boot_time']
