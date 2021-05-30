@@ -14,7 +14,7 @@ class Harvester(models.Model):
     server_number = models.CharField('Server Id', max_length=50, default='001')
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
     plot_cnt = models.IntegerField('Plots', default=0)
-    files_cnt = models.IntegerField('Files', default=0)
+    file_cnt = models.IntegerField('Files', default=0)
     driver_cnt = models.IntegerField('Drivers', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
@@ -97,7 +97,7 @@ class Harvester(models.Model):
             self.uptime = data['info']['uptime']
             self.plot_cnt = data['info']['plot_cnt']
             self.driver_cnt = data['info']['driver_cnt']
-            self.files_cnt = data['info']['files_cnt']
+            self.file_cnt = data['info']['file_cnt']
 
         if 'cpu' in data:
             self.cpu_model = data['cpu']['brand']
