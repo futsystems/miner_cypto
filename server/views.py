@@ -93,7 +93,7 @@ def update_plot_statistic(request):
     try:
         if request.method == "POST":
             data = json.loads(request.body)
-            logger.info(data)
+            #logger.info(data)
             plotter_server_name = data['name']
             server_number = plotter_server_name.split('-')[1]
 
@@ -113,7 +113,7 @@ def update_plot_info(request):
     try:
         if request.method == "POST":
             data = json.loads(request.body)
-            logger.info(data)
+            #logger.info(data)
             plotter_server_name = data['name']
             server_number = plotter_server_name.split('-')[1]
 
@@ -138,7 +138,7 @@ def update_harvester_info(request):
             harvester_server_name = data['name']
             server_number = harvester_server_name.split('-')[1]
             try:
-                logging.info('harvester:%s report local infor:%s' % (harvester_server_name, data))
+                logging.info('harvester:%s report local info:%s' % (harvester_server_name, data))
                 harvester = Harvester.objects.get(server_number=server_number)
                 harvester.update_local_info(data)
 
