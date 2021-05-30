@@ -67,6 +67,30 @@ def register_plotter(request):
 
 
 @csrf_exempt
+def register_harvester(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            harvester_server_name = data['name']
+            logger.info('%s register to manager node, data:%s' % (harvester_server_name, data))
+            server_number = harvester_server_name.split('-')[1]
+
+            try:
+                harvester = Harvester.objects.get(server_number=server_number)
+                #plotter 注册上线后 执行nagios配置更新
+                #query = {'id': harvester.server_number}
+                #response = requests.get('http://127.0.0.1:8080/icinga2/config/plotter', params=query)
+                harvester.update_register(data)
+                logger.info('%s is online' % harvester_server_name)
+            except Plotter.DoesNotExist as e:
+                json_response(Error('Plotter do not exist'))
+        return json_response(Success(''))
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return json_response(Error(e.message))
+
+
+@csrf_exempt
 def update_plot_statistic(request):
     try:
         if request.method == "POST":
