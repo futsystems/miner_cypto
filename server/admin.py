@@ -340,7 +340,7 @@ class HarvesterAdmin(admin.ModelAdmin):
         previous_url = request.META.get('HTTP_REFERER')
         harvester = Harvester.objects.get(id=server_id)
         subprocess.check_output(["/etc/icinga2/zones.d/master/config_harvester.sh", "%s" % harvester.server_number])
-        msg = "update config for plotter-%s success" % server_id
+        msg = "update config for harvester-%s success" % server_id
         messages.info(request, '%s %s' % (harvester.server_name(), msg))
         return HttpResponseRedirect(previous_url)
 
