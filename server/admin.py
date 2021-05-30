@@ -259,6 +259,19 @@ class HarvesterAdmin(admin.ModelAdmin):
                     'server_number', 'description'
                 ]
             }),
+
+            ("Info", {
+                'fields': [
+                    'internal_ip', 'boot_time', 'last_heartbeat',
+                ]
+            }),
+
+            ("Hardware", {
+                'fields': [
+                    'cpu_model', 'cpu_cnt', 'cpu_used_percent', 'memory_total', 'memory_used', 'nvme_cnt', 'nvme_size',
+                    'is_cache_raid'
+                ]
+            }),
         )
 
     def harvester_action(self, obj):
