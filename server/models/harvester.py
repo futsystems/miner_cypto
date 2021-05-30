@@ -13,8 +13,9 @@ class Harvester(models.Model):
     """
     server_number = models.CharField('Server Id', max_length=50, default='001')
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
-    plot_cnt = models.IntegerField('Plot Count', default=0)
-    driver_cnt = models.IntegerField('Driver Count', default=0)
+    plot_cnt = models.IntegerField('Plots', default=0)
+    files_cnt = models.IntegerField('Files', default=0)
+    driver_cnt = models.IntegerField('Drivers', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
     last_heartbeat = models.DateTimeField('Heartbeat', default=datetime.now, blank=True)
@@ -70,6 +71,12 @@ class Harvester(models.Model):
     _is_online.short_description = 'Online'
     is_online = property(_is_online)
 
+    def up_time(self):
+        if self.uptime < 3600:
+            return '%sm' % round(self.uptime/60,2)
+        else:
+            return '%sh' % round(self.uptime/3600,2)
+
     def update_register(self,data):
         self.boot_time = data['boot_time']
 
@@ -90,6 +97,7 @@ class Harvester(models.Model):
             self.uptime = data['info']['uptime']
             self.plot_cnt = data['info']['plot_cnt']
             self.driver_cnt = data['info']['driver_cnt']
+            self.files_cnt = data['info']['files_cnt']
 
         if 'cpu' in data:
             self.cpu_model = data['cpu']['brand']

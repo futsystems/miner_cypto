@@ -250,7 +250,7 @@ class PlotConfigAdmin(admin.ModelAdmin):
         )
 
 class HarvesterAdmin(admin.ModelAdmin):
-    list_display = ('server_number', 'internal_ip', 'plot_cnt', 'driver_cnt', 'harvester_action')
+    list_display = ('server_number', 'internal_ip', 'plot_cnt', 'driver_cnt',  '_is_online', 'up_time', 'harvester_action')
 
     def get_fieldsets(self, request, obj=None):
         return (
