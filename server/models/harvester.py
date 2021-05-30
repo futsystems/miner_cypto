@@ -82,8 +82,18 @@ class Harvester(models.Model):
         self.save()
 
     def update_local_info(self, data):
-        self.internal_ip = data['internal_ip']
-        self.plot_cnt = data['plot_cnt']
-        self.driver_cnt = data['driver_cnt']
-        self.last_heartbeat_time = datetime.now()
+        if 'info' in data:
+            self.is_sending_run = data['info']['is_sending_run']
+            self.internal_ip = data['info']['internal_ip']
+            self.uptime = data['info']['uptime']
+
+        if 'cpu' in data:
+            self.cpu_model = data['cpu']['brand']
+            self.cpu_cnt = data['cpu']['count']
+            self.cpu_used_percent = data['cpu']['used_percent']
+
+        if 'memory' in data:
+            self.memory_total = data['memory']['total']
+            self.memory_used = data['memory']['used']
+        self._update_heartbeat()
         self.save()
