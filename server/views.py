@@ -139,7 +139,7 @@ def update_harvester_info(request):
             server_number = harvester_server_name.split('-')[1]
             try:
                 harvester = Harvester.objects.get(server_number=server_number)
-                harvester.update_local_info(data['info'])
+                harvester.update_local_info(data)
 
             except Harvester.DoesNotExist as e:
                 json_response(Error('Harvester do not exist'))
