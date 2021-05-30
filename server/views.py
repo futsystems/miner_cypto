@@ -138,6 +138,7 @@ def update_harvester_info(request):
             harvester_server_name = data['name']
             server_number = harvester_server_name.split('-')[1]
             try:
+                logging.info('harvester:%s report local infor:%s' % (harvester_server_name, data))
                 harvester = Harvester.objects.get(server_number=server_number)
                 harvester.update_local_info(data)
 
