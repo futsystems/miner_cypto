@@ -268,8 +268,7 @@ class HarvesterAdmin(admin.ModelAdmin):
 
             ("Hardware", {
                 'fields': [
-                    'cpu_model', 'cpu_cnt', 'cpu_used_percent', 'memory_total', 'memory_used', 'nvme_cnt', 'nvme_size',
-                    'is_cache_raid'
+                    'cpu_model', 'cpu_cnt', 'cpu_used_percent', 'memory_total', 'memory_used'
                 ]
             }),
         )
