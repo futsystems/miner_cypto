@@ -83,7 +83,6 @@ class Harvester(models.Model):
 
     def update_local_info(self, data):
         if 'info' in data:
-            self.is_sending_run = data['info']['is_sending_run']
             self.internal_ip = data['info']['internal_ip']
             self.uptime = data['info']['uptime']
 
