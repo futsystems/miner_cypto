@@ -346,11 +346,11 @@ class HarvesterAdmin(admin.ModelAdmin):
 
     def pki_ticket(self, request, server_id):
         previous_url = request.META.get('HTTP_REFERER')
-        plotter = Plotter.objects.get(id=server_id)
+        harvester = Harvester.objects.get(id=server_id)
         import requests
-        query = {'id': plotter.server_number, 'type': 'plotter'}
+        query = {'id': harvester.server_number, 'type': 'harvester'}
         response = requests.get('http://127.0.0.1:8080/icinga2/pki/ticket', params=query)
-        messages.info(request, '%s %s' % (plotter.server_name(), response.content))
+        messages.info(request, '%s %s' % (harvester.server_name(), response.content))
         return HttpResponseRedirect(previous_url)
 
     def restart_hpool(self, request, server_id):
