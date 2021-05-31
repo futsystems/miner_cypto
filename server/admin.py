@@ -88,7 +88,8 @@ class PlotterAdmin(admin.ModelAdmin):
             '<a class="button" href="{}">H(R)</a>&nbsp;'
             '<a class="button" href="{}">P(R)</a>&nbsp;'
             '<a class="button" href="{}">StartSending</a>&nbsp;'
-            '<a class="button" href="{}">StopSending</a>&nbsp;',
+            '<a class="button" href="{}">StopSending</a>&nbsp;'
+            '<a class="button" href="{}">Shutdown</a>&nbsp;',
             reverse('admin:update-system', args=[obj.pk]),
             reverse('admin:pki-ticket', args=[obj.pk]),
             reverse('admin:update-nagios', args=[obj.pk]),
@@ -96,6 +97,7 @@ class PlotterAdmin(admin.ModelAdmin):
             reverse('admin:apply-plot-config', args=[obj.pk]),
             reverse('admin:plotter-start-sending', args=[obj.pk]),
             reverse('admin:plotter-stop-sending', args=[obj.pk]),
+            reverse('admin:plotter-shutdown', args=[obj.pk]),
         )
 
     plotter_action.allow_tags = True
@@ -143,6 +145,11 @@ class PlotterAdmin(admin.ModelAdmin):
                 self.admin_site.admin_view(self.stop_sending),
                 name='plotter-stop-sending',
             ),
+            url(
+                r'^(?P<server_id>.+)/plotter-shutdown/$',
+                self.admin_site.admin_view(self.shutdown),
+                name='plotter-shutdown',
+            ),
         ]
 
         return my_urls + urls
@@ -187,6 +194,7 @@ class PlotterAdmin(admin.ModelAdmin):
         messages.info(request,  '%s %s' % (plotter.server_name(),response.content))
         return HttpResponseRedirect(previous_url)
 
+
     def apply_plot_config(self, request, server_id):
         previous_url = request.META.get('HTTP_REFERER')
         from .plotter_api import PlotterAPI
@@ -195,6 +203,7 @@ class PlotterAdmin(admin.ModelAdmin):
         result = api.apply_plot_config()
         messages.info(request,  '%s %s' % (plotter.server_name(),result['msg']))
         return HttpResponseRedirect(previous_url)
+
 
     def start_sending(self, request, server_id):
         previous_url = request.META.get('HTTP_REFERER')
@@ -214,7 +223,18 @@ class PlotterAdmin(admin.ModelAdmin):
         messages.info(request, '%s %s' % (plotter.server_name(), result['msg']))
         return HttpResponseRedirect(previous_url)
 
+
     def stop_sending(self, request, server_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        from .plotter_api import PlotterAPI
+        plotter = Plotter.objects.get(id=server_id)
+        api = PlotterAPI(plotter)
+        result = api.stop_sending_process()
+        messages.info(request, '%s %s' % (plotter.server_name(), result['msg']))
+        return HttpResponseRedirect(previous_url)
+
+
+    def shutdown(self, request, server_id):
         previous_url = request.META.get('HTTP_REFERER')
         from .plotter_api import PlotterAPI
         plotter = Plotter.objects.get(id=server_id)

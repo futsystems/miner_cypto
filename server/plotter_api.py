@@ -64,3 +64,12 @@ class PlotterAPI(object):
         query = {'nas_ip': nas_ip}
         response = requests.get('http://%s:%s/plot/sending/stop' % (self._host, self._port), params=query)
         return response.json()
+
+    def shutdown(self):
+        """
+        shutdown
+        :param:
+        :return:
+        """
+        response = requests.get('http://%s:%s/system/shutdown' % (self._host, self._port))
+        return response.json()
