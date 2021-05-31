@@ -239,7 +239,7 @@ class PlotterAdmin(admin.ModelAdmin):
         from .plotter_api import PlotterAPI
         plotter = Plotter.objects.get(id=server_id)
         api = PlotterAPI(plotter)
-        result = api.stop_sending_process()
+        result = api.shutdown()
         messages.info(request, '%s %s' % (plotter.server_name(), result['msg']))
         return HttpResponseRedirect(previous_url)
 
