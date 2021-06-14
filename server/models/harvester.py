@@ -13,6 +13,7 @@ class Harvester(models.Model):
     """
     server_number = models.CharField('Server Id', max_length=50, default='001')
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
+    data_tx_ip = models.CharField('Data Transfer IP', max_length=20, default='', blank=True)
     plot_cnt = models.IntegerField('Plots', default=0)
     file_cnt = models.IntegerField('Files', default=0)
     driver_cnt = models.IntegerField('Drivers', default=0)
