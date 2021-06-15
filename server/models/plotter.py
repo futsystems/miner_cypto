@@ -233,7 +233,8 @@ class Plotter(models.Model):
         }
         else:
             data =  self.plot_config.to_dict()
-            data['exclude_plot_dst_path'] = self.exclude_plot_dst_path
+            data['exclude_plot_dst_path'] = self.exclude_plot_dst_path,
+            data['plot_file_path'] = self.plot_file_path
 
             return data
 
