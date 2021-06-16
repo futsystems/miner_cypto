@@ -60,7 +60,7 @@ class PlotterAdmin(admin.ModelAdmin):
 
             ("Others", {
                 'fields': [
-                    'is_plotting_run'
+                    'is_plotting_run',
                 ]
             }),
 
@@ -220,7 +220,7 @@ class PlotterAdmin(admin.ModelAdmin):
         api = PlotterAPI(plotter)
         result = api.start_sending_process(plotter.harvester)
 
-        messages.info(request, '%s %s' % (plotter.server_name(), result['msg']))
+        messages.info(request, '%s start sending plot' % (plotter.server_name()))
         return HttpResponseRedirect(previous_url)
 
 
@@ -230,7 +230,7 @@ class PlotterAdmin(admin.ModelAdmin):
         plotter = Plotter.objects.get(id=server_id)
         api = PlotterAPI(plotter)
         result = api.stop_sending_process()
-        messages.info(request, '%s %s' % (plotter.server_name(), result['msg']))
+        messages.info(request, '%s stop sending plot' % (plotter.server_name()))
         return HttpResponseRedirect(previous_url)
 
 
