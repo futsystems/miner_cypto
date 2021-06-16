@@ -38,12 +38,11 @@ class Plotter(models.Model):
 
 
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
-    is_sending_run = models.BooleanField('Sending', default=False)
 
     harvester = models.ForeignKey(Harvester, verbose_name='Harvester', on_delete=models.SET_NULL, default=None,
                                     blank=True, null=True)
 
-    is_plotting_run = models.BooleanField('Plotting', default=False)
+
 
     boot_time = models.DateTimeField('Boot Time', default=datetime.now, blank=True)#server boot at this time
     uptime = models.IntegerField('Uptime', default=0, blank=True)
@@ -65,6 +64,8 @@ class Plotter(models.Model):
     exclude_plot_dst_path = models.CharField('Exclude Dst Paths', max_length=1000, default='', blank=True)
     plot_file_path = models.CharField('Plot File Path', max_length=1000, default='', blank=True)
     data_interface = models.CharField('Data Network Card', max_length=100, default='', blank=True)
+    is_plotting_run = models.BooleanField('Plotting', default=False)
+    is_sending_run = models.BooleanField('Sending', default=False)
 
     last_heartbeat = models.DateTimeField('HeartBeat', default=timezone.now, blank=True)
 
@@ -198,7 +199,6 @@ class Plotter(models.Model):
 
     def update_local_info(self, data):
         if 'info' in data:
-            self.is_sending_run = data['info']['is_sending_run']
             self.internal_ip = data['info']['internal_ip']
             self.uptime = data['info']['uptime']
             self.plot_cnt = data['info']['plot_cnt']
@@ -252,6 +252,9 @@ class Plotter(models.Model):
         else:
             data = self.plot_config.to_dict()
             data['exclude_plot_dst_path'] = self.exclude_plot_dst_path
+            data['data_interface'] = self.data_interface
+            data['plot_file_path'] = self.plot_file_path
+            data['is_sending_run'] = self.is_sending_run
 
             return data
 
@@ -260,7 +263,8 @@ class Plotter(models.Model):
 
             'plot_file_path': self.plot_file_path,
             'data_interface': self.data_interface,
-            'exclude_plot_dst_path': self.exclude_plot_dst_path
+            'exclude_plot_dst_path': self.exclude_plot_dst_path,
+            'is_sending_run': self.is_sending_run,
         }
 
     @property

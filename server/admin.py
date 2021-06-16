@@ -60,7 +60,7 @@ class PlotterAdmin(admin.ModelAdmin):
 
             ("Others", {
                 'fields': [
-                    'is_plotting_run',
+                    'is_plotting_run', 'is_sending_run'
                 ]
             }),
 
