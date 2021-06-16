@@ -310,8 +310,8 @@ class Plotter(models.Model):
 
 
 def obj_attr_change(old, new, field):
-    old_value = getattr(old, field,None)
-    new_value = getattr(new, field,None)
+    old_value = getattr(old, field, None)
+    new_value = getattr(new, field, None)
     if old_value != new_value:
         return True
     return False
