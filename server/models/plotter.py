@@ -86,7 +86,7 @@ class Plotter(models.Model):
         if self.harvester is None:
             return '---'
         else:
-            return self.harvester.server_name()
+            return self.harvester.server_number
 
     dest_nas.short_description = 'NAS'
 
