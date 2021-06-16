@@ -85,6 +85,15 @@ class Harvester(models.Model):
         """
         return round(self.plot_cnt * 101.4 * 0.0009765625, 2)
 
+    def get_harvester_dict(self):
+        ip = self.internal_ip
+        if self.data_tx_ip is not None and self.data_tx_ip != '':
+            ip = self.data_tx_ip
+
+        return {
+            'name': self.server_name(),
+            'ip': ip
+        }
     def update_register(self,data):
         self.boot_time = data['boot_time']
 

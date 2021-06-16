@@ -259,12 +259,16 @@ class Plotter(models.Model):
             return data
 
     def get_plotter_config_dict(self):
+        harvester=None
+        if self.harvester:
+            harvester = self.harvester.get_harvester_dict()
         return {
 
             'plot_file_path': self.plot_file_path,
             'data_interface': self.data_interface,
             'exclude_plot_dst_path': self.exclude_plot_dst_path,
             'is_sending_run': self.is_sending_run,
+            'harvester': harvester
         }
 
     @property
