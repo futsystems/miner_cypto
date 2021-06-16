@@ -242,16 +242,19 @@ class Plotter(models.Model):
             'tmpdir_stagger_phase_minor': 1,
             'tmpdir_stagger_phase_limit': 6,
             'exclude_plot_dst_path': self.exclude_plot_dst_path,
-            'plot_file_path': self.plot_file_path,
-            'data_interface': self.data_interface,
         }
         else:
             data =  self.plot_config.to_dict()
-            data['exclude_plot_dst_path'] = self.exclude_plot_dst_path,
-            data['plot_file_path'] = self.plot_file_path,
-            data['data_interface'] = self.data_interface
+            data['exclude_plot_dst_path'] = self.exclude_plot_dst_path
 
             return data
+
+    def get_plotter_config_dict(self):
+        return {
+
+            'plot_file_path': self.plot_file_path,
+            'data_interface': self.data_interface,
+        }
 
     @property
     def plot_config_content(self):

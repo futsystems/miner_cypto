@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^plotter/register$', views.register_plotter, name='plotter_register'),#注册P盘机
     url(r'^plotter/info$', views.get_plotter_info, name='plotter_info'),#查询P盘机信息
     url(r'^plotter/plot-config$', views.get_plot_config, name='plotter_plot_config'),#查询P盘参数
+    url(r'^plotter/config$', views.get_plotter_config, name='plotter_config'),
     url(r'^plotter/statistic/update$', views.update_plot_statistic, name='plotter_update_statistic'),#更新统计信息
     url(r'^plotter/local-info/update$', views.update_plot_info, name='plotter_update_info'),#更新本地状态信息
 
