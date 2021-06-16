@@ -270,7 +270,8 @@ class Plotter(models.Model):
             'data_interface': self.data_interface,
             'exclude_plot_dst_path': self.exclude_plot_dst_path,
             'is_sending_run': self.is_sending_run,
-            'harvester': harvester
+            'harvester': harvester,
+            'plot_file_path_expand':  self.plot_file_path_expand,
         }
 
     @property
