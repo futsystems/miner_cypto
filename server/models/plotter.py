@@ -244,7 +244,7 @@ class Plotter(models.Model):
             'exclude_plot_dst_path': self.exclude_plot_dst_path,
         }
         else:
-            data =  self.plot_config.to_dict()
+            data = self.plot_config.to_dict()
             data['exclude_plot_dst_path'] = self.exclude_plot_dst_path
 
             return data
@@ -254,6 +254,7 @@ class Plotter(models.Model):
 
             'plot_file_path': self.plot_file_path,
             'data_interface': self.data_interface,
+            'exclude_plot_dst_path': self.exclude_plot_dst_path
         }
 
     @property
