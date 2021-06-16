@@ -82,6 +82,14 @@ class Plotter(models.Model):
 
     cache.short_description = 'nvme/raid'
 
+    def dest_nas(self):
+        if self.harvester is None:
+            return '---'
+        else:
+            return self.harvester.server_name()
+
+    dest_nas.short_description = 'NAS'
+
     def job_plot(self):
         avg_plot_hour = (self.st_avg_plot_time + self.st_avg_copy_time) / 3600
         return "%s / %s" % (self.st_plot_process_cnt, self.st_plot_output)

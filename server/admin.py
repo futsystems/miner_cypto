@@ -33,7 +33,7 @@ update_plotter.short_description = "Update Plotter"
 
 class PlotterAdmin(admin.ModelAdmin):
     list_display = ('server_number', 'cache', 'plot_config_content', 'job_plot',
-                    'time_round', 'output', 'cpu', 'mem', 'thread', '_is_online', 'up_time', 'is_plotting_run', 'is_sending_run', 'plotter_action')
+                    'time_round', 'output', 'cpu', 'mem', 'thread', '_is_online', 'up_time', 'is_plotting_run', 'is_sending_run', 'dest_nas', 'plotter_action')
     ordering = ('server_number',)
     list_filter = ('nvme_size', 'nvme_cnt', )
     search_fields = ('server_number', 'description')
