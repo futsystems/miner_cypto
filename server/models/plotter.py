@@ -291,11 +291,15 @@ class Plotter(models.Model):
         old = Plotter.objects.filter(pk=getattr(self, 'pk', None)).first()
         if old:
             if obj_attr_change(old, self, 'exclude_plot_dst_path'):
-                config_change=True
+                config_change = True
             if obj_attr_change(old, self, 'plot_file_path'):
-                config_change=True
+                config_change = True
             if obj_attr_change(old, self, 'data_interface'):
-                config_change=True
+                config_change = True
+            if obj_attr_change(old, self, 'is_sending_run'):
+                config_change = True
+            if obj_attr_change(old, self, 'harvester'):
+                config_change = True
 
         super(Plotter, self).save(force_insert, force_update, *args, **kwargs)
         self.__original_plot_config = self.plot_config
