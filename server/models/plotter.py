@@ -63,6 +63,7 @@ class Plotter(models.Model):
     # plotter config
     exclude_plot_dst_path = models.CharField('Exclude Dst Paths', max_length=1000, default='', blank=True)
     plot_file_path = models.CharField('Plot File Path', max_length=1000, default='', blank=True)
+    plot_file_path_expand = models.CharField('Plot File Path(Expand)', max_length=1000, default='', blank=True)
     data_interface = models.CharField('Data Network Card', max_length=100, default='', blank=True)
     is_plotting_run = models.BooleanField('Plotting', default=False)
     is_sending_run = models.BooleanField('Sending', default=False)
@@ -255,6 +256,7 @@ class Plotter(models.Model):
             data['data_interface'] = self.data_interface
             data['plot_file_path'] = self.plot_file_path
             data['is_sending_run'] = self.is_sending_run
+            data['plot_file_path_expand'] = self.plot_file_path_expand
 
             return data
 

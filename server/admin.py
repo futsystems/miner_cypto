@@ -48,7 +48,7 @@ class PlotterAdmin(admin.ModelAdmin):
         return (
             (None, {
                 "fields": [
-                    'server_number', 'plot_config', 'exclude_plot_dst_path', 'plot_file_path', 'data_interface', 'description'
+                    'server_number', 'plot_config', 'exclude_plot_dst_path', 'plot_file_path', 'plot_file_path_expand', 'data_interface', 'description'
                 ]
             }),
 
