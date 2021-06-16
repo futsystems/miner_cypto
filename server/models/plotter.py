@@ -54,6 +54,8 @@ class Plotter(models.Model):
     nvme_size = models.FloatField('NVME Size', default=0)
     nvme_cnt = models.IntegerField('NVME Count', default=1)
 
+    plot_cnt = models.IntegerField('Plot Count', default=0)
+
     is_cache_raid = models.BooleanField('Cache Raid', default=False)
     exclude_plot_dst_path = models.CharField('Exclude Dst Paths', max_length=1000, default='', blank=True)
     plot_file_path = models.CharField('Plot File Path', max_length=1000, default='', blank=True)
@@ -191,6 +193,7 @@ class Plotter(models.Model):
             self.is_sending_run = data['info']['is_sending_run']
             self.internal_ip = data['info']['internal_ip']
             self.uptime = data['info']['uptime']
+            self.plot_cnt = data['info']['plot_cnt']
 
         if 'cpu' in data:
             self.cpu_model = data['cpu']['brand']
