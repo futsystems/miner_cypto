@@ -62,6 +62,8 @@ class Plotter(models.Model):
 
     last_heartbeat = models.DateTimeField('HeartBeat', default=timezone.now, blank=True)
 
+    data_interface = models.CharField('Data Network Card', max_length=100, default='', blank=True)
+
     __original_plot_config = None
 
     def __init__(self, *args, **kwargs):
@@ -241,11 +243,13 @@ class Plotter(models.Model):
             'tmpdir_stagger_phase_limit': 6,
             'exclude_plot_dst_path': self.exclude_plot_dst_path,
             'plot_file_path': self.plot_file_path,
+            'data_interface': self.data_interface,
         }
         else:
             data =  self.plot_config.to_dict()
             data['exclude_plot_dst_path'] = self.exclude_plot_dst_path,
-            data['plot_file_path'] = self.plot_file_path
+            data['plot_file_path'] = self.plot_file_path,
+            data['data_interface'] = self.data_interface
 
             return data
 
