@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from datetime import datetime
 from django.utils import timezone
 from django.db import models
@@ -280,6 +283,10 @@ class Plotter(models.Model):
         super(Plotter, self).save(force_insert, force_update, *args, **kwargs)
         self.__original_plot_config = self.plot_config
 
-        #if config_change:
-        #    #call gateway to apply config
+
+@receiver(post_save, sender=Plotter, dispatch_uid="restart_api_plotter")
+def restart_api_plotter(sender, instance, **kwargs):
+    from ..plotter_api import PlotterAPI
+    api = PlotterAPI(instance)
+    api.config_change()
 

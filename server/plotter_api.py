@@ -10,6 +10,15 @@ class PlotterAPI(object):
         self._host = plotter.api_host
         self._port = plotter.api_port
 
+    def config_change(self):
+        """
+        when plotter config change, notify plotter
+        :param service_name:
+        :return:
+        """
+        response = requests.get('http://%s:%s/config/change' % (self._host, self._port))
+        return response.json()
+
     def restart_service(self, service_name):
         """
         restart service srv.plotter srv.hpool etc
