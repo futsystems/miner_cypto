@@ -87,8 +87,8 @@ class PlotterAdmin(admin.ModelAdmin):
             '<a class="button" href="{}">N</a>&nbsp;'
             '<a class="button" href="{}">H(R)</a>&nbsp;'
             '<a class="button" href="{}">P(R)</a>&nbsp;'
-            '<a class="button" href="{}">StartSending</a>&nbsp;'
-            '<a class="button" href="{}">StopSending</a>&nbsp;'
+            '<a class="button" href="{}">Send(B)</a>&nbsp;'
+            '<a class="button" href="{}">Send(E)</a>&nbsp;'
             '<a class="button" href="{}">Shutdown</a>&nbsp;',
             reverse('admin:update-system', args=[obj.pk]),
             reverse('admin:pki-ticket', args=[obj.pk]),
