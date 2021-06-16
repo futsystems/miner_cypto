@@ -60,12 +60,15 @@ class Plotter(models.Model):
     plot_cnt = models.IntegerField('Plot Count', default=0)
 
     is_cache_raid = models.BooleanField('Cache Raid', default=False)
+
+    # plotter config
     exclude_plot_dst_path = models.CharField('Exclude Dst Paths', max_length=1000, default='', blank=True)
     plot_file_path = models.CharField('Plot File Path', max_length=1000, default='', blank=True)
+    data_interface = models.CharField('Data Network Card', max_length=100, default='', blank=True)
 
     last_heartbeat = models.DateTimeField('HeartBeat', default=timezone.now, blank=True)
 
-    data_interface = models.CharField('Data Network Card', max_length=100, default='', blank=True)
+
 
     __original_plot_config = None
 
@@ -276,17 +279,28 @@ class Plotter(models.Model):
         return 8080
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
-        config_change = False
-        if self.plot_config != self.__original_plot_config:
-            self.plot_config_applied = False
-            #fire_event = True
+        config_change=False
+        old = Plotter.objects.filter(pk=getattr(self, 'pk', None)).first()
+        if old:
+            if obj_attr_change(old, self, 'exclude_plot_dst_path'):
+                config_change=True
+            if obj_attr_change(old, self, 'plot_file_path'):
+                config_change=True
+            if obj_attr_change(old, self, 'data_interface'):
+                config_change=True
+
         super(Plotter, self).save(force_insert, force_update, *args, **kwargs)
         self.__original_plot_config = self.plot_config
+        if config_change:
+            from ..plotter_api import PlotterAPI
+            api = PlotterAPI(self)
+            api.config_change()
 
 
-@receiver(post_save, sender=Plotter, dispatch_uid="restart_api_plotter")
-def restart_api_plotter(sender, instance, **kwargs):
-    from ..plotter_api import PlotterAPI
-    api = PlotterAPI(instance)
-    api.config_change()
+def obj_attr_change(old, new, field):
+    old_value = getattr(old, field,None)
+    new_value = getattr(new, field,None)
+    if old_value != new_value:
+        return True
+    return False
 
