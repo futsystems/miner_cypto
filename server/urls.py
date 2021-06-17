@@ -18,6 +18,7 @@ urlpatterns = [
 
     url(r'^harvester/register$', views.register_harvester, name='harvester_register'),
     url(r'^harvester/local-info/update$', views.update_harvester_info, name='harvester_update_info'),
+    url(r'^harvester/config$', views.get_harvester_config, name='harvester_config'),
 
     url(r'^transfer/start$', views.plot_transfer_start, name='plot_transfer_start'),
     url(r'^transfer/stop$', views.plot_transfer_stop, name='plot_transfer_stop'),

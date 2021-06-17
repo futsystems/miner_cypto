@@ -276,6 +276,12 @@ class HarvesterAdmin(admin.ModelAdmin):
                 ]
             }),
 
+            ("Others", {
+                'fields': [
+                    'auto_scan_plot'
+                ]
+            }),
+
             ("Info", {
                 'fields': [
                     'internal_ip', 'data_tx_ip', 'boot_time', 'last_heartbeat',

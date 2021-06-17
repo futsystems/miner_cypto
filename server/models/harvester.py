@@ -30,8 +30,7 @@ class Harvester(models.Model):
     memory_total = models.BigIntegerField('Memory Total', default=0)
     memory_used = models.BigIntegerField('Memory Used', default=0)
 
-
-
+    auto_scan_plot = models.BooleanField('Auto Scan', default=False)
 
     class Meta:
         app_label = 'server'
@@ -94,6 +93,7 @@ class Harvester(models.Model):
             'name': self.server_name(),
             'ip': ip
         }
+
     def update_register(self,data):
         self.boot_time = data['boot_time']
 
@@ -126,3 +126,8 @@ class Harvester(models.Model):
             self.memory_used = data['memory']['used']
         self._update_heartbeat()
         self.save()
+
+    def get_harvester_config_dict(self):
+        return {
+            'auto_scan_plot': self.auto_scan_plot
+        }
