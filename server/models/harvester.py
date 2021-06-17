@@ -6,6 +6,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import datetime
 from .settings import HARVESTER_GATEWAY_DOMAIN
+from common.helper import obj_attr_change
 
 class Harvester(models.Model):
     """
@@ -131,3 +132,15 @@ class Harvester(models.Model):
         return {
             'auto_scan_plot': self.auto_scan_plot
         }
+
+    def save(self, force_insert=False, force_update=False, *args, **kwargs):
+        config_change=False
+        old = Harvester.objects.filter(pk=getattr(self, 'pk', None)).first()
+        if old:
+            if obj_attr_change(old, self, 'auto_scan_plot'):
+                config_change = True
+        super(Harvester, self).save(force_insert, force_update, *args, **kwargs)
+        if config_change:
+            from ..harvester_api import HarvesterAPI
+            api = HarvesterAPI(self)
+            api.config_change()

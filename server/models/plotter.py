@@ -11,6 +11,7 @@ from .settings import GATEWAY_DOMAIN
 
 from .plot_config import PlotConfig
 from .harvester import Harvester
+from common.helper import obj_attr_change
 import logging,traceback,json
 logger = logging.getLogger(__name__)
 from .choices import CACHE_TYPE
@@ -312,10 +313,5 @@ class Plotter(models.Model):
             api.config_change()
 
 
-def obj_attr_change(old, new, field):
-    old_value = getattr(old, field, None)
-    new_value = getattr(new, field, None)
-    if old_value != new_value:
-        return True
-    return False
+
 

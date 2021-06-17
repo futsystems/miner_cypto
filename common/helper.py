@@ -10,3 +10,10 @@ def get_human_readable_size(num):
         i += 1
         rounded_val = round(float(num) / 2 ** exp_str[i][0], 2)
     return '%s %s' % (int(rounded_val), exp_str[i][1])
+
+def obj_attr_change(old, new, field):
+    old_value = getattr(old, field, None)
+    new_value = getattr(new, field, None)
+    if old_value != new_value:
+        return True
+    return False
