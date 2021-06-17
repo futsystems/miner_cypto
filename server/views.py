@@ -33,8 +33,8 @@ def get_plotter_config(request):
             raise Exception("POST not support")
         else:
             server_number = request.GET.get("id", None)
-            harvester = Harvester.objects.get(server_number=server_number)
-            config = harvester.get_harvester_config_dict()
+            plotter = Plotter.objects.get(server_number=server_number)
+            config = plotter.get_plotter_config_dict()
         return json_response(config)
     except Exception as e:
         logger.error(traceback.format_exc())
@@ -47,9 +47,9 @@ def get_harvester_config(request):
             raise Exception("POST not support")
         else:
             server_number = request.GET.get("id", None)
-            plotter = Plotter.objects.get(server_number=server_number)
-            plot_config_dict = plotter.get_plotter_config_dict()
-        return json_response(plot_config_dict)
+            harvester = Harvester.objects.get(server_number=server_number)
+            config = harvester.get_harvester_config_dict()
+        return json_response(config)
     except Exception as e:
         logger.error(traceback.format_exc())
         return json_response(e.message)
