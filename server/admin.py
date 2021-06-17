@@ -87,16 +87,12 @@ class PlotterAdmin(admin.ModelAdmin):
             '<a class="button" href="{}">N</a>&nbsp;'
             '<a class="button" href="{}">H(R)</a>&nbsp;'
             '<a class="button" href="{}">P(R)</a>&nbsp;'
-            '<a class="button" href="{}">Send(B)</a>&nbsp;'
-            '<a class="button" href="{}">Send(E)</a>&nbsp;'
             '<a class="button" href="{}">Shutdown</a>&nbsp;',
             reverse('admin:update-system', args=[obj.pk]),
             reverse('admin:pki-ticket', args=[obj.pk]),
             reverse('admin:update-nagios', args=[obj.pk]),
             reverse('admin:restart-hpool', args=[obj.pk]),
             reverse('admin:apply-plot-config', args=[obj.pk]),
-            reverse('admin:plotter-start-sending', args=[obj.pk]),
-            reverse('admin:plotter-stop-sending', args=[obj.pk]),
             reverse('admin:plotter-shutdown', args=[obj.pk]),
         )
 
