@@ -15,7 +15,8 @@ class Harvester(models.Model):
     server_number = models.CharField('Server Id', max_length=50, default='001')
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
     data_tx_ip = models.CharField('Data Transfer IP', max_length=20, default='', blank=True)
-    plot_cnt = models.IntegerField('Plots', default=0)
+    total_current_plots = models.IntegerField('Plots', default=0)
+    space_free_plots = models.IntegerField('Free Plots', default=0)
     file_cnt = models.IntegerField('Files', default=0)
     driver_cnt = models.IntegerField('Drivers', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
@@ -83,7 +84,7 @@ class Harvester(models.Model):
         1gib = 0.0009765625 tib
         :return:
         """
-        return round(self.plot_cnt * 101.4 * 0.0009765625, 2)
+        return round(self.file_cnt * 101.4 * 0.0009765625, 2)
 
     def get_harvester_dict(self):
         ip = self.internal_ip
@@ -113,8 +114,9 @@ class Harvester(models.Model):
         if 'info' in data:
             self.internal_ip = data['info']['internal_ip']
             self.uptime = data['info']['uptime']
-            self.plot_cnt = data['info']['plot_cnt']
+            self.total_current_plots = data['info']['total_current_plots']
             self.driver_cnt = data['info']['driver_cnt']
+            self.file_cnt = data['info']['space_free_plots']
             self.file_cnt = data['info']['file_cnt']
 
         if 'cpu' in data:
