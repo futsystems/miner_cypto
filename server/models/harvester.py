@@ -116,7 +116,7 @@ class Harvester(models.Model):
             self.uptime = data['info']['uptime']
             self.total_current_plots = data['info']['total_current_plots']
             self.driver_cnt = data['info']['driver_cnt']
-            self.file_cnt = data['info']['space_free_plots']
+            self.space_free_plots = data['info']['space_free_plots']
             self.file_cnt = data['info']['file_cnt']
 
         if 'cpu' in data:
