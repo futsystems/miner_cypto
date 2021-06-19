@@ -268,6 +268,12 @@ class PlotConfigAdmin(admin.ModelAdmin):
 class HarvesterAdmin(admin.ModelAdmin):
     list_display = ('server_number', 'biz_ip', 'data_ip', 'driver_cnt', 'file_cnt', 'power', 'space_free_plots', 'plotter_cnt', '_is_online', 'up_time', 'harvester_action')
     ordering = ('server_number',)
+    def get_readonly_fields(self, request, obj=None):
+        if obj is None:
+            return []
+        return ['server_number', 'biz_ip', 'biz_interface', 'data_ip', 'data_interface', 'boot_time', 'last_heartbeat', 'cpu_model', 'cpu_cnt', 'cpu_used_percent', 'memory_total', 'memory_used']
+
+
     def get_fieldsets(self, request, obj=None):
         return (
             (None, {
