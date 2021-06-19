@@ -54,6 +54,11 @@ class Harvester(models.Model):
     def api_port(self):
         return 8080
 
+    @property
+    def plotter_cnt(self):
+        return  self.plotters.count()
+
+
     def _update_heartbeat(self, need_save=False):
         self.last_heartbeat = timezone.now()
         if need_save:

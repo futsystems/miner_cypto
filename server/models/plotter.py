@@ -24,7 +24,7 @@ class Plotter(models.Model):
     plotter server
     """
     server_number = models.CharField('Id', max_length=50, default='001')
-    plot_config = models.ForeignKey(PlotConfig, verbose_name='PlotConfig', on_delete=models.SET_NULL, default=None,
+    plot_config = models.ForeignKey(PlotConfig, related_name='plotters', verbose_name='PlotConfig', on_delete=models.SET_NULL, default=None,
                                     blank=True, null=True)
     plot_config_applied = models.BooleanField('Plot Config Applied', default=False)
 
@@ -40,7 +40,7 @@ class Plotter(models.Model):
 
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
 
-    harvester = models.ForeignKey(Harvester, verbose_name='Harvester', on_delete=models.SET_NULL, default=None,
+    harvester = models.ForeignKey(Harvester, related_name='plotters', verbose_name='Harvester', on_delete=models.SET_NULL, default=None,
                                     blank=True, null=True)
 
 
