@@ -23,6 +23,7 @@ class Harvester(models.Model):
     space_free_plots = models.IntegerField('Free Plots', default=0)
     file_cnt = models.IntegerField('Files', default=0)
     driver_cnt = models.IntegerField('Drivers', default=0)
+    nc_process_cnt = models.IntegerField('NC Process CNT', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
     last_heartbeat = models.DateTimeField('Heartbeat', default=datetime.now, blank=True)
@@ -128,6 +129,8 @@ class Harvester(models.Model):
                 if 'data_interface' in data['info']['network']:
                     self.data_ip = data['info']['network']['data_ip']
                     self.data_interface = data['info']['network']['data_interface']
+            if 'nc_process_cnt' in data['info']:
+                self.nc_process_cnt = data['info']['nc_process_cnt']
 
             self.uptime = data['info']['uptime']
             self.total_current_plots = data['info']['total_current_plots']
