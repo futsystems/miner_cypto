@@ -53,8 +53,8 @@ class PlotterAPI(object):
         :return:
         """
         ip = harvester.internal_ip
-        if harvester.data_tx_ip is not None and harvester.data_tx_ip != '':
-            ip = harvester.data_tx_ip
+        if harvester.data_ip is not None and harvester.data_ip != '':
+            ip = harvester.data_ip
         query = {'nas_ip': ip, 'nas_name': harvester.server_name()}
         response = requests.get('http://%s:%s/plot/sending/start' % (self._host, self._port), params=query)
         return response.json()
