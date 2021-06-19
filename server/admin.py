@@ -284,7 +284,7 @@ class HarvesterAdmin(admin.ModelAdmin):
 
             ("Info", {
                 'fields': [
-                    'internal_ip', 'data_ip', 'boot_time', 'last_heartbeat',
+                    'biz_ip', 'biz_interface', 'data_ip', 'data_interface', 'boot_time', 'last_heartbeat',
                 ]
             }),
 
