@@ -15,7 +15,7 @@ class Harvester(models.Model):
     server_number = models.CharField('Server Id', max_length=50, default='001')
     internal_ip = models.CharField('Internal IP', max_length=20, default='', blank=True)
     data_ip = models.CharField('Data Transfer IP', max_length=20, default='', blank=True)
-    
+
     total_current_plots = models.IntegerField('Plots', default=0)
     space_free_plots = models.IntegerField('Free Plots', default=0)
     file_cnt = models.IntegerField('Files', default=0)
@@ -118,7 +118,10 @@ class Harvester(models.Model):
 
     def update_local_info(self, data):
         if 'info' in data:
-            self.internal_ip = data['info']['internal_ip']
+            if 'biz_interface' in data['info']['network']:
+                self.internal_ip = data['info']['network']['biz_ip']
+            if 'data_interface' in data['info']['network']:
+                self.data_ip = data['info']['network']['data_ip']
 
             self.uptime = data['info']['uptime']
             self.total_current_plots = data['info']['total_current_plots']
