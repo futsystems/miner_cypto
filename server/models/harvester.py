@@ -41,6 +41,7 @@ class Harvester(models.Model):
 
     class Meta:
         app_label = 'server'
+        ordering = ['server_number', ]
 
     def __unicode__(self):
         return u'harvester-%s' % self.server_number
