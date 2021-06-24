@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'common',
     'server',
+    'server.apps.SignalsConfig'
 ]
 
 MIDDLEWARE = [

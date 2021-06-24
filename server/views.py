@@ -249,7 +249,8 @@ def harvester_service_restart(request):
             reason = data['reason']
 
             harvester = Harvester.objects.get(server_number=harvester.split('-')[1])
-            HarvesterServiceRestart.objects.create(reason=reason, service=service, harvester=harvester, time=timezone.now())
+            obj = HarvesterServiceRestart.objects.create(reason=reason, service=service, harvester=harvester, time=timezone.now())
+            #harvester_service_restart.send(obj)
         return json_response(Success(''))
 
     except Exception as e:
