@@ -155,7 +155,7 @@ CORS_ALLOW_HEADERS = (
 )
 
 CRONJOBS = [
-    ('30 8 * * *', 'server.task.send_report'),
+    ('30 8 * * *', 'server.tasks.send_report'),
 ]
 
 
