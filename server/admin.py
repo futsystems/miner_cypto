@@ -267,7 +267,7 @@ class PlotConfigAdmin(admin.ModelAdmin):
 
 
 class HarvesterServiceAdmin(admin.ModelAdmin):
-    list_display = ('index', 'service', 'local_power', 'remote_power', 'remote_unit', 'status', 'harvester')
+    list_display = ('index', 'service', 'remote_power', 'remote_unit', 'local_power', 'ratio', 'status', 'harvester')
     list_filter = ('harvester',)
 
 

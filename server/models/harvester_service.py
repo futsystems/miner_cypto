@@ -63,3 +63,11 @@ class HarvesterService(models.Model):
     def __str__(self):
         return self.__unicode__()
 
+
+    def ratio(self):
+        if self.local_power == 0:
+            return '--'
+        else:
+            return round(self.remote_power/self.local_power,2)
+
+
