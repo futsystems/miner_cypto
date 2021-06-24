@@ -58,7 +58,7 @@ class HarvesterService(models.Model):
         app_label = 'server'
 
     def __unicode__(self):
-        return u'service-%s' % self.service
+        return u'service-%s' % '00'
 
     def __str__(self):
         return self.__unicode__()
