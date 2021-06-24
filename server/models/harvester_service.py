@@ -52,6 +52,7 @@ class HarvesterService(models.Model):
 
     class Meta:
         app_label = 'server'
+        ordering = ['index', ]
 
     def __unicode__(self):
         return u'service-%s' % self.service
