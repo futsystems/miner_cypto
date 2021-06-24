@@ -28,7 +28,8 @@ def send_report():
     total_current_plots = sum(([h.total_current_plots for h in harvesters]))
     space_free_plots = sum(([h.space_free_plots for h in harvesters]))
 
-    now =  timezone.now()
+    now = timezone.localtime(timezone.now())
+    
     last_day = now - datetime.timedelta(days=1)
     #logger.info('last day:%s' % last_day)
 
