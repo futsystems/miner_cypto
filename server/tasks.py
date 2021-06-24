@@ -34,7 +34,7 @@ def send_report():
     txns = PlotTransfer.objects.filter(txn_stop_time__gte=last_day).all()
     plots_transfered = len(txns)
 
-    subject = 'chia report daily-%s' % timezone.now().strptime('YYYY-MM-DDTHH:MM:SS')
+    subject = 'chia report daily-%s' % timezone.now().strftime('YYYY-MM-DDTHH:MM:SS')
     body = 'local power:%s\nremote power:%s\nratio:%s\n-------------------\ndriver_cnt:%s\nplots:%s\nplots_free:%s\n-------------------\nplots transfered:%s\n' % (local_power,
                                                                                                     remote_power,
                                                                                                     round(remote_power/local_power,2),
