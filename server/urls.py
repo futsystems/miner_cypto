@@ -23,4 +23,6 @@ urlpatterns = [
 
     url(r'^transfer/start$', views.plot_transfer_start, name='plot_transfer_start'),
     url(r'^transfer/stop$', views.plot_transfer_stop, name='plot_transfer_stop'),
+
+    url(r'^report$', views.demo_report, name='daily_report'),
 ]

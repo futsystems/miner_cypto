@@ -257,3 +257,14 @@ def harvester_service_restart(request):
         logger.error(traceback.format_exc())
         return json_response(Error('plot transfer start server side error'))
 
+
+@csrf_exempt
+def demo_report(request):
+    try:
+        from tasks import send_report
+        send_report()
+        return json_response(Success(''))
+
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return json_response(Error('demo report server side error'))

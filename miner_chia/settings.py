@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_crontab',
     'common',
     'server',
     'server.apps.SignalsConfig'
@@ -153,6 +154,9 @@ CORS_ALLOW_HEADERS = (
     'Pragma',
 )
 
+CRONJOBS = [
+    ('* 8 * * *', 'server.task.send_report'),
+]
 
 
 # A sample logging configuration. The only tangible logging
