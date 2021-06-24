@@ -28,15 +28,14 @@ def send_report():
     total_current_plots = sum(([h.total_current_plots for h in harvesters]))
     space_free_plots = sum(([h.space_free_plots for h in harvesters]))
 
-    now = timezone.localtime(timezone.now())
-    
+    now = timezone.now()
     last_day = now - datetime.timedelta(days=1)
     #logger.info('last day:%s' % last_day)
 
     txns = PlotTransfer.objects.filter(txn_stop_time__gte=last_day).all()
     plots_transfered = len(txns)
 
-    subject = 'chia report daily-%s' % now.strftime('%Y-%m-%d %H:%M:%S')
+    subject = 'chia report daily-%s' % timezone.localtime(now).strftime('%Y-%m-%d %H:%M:%S')
     body = 'local power:%s\nremote power:%s\nratio:%s\n-------------------\ndriver_cnt:%s\nplots:%s\nplots_free:%s\n-------------------\nplots transfered:%s\n' % (local_power,
                                                                                                     remote_power,
                                                                                                     round(remote_power/local_power,2),
