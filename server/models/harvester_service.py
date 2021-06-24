@@ -18,7 +18,7 @@ class HarvesterServiceManager(models.Manager):
         remote_power = data['remote_power']
         remote_power_unit = data['remote_power_unit']
         status = data['status']
-        service = self.filter(index=index,harvester__server_number=harvester.service_number).first()
+        service = self.filter(index=index, harvester__server_number=harvester.server_number).first()
         if service is None:
             service = HarvesterService()
             service.index = index
