@@ -21,8 +21,8 @@ def send_report():
     from .models import HarvesterService, Harvester, PlotTransfer
     services = HarvesterService.objects.all()
     harvesters = Harvester.objects.all()
-    local_power = sum([s.local_power for s in services])
-    remote_power = sum([s.remote_power for s in services])
+    local_power = round(sum([s.local_power for s in services]), 2)
+    remote_power = round(sum([s.remote_power for s in services]), 2)
 
     driver_cnt = sum(([h.driver_cnt for h in harvesters]))
     total_current_plots = sum(([h.total_current_plots for h in harvesters]))
@@ -34,7 +34,7 @@ def send_report():
     txns = PlotTransfer.objects.filter(txn_stop_time__gte=last_day).all()
     plots_transfered = len(txns)
 
-    subject = 'chia report daily'
+    subject = 'chia report daily-%s' % timezone.now().strptime('YYYY-MM-DDTHH:MM:SS')
     body = 'local power:%s\nremote power:%s\nratio:%s\n-------------------\ndriver_cnt:%s\nplots:%s\nplots_free:%s\n-------------------\nplots transfered:%s\n' % (local_power,
                                                                                                     remote_power,
                                                                                                     round(remote_power/local_power,2),
