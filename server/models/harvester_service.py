@@ -46,7 +46,7 @@ class HarvesterService(models.Model):
     remote_unit = models.CharField('Remote Unit', max_length=20, default='TB', blank=True)
     status = models.CharField('Status', max_length=100, default='', blank=True)
 
-    harvester = models.ForeignKey('Harvester', related_name='services', verbose_name='PlotConfig', on_delete=models.SET_NULL,
+    harvester = models.ForeignKey('Harvester', related_name='services', verbose_name='Harvester', on_delete=models.SET_NULL,
                       default=None,
                       blank=True, null=True)
 
