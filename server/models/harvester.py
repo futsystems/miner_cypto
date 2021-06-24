@@ -7,6 +7,7 @@ from django.utils import timezone
 from datetime import datetime
 from .settings import HARVESTER_GATEWAY_DOMAIN
 from common.helper import obj_attr_change
+from .harvester_service import HarvesterService
 
 class Harvester(models.Model):
     """
@@ -147,6 +148,11 @@ class Harvester(models.Model):
         if 'memory' in data:
             self.memory_total = data['memory']['total']
             self.memory_used = data['memory']['used']
+
+        if 'harvester_service' in data:
+            for service in data['harvester_service']:
+                HarvesterService.objects.add_or_update(self.server_name(), service)
+
         self._update_heartbeat()
         self.save()
 

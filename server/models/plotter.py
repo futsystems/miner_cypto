@@ -72,7 +72,6 @@ class Plotter(models.Model):
     last_heartbeat = models.DateTimeField('HeartBeat', default=timezone.now, blank=True)
 
 
-
     __original_plot_config = None
 
     def __init__(self, *args, **kwargs):
