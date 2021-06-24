@@ -21,7 +21,7 @@ import subprocess
 import logging,traceback,json
 logger = logging.getLogger(__name__)
 
-from server.models import Plotter, PlotConfig, Harvester, PlotTransfer, PlotKey,HarvesterService
+from server.models import Plotter, PlotConfig, Harvester, PlotTransfer, PlotKey, HarvesterService, HarvesterServiceRestart
 
 
 
@@ -304,6 +304,11 @@ class HarvesterServiceAdmin(admin.ModelAdmin):
         return HttpResponseRedirect(previous_url)
 
 
+class HarvesterServiceRestartAdmin(admin.ModelAdmin):
+    list_display = ('service', 'harvester', 'time', 'reason')
+
+
+
 class HarvesterAdmin(admin.ModelAdmin):
     list_display = ('server_number', 'biz_ip', 'data_ip', 'driver_cnt', 'file_cnt', 'power', 'space_free_plots', 'plotter_cnt', 'nc_process_cnt',  '_is_online', 'up_time', 'harvester_action')
     ordering = ('server_number',)
@@ -454,3 +459,4 @@ admin.site.register(Harvester, HarvesterAdmin)
 admin.site.register(PlotTransfer, PlotTransferAdmin)
 admin.site.register(PlotKey, PlotKeyAdmin)
 admin.site.register(HarvesterService, HarvesterServiceAdmin)
+admin.site.register(HarvesterServiceRestart, HarvesterServiceRestartAdmin)

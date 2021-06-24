@@ -3,8 +3,9 @@
 
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 from common import json_response, Success, Error
-from server.models import Plotter, Harvester, PlotTransfer
+from server.models import Plotter, Harvester, PlotTransfer, HarvesterServiceRestart
 import logging, traceback
 import requests
 from datetime import datetime
@@ -234,4 +235,24 @@ def plot_transfer_stop(request):
     except Exception as e:
         logger.error(traceback.format_exc())
         return json_response(Error(e.message))
+
+
+@csrf_exempt
+def harvester_service_restart(request):
+    try:
+        if request.method == "POST":
+            data = json.loads(request.body)
+            logger.info(data)
+
+            harvester = data['harvester']
+            service = data['service']
+            reason = data['reason']
+
+            harvester = Harvester.objects.get(server_number=harvester.split('-')[1])
+            HarvesterServiceRestart.objects.create(reason=reason, service=service, harvester=harvester, time=timezone.now())
+        return json_response(Success(''))
+
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return json_response(Error('plot transfer start server side error'))
 
