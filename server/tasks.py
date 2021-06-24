@@ -18,7 +18,7 @@ def send_report():
 
     import datetime
     from django.utils import timezone
-    from models import HarvesterService, Harvester, PlotTransfer
+    from .models import HarvesterService, Harvester, PlotTransfer
     services = HarvesterService.objects.all()
     harvesters = Harvester.objects.all()
     local_power = sum([s.local_power for s in services])
