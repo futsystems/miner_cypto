@@ -8,6 +8,8 @@ from common.mail import send_email, get_stuff_emails
 import logging
 
 logger = logging.getLogger(__name__)
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 
 def send_report():
