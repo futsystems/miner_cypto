@@ -30,6 +30,8 @@ class HarvesterServiceManager(models.Manager):
         service.remote_power_unit = remote_power_unit
         service.status = status
 
+        if service.status is None:
+            service.status = ''
         service.save()
 
 
