@@ -267,9 +267,41 @@ class PlotConfigAdmin(admin.ModelAdmin):
 
 
 class HarvesterServiceAdmin(admin.ModelAdmin):
-    list_display = ('index', 'service', 'remote_power', 'remote_unit', 'local_power', 'ratio', 'status', 'harvester')
+    list_display = ('index', 'service', 'remote_power', 'remote_unit', 'local_power', 'ratio', 'status', 'harvester', 'harvester_service_action')
     list_filter = ('harvester',)
+    def harvester_service_action(self, obj):
+        """
 
+        """
+        return format_html(
+            '<a class="button" href="{}">Restart</a>&nbsp;',
+            reverse('admin:harvester-service-restart', args=[obj.pk]),
+        )
+
+    harvester_service_action.allow_tags = True
+    harvester_service_action.short_description = "Action"
+
+    def get_urls(self):
+        # use get_urls for easy adding of views to the admin
+        urls = super(HarvesterServiceAdmin, self).get_urls()
+        my_urls = [
+            url(
+                r'^(?P<service_id>.+)/harvester-service-restart/$',
+                self.admin_site.admin_view(self.restart_harvester_service),
+                name='harvester-service-restart',
+            ),
+        ]
+
+        return my_urls + urls
+
+    def restart_harvester_service(self, request, service_id):
+        previous_url = request.META.get('HTTP_REFERER')
+        obj = HarvesterService.objects.get(id=service_id)
+        from .harvester_api import HarvesterAPI
+        api = HarvesterAPI(obj.harvester)
+        result = api.restart_service(obj.service)
+        messages.info(request, 'restart %s success' % obj.service)
+        return HttpResponseRedirect(previous_url)
 
 
 class HarvesterAdmin(admin.ModelAdmin):
