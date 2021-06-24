@@ -151,7 +151,7 @@ class Harvester(models.Model):
 
         if 'harvester_service' in data:
             for service in data['harvester_service']:
-                HarvesterService.objects.add_or_update(self.server_name(), service)
+                HarvesterService.objects.add_or_update(self, service)
 
         self._update_heartbeat()
         self.save()
