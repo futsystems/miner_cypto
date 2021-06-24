@@ -299,7 +299,7 @@ class HarvesterServiceAdmin(admin.ModelAdmin):
         obj = HarvesterService.objects.get(id=service_id)
         from .harvester_api import HarvesterAPI
         api = HarvesterAPI(obj.harvester)
-        result = api.restart_service(obj.service)
+        result = api.restart_harvester(obj.service)
         messages.info(request, 'restart %s success' % obj.service)
         return HttpResponseRedirect(previous_url)
 

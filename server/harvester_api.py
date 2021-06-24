@@ -30,6 +30,17 @@ class HarvesterAPI(object):
 
         return response.json()
 
+    def restart_harvester(self, service_name):
+        """
+        restart service srv.plotter srv.hpool etc
+        :param service_name:
+        :return:
+        """
+        query = {'service_name': service_name}
+        response = requests.get('http://%s:%s/harvester/restart' % (self._host, self._port), params=query)
+
+        return response.json()
+
     def update_system(self):
         """
         update plotter system
