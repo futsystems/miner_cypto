@@ -18,24 +18,18 @@ class HarvesterServiceManager(models.Manager):
         remote_power = data['remote_power']
         remote_power_unit = data['remote_power_unit']
         status = data['status']
-        service = self.filter(index=index, harvester__server_number=harvester.server_number).first()
-        if service is None:
-            service = HarvesterService()
-            service.index = index
-            service.service = service
-            service.harvester = harvester
+        harvester_service = self.filter(index=index, harvester__server_number=harvester.server_number).first()
+        if harvester_service is None:
+            harvester_service = HarvesterService()
+            harvester_service.index = index
+            harvester_service.service = service
+            harvester_service.harvester = harvester
 
-        service.local_power = local_power
-        service.remote_power = remote_power
-        service.remote_power_unit = remote_power_unit
-        service.status = status
-
-        if service.status is None:
-            service.status = ''
-        service.save()
-
-
-
+        harvester_service.local_power = local_power
+        harvester_service.remote_power = remote_power
+        harvester_service.remote_power_unit = remote_power_unit
+        harvester_service.status = status
+        harvester_service.save()
 
 
 class HarvesterService(models.Model):
@@ -60,7 +54,7 @@ class HarvesterService(models.Model):
         app_label = 'server'
 
     def __unicode__(self):
-        return u'service-%s' % '00'
+        return u'service-%s' % self.service
 
     def __str__(self):
         return self.__unicode__()
