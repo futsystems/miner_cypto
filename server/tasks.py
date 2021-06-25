@@ -65,7 +65,7 @@ def send_problem():
     plotters_sending = [p for p in plotters if p.harvester is not None]
     if len(plotters_sending) > 0:
         body ='%s\nplotter overstock:' % body
-        for plotter in plotters:
+        for plotter in plotters_sending:
             body = '%s%s ' % (body, plotter.server_number)
 
     if body != '':
