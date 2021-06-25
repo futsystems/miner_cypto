@@ -76,6 +76,14 @@ def send_problem():
             body = '%s%s ' % (body, plotter.server_number)
 
 
+    # harvester with low plots free but more plotters
+    harvesters = Harvester.objects.all()
+    harvesters_low_free_plots = [h for h in harvesters if h.is_online  and h.space_free_plots < 100 and h.plotters.count()> 2]
+    if len(harvesters_low_free_plots) > 0:
+        body = '%s\nharvester low free plots:' % body
+        for harvester in harvesters_low_free_plots:
+            body = '%s%s ' % (body, harvester.server_number)
+
     if body != '':
         for email in emails:
             send_email(subject, body, email)
