@@ -69,7 +69,7 @@ def send_problem():
             body = '%s%s ' % (body, plotter.server_number)
 
     # plotters开启时间超过4小时 但是CPU使用率一直偏低
-    plotters_low_cpu = [p for p in plotters if (p.harvester is not None and (p.uptime/3600) > 4 and p.cpu_used_percent < 0.3 )]
+    plotters_low_cpu = [p for p in plotters if (p.harvester is not None and (p.uptime/3600) > 4 and p.cpu_used_percent < 30 )]
     if len(plotters_low_cpu) > 0:
         body = '%s\nplotter low cpu:' % body
         for plotter in plotters_low_cpu:
