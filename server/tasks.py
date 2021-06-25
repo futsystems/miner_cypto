@@ -61,12 +61,20 @@ def send_problem():
 
 
     # plotters缓存plots太多
-    plotters = Plotter.objects.filter(plot_cnt__gte=5).all()
-    plotters_sending = [p for p in plotters if p.harvester is not None]
+    plotters = Plotter.objects.all()
+    plotters_sending = [p for p in plotters if (p.harvester is not None and p.plot_cnt>=5)]
     if len(plotters_sending) > 0:
         body ='%s\nplotter overstock:' % body
         for plotter in plotters_sending:
             body = '%s%s ' % (body, plotter.server_number)
+
+    # plotters开启时间超过4小时 但是CPU使用率一直偏低
+    plotters_low_cpu = [p for p in plotters if (p.harvester is not None and (p.uptime/3600) > 4 and p.cpu_used_percent < 0.3 )]
+    if len(plotters_low_cpu) > 0:
+        body = '%s\nplotter low cpu:' % body
+        for plotter in plotters_low_cpu:
+            body = '%s%s ' % (body, plotter.server_number)
+
 
     if body != '':
         for email in emails:
