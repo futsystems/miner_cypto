@@ -46,3 +46,31 @@ def send_report():
 
     for email in emails:
         send_email(subject, body, email)
+
+
+def send_problem():
+    emails = get_stuff_emails()
+    logger.info('emails:%s' % emails)
+
+    import datetime
+    from django.utils import timezone
+    from .models import Plotter, HarvesterService, Harvester, PlotTransfer
+
+    subject = 'chia pending problems'
+    body = ''
+
+
+    # plotters缓存plots太多
+    plotters = Plotter.objects.filter(plot_cnt__gte=5).all()
+    plotters_sending = [p for p in plotters if p.harvester is not None]
+    if len(plotters_sending) > 0:
+        body ='%s\nplotter overstock:' % body
+        for plotter in plotters:
+            body = '%s%s ' % (body, plotter.server_number)
+
+    if body != '':
+        for email in emails:
+            send_email(subject, body, email)
+
+
+
