@@ -1,20 +1,13 @@
-#mysql
-#mysql-python
-#python3 -m pip install mysql-connector
 mysqlclient
 
 django==1.11.29
 
 requests
-
 gunicorn
 gevent
 
-#django-crontab
 redis==2.10.6
 django-celery==3.3.1
-
-
 
 
 # install python2 in ubuntu 20.04
