@@ -30,7 +30,7 @@ def add(x, y):
 def mul(x, y):
     return x * y
 
-
+@shared_task
 def send_report():
     emails = get_stuff_emails()
     logger.info('emails:%s' % emails)
@@ -66,7 +66,7 @@ def send_report():
     for email in emails:
         send_email(subject, body, email)
 
-
+@shared_task
 def send_problem():
     emails = get_stuff_emails()
     logger.info('emails:%s' % emails)
