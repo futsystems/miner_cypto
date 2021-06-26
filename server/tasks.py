@@ -17,7 +17,9 @@ logger = logging.getLogger(__name__)
 
 
 
-
+@shared_task(bind=True)
+def log_task():
+    logger.info('log task information')
 
 @shared_task
 def add(x, y):
