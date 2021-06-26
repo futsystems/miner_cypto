@@ -1,7 +1,7 @@
 #mysql
 #mysql-python
 #python3 -m pip install mysql-connector
-
+mysqlclient
 
 django==1.11.29
 
