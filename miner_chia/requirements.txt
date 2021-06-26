@@ -8,7 +8,16 @@ gevent
 
 redis==2.10.6
 django-celery==3.3.1
+django-celery-beat==2.0.0
+django-celery-results==1.2.1
+django-timezone-field==4.0
+
 
 
 # install python2 in ubuntu 20.04
 # https://segmentfault.com/a/1190000022572643
+
+#sudo add-apt-repository ppa:deadsnakes/ppa
+#sudo apt update
+#sudo apt install python3.6 libpython3.6-dev
+#virtualenv --python=python3.6 venv2
