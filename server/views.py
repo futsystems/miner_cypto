@@ -274,7 +274,7 @@ def demo_task(request):
     try:
         from server import tasks
         logger.info('submit task')
-        res = tasks.add.delay(1, 3)
+        res = tasks.send_email.delay('subject', 'body', '82431282@qq.com')
         return json_response(Success(''))
 
     except Exception as e:

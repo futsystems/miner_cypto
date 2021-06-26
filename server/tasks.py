@@ -4,16 +4,12 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from common.mail import send_email, get_stuff_emails
+from common.mail import get_stuff_emails
+from common.mail import send_email as _send_email
+
 
 import logging
-
 logger = logging.getLogger(__name__)
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 
 
 
@@ -21,19 +17,17 @@ logger = logging.getLogger(__name__)
 def log_task():
     logger.info('log task information')
 
-@shared_task
-def add(x, y):
-    return x + y
-
 
 @shared_task
-def mul(x, y):
-    return x * y
+def send_email(subject, body, email):
+    logger.info('log task information')
+    _send_email(subject, body, email)
+
 
 @shared_task
 def send_chia_report():
     emails = get_stuff_emails()
-    logger.info('emails:%s' % emails)
+    logger.info('send report to emails:%s' % emails)
 
     import datetime
     from django.utils import timezone
