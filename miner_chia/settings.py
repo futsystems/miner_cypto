@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+    'django_celery_beat',
+    'django_celery_results',
+
     'common',
     'server',
     'server.apps.SignalsConfig'
@@ -156,11 +160,6 @@ CORS_ALLOW_HEADERS = (
     'Pragma',
 )
 
-CRONJOBS = [
-    ('30 8 * * *', 'server.tasks.send_report'),
-    ('*/60  * * * *', 'server.tasks.send_problem'),
-]
-
 
 #############################
 # celery 配置信息 start
@@ -168,8 +167,9 @@ CRONJOBS = [
 import djcelery
 djcelery.setup_loader()
 BROKER_URL = 'redis://127.0.0.1:6379/1'
+CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'Asia/Shanghai'
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 #############################
 # celery 配置信息 end
