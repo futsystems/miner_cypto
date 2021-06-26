@@ -20,7 +20,7 @@ def log_task():
 
 @shared_task
 def send_email(subject, body, email):
-    logger.info('log task information')
+    logger.info('send email to :%s' % email)
     _send_email(subject, body, email)
 
 
