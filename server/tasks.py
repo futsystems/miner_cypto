@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import, unicode_literals
+from celery import shared_task
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from common.mail import send_email, get_stuff_emails
@@ -10,6 +13,20 @@ import logging
 logger = logging.getLogger(__name__)
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+
+
+
+
+
+@shared_task
+def add(x, y):
+    return x + y
+
+
+@shared_task
+def mul(x, y):
+    return x * y
 
 
 def send_report():

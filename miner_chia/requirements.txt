@@ -10,7 +10,9 @@ requests
 gunicorn
 gevent
 
-django-crontab
+#django-crontab
+redis==2.10.6
+django-celery==3.3.1
 
 
 

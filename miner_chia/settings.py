@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """
 Django settings for miner_chia project.
 
@@ -158,6 +161,20 @@ CRONJOBS = [
     ('30 8 * * *', 'server.tasks.send_report'),
     ('*/60  * * * *', 'server.tasks.send_problem'),
 ]
+
+
+#############################
+# celery 配置信息 start
+#############################
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = 'redis://127.0.0.1:6379/1'
+CELERY_TIMEZONE = 'Asia/Shanghai'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+#############################
+# celery 配置信息 end
+#############################
 
 
 # A sample logging configuration. The only tangible logging

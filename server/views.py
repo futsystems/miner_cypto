@@ -268,3 +268,15 @@ def demo_report(request):
     except Exception as e:
         logger.error(traceback.format_exc())
         return json_response(Error('demo report server side error'))
+
+@csrf_exempt
+def demo_task(request):
+    try:
+        from server import tasks
+        logger.info('submit task')
+        res = tasks.add.delay(1, 3)
+        return json_response(Success(''))
+
+    except Exception as e:
+        logger.error(traceback.format_exc())
+        return json_response(Error('demo report server side error'))
