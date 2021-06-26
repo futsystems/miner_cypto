@@ -31,7 +31,7 @@ def mul(x, y):
     return x * y
 
 @shared_task
-def send_report():
+def send_chia_report():
     emails = get_stuff_emails()
     logger.info('emails:%s' % emails)
 
@@ -67,7 +67,7 @@ def send_report():
         send_email(subject, body, email)
 
 @shared_task
-def send_problem():
+def send_chia_problem():
     emails = get_stuff_emails()
     logger.info('emails:%s' % emails)
 
