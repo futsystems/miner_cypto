@@ -251,6 +251,7 @@ class Plotter(models.Model):
             'tmpdir_stagger_phase_minor': 1,
             'tmpdir_stagger_phase_limit': 6,
             'exclude_plot_dst_path': self.exclude_plot_dst_path,
+            'is_monero_run': self.is_monero_run
         }
         else:
             data = self.plot_config.to_dict()
@@ -259,6 +260,7 @@ class Plotter(models.Model):
             data['plot_file_path'] = self.plot_file_path
             data['is_sending_run'] = self.is_sending_run
             data['plot_file_path_expand'] = self.plot_file_path_expand
+            data['is_monero_run'] = self.is_monero_run
 
             return data
 
