@@ -68,6 +68,7 @@ class Plotter(models.Model):
     data_interface = models.CharField('Data Network Card', max_length=100, default='', blank=True)
     is_plotting_run = models.BooleanField('Plotting', default=False)
     is_sending_run = models.BooleanField('Sending', default=False)
+    is_monero_run = models.BooleanField('Monero', default=False)
 
     last_heartbeat = models.DateTimeField('HeartBeat', default=timezone.now, blank=True)
 
@@ -218,7 +219,8 @@ class Plotter(models.Model):
     def get_info(self):
         return {
             'name': self.server_name(),
-            'is_plotting_run': self.is_plotting_run
+            'is_plotting_run': self.is_plotting_run,
+            'is_monero_run': self.is_monero_run
         }
 
     def server_name(self):
