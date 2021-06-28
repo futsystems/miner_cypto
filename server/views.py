@@ -261,7 +261,7 @@ def harvester_service_restart(request):
 @csrf_exempt
 def demo_report(request):
     try:
-        from tasks import send_report
+        from tasks import send_reportget_plotter_config
         send_report()
         return json_response(Success(''))
 
