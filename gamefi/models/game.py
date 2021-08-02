@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-
+from .choices import CHAIN_TYPE
 
 class Game(models.Model):
     """
@@ -11,6 +11,11 @@ class Game(models.Model):
     name = models.CharField('Name', max_length=50, default='Game')
     url = models.CharField('Url', max_length=250, default='')
     token = models.CharField('Token', max_length=100, default='')
+    chain = models.CharField(
+        max_length=10,
+        choices=CHAIN_TYPE,
+        default='BSC',
+    )
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
 
