@@ -24,7 +24,7 @@ class BSCAPI(object):
             return await bsc.get_acc_balance_by_token_contract_address(contract_address=contact, address=address)
 
 
-    def get_token_balance(self, address, token_contact):
+    def _get_token_balance(self, address, token_contact):
         loop = asyncio.get_event_loop()
         task = loop.create_task(self.async_get_balance_by_token_contact(address, token_contact))
         loop.run_until_complete(task)
@@ -36,7 +36,7 @@ class BSCAPI(object):
         :param address:
         :return:
         """
-        return self.get_token_balance(address, '0x9D173E6c594f479B4d47001F8E6A95A7aDDa42bC')*1e-18
+        return self._get_token_balance(address, '0x9D173E6c594f479B4d47001F8E6A95A7aDDa42bC')*1e-18
 
     def get_skill_balance(self, address):
         """
@@ -44,7 +44,7 @@ class BSCAPI(object):
         :param address:
         :return:
         """
-        return self.get_token_balance(address, '0x154A9F9cbd3449AD22FDaE23044319D6eF2a1Fab')*1e-18
+        return self._get_token_balance(address, '0x154A9F9cbd3449AD22FDaE23044319D6eF2a1Fab')*1e-18
 
 
     def get_token_balance(self,address,token):
