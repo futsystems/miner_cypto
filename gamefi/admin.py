@@ -27,7 +27,8 @@ class GameAdmin(admin.ModelAdmin):
     list_display = ('name', 'token', 'url')
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('account_id', 'address', 'chain_token_balance', 'game_token_balance')
+    list_display = ('account_id', 'game', 'address', 'chain_token_balance', 'game_token_balance')
+    list_filter = ('game',)
 
 admin.site.register(Game, GameAdmin)
 admin.site.register(Account, AccountAdmin)
