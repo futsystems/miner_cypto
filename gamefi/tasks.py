@@ -22,8 +22,8 @@ def sync_account_balance():
             for account in game.accounts.all():
                 chain_token_balance = api.get_chain_balance(account.address)
                 game_token_balance = api.get_token_balance(account.address, game.token)
-                account.chain_token_balance = chain_token_balance
-                account.game_token_balance = game_token_balance
+                account.chain_token_balance = round(chain_token_balance,4)
+                account.game_token_balance = round(game_token_balance,4)
                 account.save()
 
                 logger.info('account address:%s balance:%s token:%s token balance:%s' % (account.address, chain_token_balance, game.token, game_token_balance))
