@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     'common',
     'server',
-    'server.apps.SignalsConfig'
+    'server.apps.SignalsConfig',
+    'gamefi',
 ]
 
 MIDDLEWARE = [
