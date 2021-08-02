@@ -17,7 +17,7 @@ class BSCAPI(object):
         loop = asyncio.get_event_loop()
         task = loop.create_task(self.async_get_bnb_balance(address))
         loop.run_until_complete(task)
-        return task.result()
+        return task.result()*1e-18
 
     async def async_get_balance_by_token_contact(self, address, contact):
         async with BscScan(self._api_key) as bsc:
@@ -30,3 +30,18 @@ class BSCAPI(object):
         loop.run_until_complete(task)
         return task.result()
 
+    def get_zoon_balance(self, address):
+        """
+        zoon contact address 0x9D173E6c594f479B4d47001F8E6A95A7aDDa42bC
+        :param address:
+        :return:
+        """
+        return self.get_token_balance(address, '0x9D173E6c594f479B4d47001F8E6A95A7aDDa42bC')*1e-18
+
+    def get_skill_balance(self, address):
+        """
+        skill contact address 0x154A9F9cbd3449AD22FDaE23044319D6eF2a1Fab
+        :param address:
+        :return:
+        """
+        return self.get_token_balance(address, '0x154A9F9cbd3449AD22FDaE23044319D6eF2a1Fab')*1e-18
