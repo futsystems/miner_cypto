@@ -13,6 +13,7 @@ class Game(models.Model):
     token = models.CharField('Token', max_length=100, default='')
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
+
     class Meta:
         app_label = 'gamefi'
 
