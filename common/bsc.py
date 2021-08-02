@@ -21,7 +21,7 @@ class BSCAPI(object):
 
     async def async_get_balance_by_token_contact(self, address, contact):
         async with BscScan(self._api_key) as bsc:
-            return await bsc.get_acc_balance_by_token_contract_address(contract_address=address, address=address)
+            return await bsc.get_acc_balance_by_token_contract_address(contract_address=contact, address=address)
 
 
     def get_token_balance(self, address, token_contact):
