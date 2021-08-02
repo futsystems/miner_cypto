@@ -9,7 +9,7 @@ class BSCAPI(object):
     def __init__(self,address):
         self._api_key = '5B7Y6IW73Y33Z8TNPR68XD2CHP63I5CVM5'
 
-    async def async_get_balance(self):
+    async def async_get_balance(self, address):
         async with BscScan(self._api_key) as bsc:
             return await bsc.get_bnb_balance(address=address)
 
