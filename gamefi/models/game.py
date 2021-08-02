@@ -23,10 +23,10 @@ class Game(models.Model):
         app_label = 'gamefi'
 
     def chain_balance(self):
-        return sum([account.chain_token_balance for account in self.accounts.all()]),
+        return round(sum([account.chain_token_balance for account in self.accounts.all()]), 2)
 
     def game_balance(self):
-        return sum([account.game_token_balance for account in self.accounts.all()]),
+        return round(sum([account.game_token_balance for account in self.accounts.all()]), 2)
 
     def __unicode__(self):
         return self.name
