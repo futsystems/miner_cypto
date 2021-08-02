@@ -10,6 +10,7 @@ class Game(models.Model):
     """
     name = models.CharField('Name', max_length=50, default='Game')
     url = models.CharField('Url', max_length=250, default='')
+    input = models.FloatField('Input', default=0)
     token = models.CharField('Token', max_length=100, default='')
     chain = models.CharField(
         max_length=10,
