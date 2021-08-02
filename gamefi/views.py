@@ -12,7 +12,7 @@ from datetime import datetime
 
 import json
 logger = logging.getLogger(__name__)
-from models.game import Game
+from .models.game import Game
 
 def homepage(request):
     return 'gamefi'
