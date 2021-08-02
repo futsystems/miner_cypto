@@ -242,6 +242,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False
         },
+        'gamefi': {
+            'handlers': ['tinyconsole', 'default'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
     }
 }
 
