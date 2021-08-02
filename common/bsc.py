@@ -17,5 +17,5 @@ class BSCAPI(object):
         loop = asyncio.get_event_loop()
         task = loop.create_task(self.async_get_balance())
         loop.run_until_complete(task)
-        loop.close()
+        #loop.close()
         return task.result()
