@@ -16,7 +16,7 @@ class Account(models.Model):
                                   blank=True, null=True)
 
     address = models.CharField('Address', max_length=100, default='')
-
+    is_main = models.BooleanField('Main Account', default=False)
     chain_token_balance = models.FloatField('Chain Token', default=0)
     game_token_balance = models.FloatField('Game Token', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
