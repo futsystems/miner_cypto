@@ -21,10 +21,14 @@ import subprocess
 import logging,traceback,json
 logger = logging.getLogger(__name__)
 
-from .models import Game
+from .models import Game, Account
 
 class GameAdmin(admin.ModelAdmin):
     list_display = ('name', 'token', 'url')
 
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ('account_id', 'address', 'chain_token_balance', 'game_token_balance')
+
 admin.site.register(Game, GameAdmin)
+admin.site.register(Account, AccountAdmin)
 
