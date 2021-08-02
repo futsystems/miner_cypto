@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 from .models import Game, Account
 
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('name', 'chain', 'token', 'url')
+    list_display = ('name', 'chain', 'token', 'url', 'chain_balance', 'game_balance')
 
 class AccountAdmin(admin.ModelAdmin):
     list_display = ('account_id', 'game', 'address', 'chain_token_balance', 'game_token_balance')
