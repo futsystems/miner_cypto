@@ -45,3 +45,12 @@ class BSCAPI(object):
         :return:
         """
         return self.get_token_balance(address, '0x154A9F9cbd3449AD22FDaE23044319D6eF2a1Fab')*1e-18
+
+
+    def get_token_balance(self,address,token):
+        if token=='ZOON':
+            return self.get_zoon_balance(address)
+        if token=='SKILL':
+            return self.get_skill_balance(address)
+
+        return 0

@@ -16,13 +16,17 @@ from .models import Game
 @shared_task
 def sync_account_balance():
     logger.info('sync account balance')
-
     for game in Game.objects.all():
         if game.chain == 'BSC':
             api = BSCAPI()
             for account in game.accounts.all():
-                chain_balance = api.get_chain_balance(account.address)
-                logger.info('account address:%s balance:%s' % (account.address, chain_balance))
+                chain_token_balance = api.get_chain_balance(account.address)
+                game_token_balance = api.get_token_balance(account.address, game.token)
+                account.chain_token_balance = chain_token_balance
+                account.game_token_balance = game_token_balance
+                account.save()
+
+                #logger.info('account address:%s balance:%s' % (account.address, chain_token_balance))
                 time.sleep(0.5)
 
 
