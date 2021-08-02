@@ -13,7 +13,7 @@ class BSCAPI(object):
         async with BscScan(self._api_key) as bsc:
             return await bsc.get_bnb_balance(address=address)
 
-    def get_bnb_balance(self, address):
+    def get_chain_balance(self, address):
         loop = asyncio.get_event_loop()
         task = loop.create_task(self.async_get_bnb_balance(address))
         loop.run_until_complete(task)

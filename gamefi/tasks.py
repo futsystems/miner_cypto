@@ -7,7 +7,7 @@ from celery import shared_task
 from common.mail import get_stuff_emails
 from common.mail import send_email as _send_email
 
-
+import time
 import logging
 logger = logging.getLogger(__name__)
 
@@ -21,7 +21,11 @@ def sync_account_balance():
         if game.chain == 'BSC':
             api = BSCAPI()
             for account in game.accounts.all():
-                logger.info('account address:%s' % account.address)
+                chain_balance = api.get_chain_balance(account.address)
+                logger.info('account address:%s balance:%s' % (account.address, chain_balance))
+                time.sleep(0.5)
+
+
 
 
 
