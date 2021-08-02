@@ -14,6 +14,7 @@ class Account(models.Model):
                                   on_delete=models.SET_NULL,
                                   default=None,
                                   blank=True, null=True)
+
     address = models.CharField('Address', max_length=100, default='')
 
     chain_token_balance = models.FloatField('Chain Token', default=0)

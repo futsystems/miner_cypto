@@ -26,7 +26,7 @@ def sync_account_balance():
                 account.game_token_balance = game_token_balance
                 account.save()
 
-                #logger.info('account address:%s balance:%s' % (account.address, chain_token_balance))
+                logger.info('account address:%s balance:%s token:%s token balance:%s' % (account.address, chain_token_balance, game.token, game_token_balance))
                 time.sleep(0.5)
 
 
