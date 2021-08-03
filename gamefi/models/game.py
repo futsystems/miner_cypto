@@ -17,6 +17,8 @@ class Game(models.Model):
         choices=CHAIN_TYPE,
         default='BSC',
     )
+
+    last_game_token_balance = models.FloatField('Game Token Balance(Last)', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
 

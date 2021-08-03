@@ -23,6 +23,7 @@ class Account(models.Model):
 
     class Meta:
         app_label = 'gamefi'
+        ordering = ['account_id', ]
 
     def __unicode__(self):
         return 'ACC-%s' % self.id

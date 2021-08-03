@@ -21,7 +21,7 @@ import subprocess
 import logging,traceback,json
 logger = logging.getLogger(__name__)
 
-from .models import Game, Account
+from .models import Game, Account, GameSettlement
 
 class GameAdmin(admin.ModelAdmin):
     list_display = ('name', 'chain', 'token', 'url', 'input', 'chain_balance', 'game_balance')
@@ -30,6 +30,13 @@ class AccountAdmin(admin.ModelAdmin):
     list_display = ('account_id', 'game', 'address', 'chain_token_balance', 'game_token_balance')
     list_filter = ('game',)
 
+
+class GameSettlementAdmin(admin.ModelAdmin):
+    list_display = ('game', 'last_game_token_balance', 'game_token_income', 'game_token_payout', 'game_token_balance', 'settle_time')
+    list_filter = ('game',)
+
 admin.site.register(Game, GameAdmin)
 admin.site.register(Account, AccountAdmin)
+admin.site.register(GameSettlement,GameSettlementAdmin)
+
 

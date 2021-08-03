@@ -3,3 +3,4 @@
 
 from .game import Game
 from .account import Account
+from .game_settlement import GameSettlement
