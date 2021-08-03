@@ -27,7 +27,7 @@ class GameAdmin(admin.ModelAdmin):
     list_display = ('name', 'chain', 'token', 'url', 'input', 'chain_balance', 'game_balance')
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('account_id', 'game', 'address', 'chain_token_balance', 'game_token_balance')
+    list_display = ('account_id', 'game', 'address', 'chain_token_balance', 'game_token_balance', 'game_token_balance_not_claimed')
     list_filter = ('game',)
 
 

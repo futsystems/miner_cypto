@@ -19,6 +19,7 @@ class Account(models.Model):
     is_main = models.BooleanField('Main Account', default=False)
     chain_token_balance = models.FloatField('Chain Token', default=0)
     game_token_balance = models.FloatField('Game Token', default=0)
+    game_token_balance_not_claimed = models.FloatField('Game Token Not Claimed', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
     class Meta:
@@ -30,3 +31,6 @@ class Account(models.Model):
 
     def __str__(self):
         return self.__unicode__()
+
+    def total_game_token_balance(self):
+        return  self.game_token_balance + self.game_token_balance_not_claimed

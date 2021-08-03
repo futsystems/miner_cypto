@@ -29,7 +29,7 @@ class Game(models.Model):
         return round(sum([account.chain_token_balance for account in self.accounts.filter(is_main=False).all()]), 2)
 
     def game_balance(self):
-        return round(sum([account.game_token_balance for account in self.accounts.all()]), 2)
+        return round(sum([account.total_game_token_balance() for account in self.accounts.all()]), 2)
 
     def __unicode__(self):
         return self.name
