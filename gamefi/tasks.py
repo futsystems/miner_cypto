@@ -12,6 +12,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 from common.bsc import BSCAPI
+from common.market import MarketAPI
 from .models import Game, GameSettlement
 
 
@@ -66,6 +67,17 @@ def settle_game_balance():
 
         game.last_game_token_balance = game_token_balance
         game.save()
+
+
+@shared_task
+def query_price():
+    logger.info('query price')
+    market = MarketAPI()
+    for game in Game.objects.all():
+        game.token_price = market.get_token_price(game.token)
+        game.save()
+
+
 
 
 

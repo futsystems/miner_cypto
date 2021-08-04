@@ -19,3 +19,7 @@ gevent
 #sudo apt update
 #sudo apt install python3.6 libpython3.6-dev
 #virtualenv --python=python3.6 venv2
+
+
+pycoingecko
+bscscan-python
