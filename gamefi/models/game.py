@@ -31,6 +31,9 @@ class Game(models.Model):
     def game_balance(self):
         return round(sum([account.total_game_token_balance() for account in self.accounts.all()]), 2)
 
+    def game_balance_usd(self):
+        return round(self.game_balance()* self.token_price,2)
+
     def __unicode__(self):
         return self.name
 
