@@ -17,6 +17,8 @@ class MarketAPI(object):
             return self._get_price('cryptoblades')
         if token == 'ZOON':
             return self._get_price('cryptozoon')
+        if token == 'BNB':
+            return self._get_price('binancecoin')
         return 0
 
     def _get_price(self, currency_id):

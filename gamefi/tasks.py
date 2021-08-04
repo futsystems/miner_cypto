@@ -75,6 +75,8 @@ def query_price():
     market = MarketAPI()
     for game in Game.objects.all():
         game.token_price = market.get_token_price(game.token)
+        if game.chain == 'BSC':
+            game.chain_price = market.get_token_price('BNB')
         game.save()
 
 

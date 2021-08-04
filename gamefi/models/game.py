@@ -17,7 +17,9 @@ class Game(models.Model):
         choices=CHAIN_TYPE,
         default='BSC',
     )
+
     token_price = models.FloatField('Token Price', default=0)
+    chain_price = models.FloatField('Chain Price', default=0)
     last_game_token_balance = models.FloatField('Game Token Balance(Last)', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
@@ -32,7 +34,12 @@ class Game(models.Model):
         return round(sum([account.total_game_token_balance() for account in self.accounts.all()]), 2)
 
     def game_balance_usd(self):
-        return round(self.game_balance()* self.token_price,2)
+        return round(self.game_balance()* self.token_price, 2)
+
+    def game_balance_chain(self):
+        if self.chain_price == 0:
+            return 0
+        return round(self.game_balance() * self.token_price / self.chain_price, 2)
 
     def __unicode__(self):
         return self.name
