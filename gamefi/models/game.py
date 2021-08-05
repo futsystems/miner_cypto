@@ -41,6 +41,9 @@ class Game(models.Model):
             return 0
         return round(self.game_balance() * self.token_price / self.chain_price, 2)
 
+    def ratio(self):
+        return round(self.game_balance_chain() * 100 / (self.input - self.chain_balance()), 2)
+
     def __unicode__(self):
         return self.name
 
