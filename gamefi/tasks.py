@@ -77,7 +77,7 @@ def query_price():
         game.token_price = market.get_token_price(game.token)
         if game.chain == 'BSC':
             game.chain_price = market.get_token_price('BNB')
-        game.save()
+        game.save(update_fields=['token_price', 'chain_price'])
 
 
 
