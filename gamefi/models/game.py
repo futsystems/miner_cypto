@@ -21,8 +21,8 @@ class Game(models.Model):
     token_price = models.FloatField('Token Price', default=0)
     chain_price = models.FloatField('Chain Price', default=0)
     last_game_token_balance = models.FloatField('Game Token Balance(Last)', default=0)
+    output_game_token = models.FloatField('Output Game Token', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
-
 
     class Meta:
         app_label = 'gamefi'
@@ -42,7 +42,7 @@ class Game(models.Model):
         return round(self.game_balance() * self.token_price / self.chain_price, 2)
 
     def ratio(self):
-        return "{0:.2%}".format(self.game_balance_chain()/ (self.input - self.chain_balance()))
+        return "{0:.2%}".format((self.game_balance_chain() + self.output_game_token * self.token_price / self.chain_price )/ (self.input - self.chain_balance()))
 
     def __unicode__(self):
         return self.name

@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 from .models import Game, Account, GameSettlement
 
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('name', 'chain', 'token', 'url', 'input','last_game_token_balance', 'chain_balance', 'game_balance', 'token_price', 'game_balance_usd', 'game_balance_chain', 'ratio')
+    list_display = ('name', 'chain', 'token', 'url', 'input', 'output_game_token', 'last_game_token_balance', 'chain_balance', 'game_balance', 'token_price', 'game_balance_usd', 'game_balance_chain', 'ratio')
 
 class AccountAdmin(admin.ModelAdmin):
     list_display = ('account_id', 'game', 'address', 'chain_token_balance', 'game_token_balance', 'game_token_balance_not_claimed')
