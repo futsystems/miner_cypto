@@ -4,7 +4,7 @@
 main_token = (
     ('ETH', 'ETH'),
     ('BNB', 'BNB'),
-    ('BNB', 'BNB'),
+    ('USDT', 'USDT'),
 )
 
 ido_platform_type = (
