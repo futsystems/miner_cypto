@@ -7,6 +7,7 @@ main_token = (
     ('USDT', 'USDT'),
 )
 
+
 ido_platform_type = (
     ('CoinList', 'CoinList'),
     ('Miso', 'Miso'),
