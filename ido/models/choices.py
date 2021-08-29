@@ -7,6 +7,14 @@ main_token = (
     ('BNB', 'BNB'),
 )
 
+ido_platform_type = (
+    ('CoinList', 'CoinList'),
+    ('Miso', 'Miso'),
+    ('DaoMaker', 'DaoMaker'),
+    ('LaunchZone', 'LaunchZone'),
+    ('FTX', 'FTX'),
+)
+
 ido_project_type = (
     ('GameFi', 'GameFi'),
     ('PublicChain', 'PublicChain'),

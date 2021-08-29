@@ -3,7 +3,7 @@
 
 from django.db import models
 from datetime import datetime
-from .choices import main_token, ido_project_type
+from .choices import main_token, ido_platform_type
 
 class Token(models.Model):
     """
@@ -11,6 +11,11 @@ class Token(models.Model):
     """
     name = models.CharField('Name', max_length=50, default='Project Name')
     token = models.CharField('Token', max_length=50, default='Token')
+    platform =  models.CharField(
+        max_length=10,
+        choices=ido_platform_type,
+        default='CoinList',
+    )
 
     date = models.DateTimeField('Date', default=datetime.now, blank=True)
     price = models.FloatField('Price', default=0)
