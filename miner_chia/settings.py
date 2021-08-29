@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'server',
     'server.apps.SignalsConfig',
     'gamefi',
+    'ido',
 ]
 
 MIDDLEWARE = [
