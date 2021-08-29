@@ -6,3 +6,8 @@ main_token = (
     ('ETH', 'ETH'),
     ('BNB', 'BNB'),
 )
+
+ido_project_type = (
+    ('GameFi', 'GameFi'),
+    ('PublicChain', 'PublicChain'),
+)

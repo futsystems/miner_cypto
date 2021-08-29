@@ -24,8 +24,8 @@ logger = logging.getLogger(__name__)
 from .models import Token
 
 class TokenAdmin(admin.ModelAdmin):
-    list_display = ('name', 'token', 'date', 'price', 'quantity', 'token_used', 'token_type')
-
+    list_display = ('name', 'token', 'project_type', 'date', 'price', 'quantity', 'token_used', 'token_type')
+    list_filter = ('project_type',)
 
 admin.site.register(Token, TokenAdmin)
 

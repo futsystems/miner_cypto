@@ -3,18 +3,24 @@
 
 from django.db import models
 from datetime import datetime
-from .choices import main_token
+from .choices import main_token, ido_project_type
 
 class Token(models.Model):
     """
     Token
     """
-    name = models.CharField('Name', max_length=50, default='token')
-    token = models.CharField('Token', max_length=50, default='token')
+    name = models.CharField('Name', max_length=50, default='Project Name')
+    token = models.CharField('Token', max_length=50, default='Token')
 
     date = models.DateTimeField('Date', default=datetime.now, blank=True)
     price = models.FloatField('Price', default=0)
     quantity = models.FloatField('Quantity', default=0)
+
+    project_type = models.CharField(
+        max_length=10,
+        choices=ido_project_type,
+        default='GameFi',
+    )
 
     token_used = models.FloatField('Token Used', default=0)
     token_type = models.CharField(
@@ -22,7 +28,7 @@ class Token(models.Model):
         choices=main_token,
         default='ETH',
     )
-
+    vest = models.CharField('Vest', max_length=1000, default='', blank=True)
     current_price = models.FloatField('Current Price', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
