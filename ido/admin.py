@@ -25,7 +25,6 @@ from .models import Token
 
 class TokenAdmin(admin.ModelAdmin):
     list_display = ('name', 'token', 'date', 'price', 'quantity', 'token_used', 'token_type', 'current_price')
-    list_filter = ('project_type',)
 
 admin.site.register(Token, TokenAdmin)
 
