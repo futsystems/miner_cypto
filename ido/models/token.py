@@ -16,11 +16,7 @@ class Token(models.Model):
     price = models.FloatField('Price', default=0)
     quantity = models.FloatField('Quantity', default=0)
 
-    project_type = models.CharField(
-        max_length=10,
-        choices=ido_project_type,
-        default='GameFi',
-    )
+    project_type = models.CharField('Project Type', max_length=50,  default='', blank=True)
 
     token_used = models.FloatField('Token Used', default=0)
     token_type = models.CharField(
@@ -28,7 +24,7 @@ class Token(models.Model):
         choices=main_token,
         default='ETH',
     )
-    vest = models.CharField('Vest', max_length=1000, default='', blank=True)
+    vesting = models.CharField('Vest', max_length=1000, default='', blank=True)
     current_price = models.FloatField('Current Price', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
