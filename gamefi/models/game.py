@@ -51,6 +51,9 @@ class Game(models.Model):
     def ratio(self):
         return "{0:.2%}".format((self.game_balance_chain() + self.output_game_token * self.token_price / self.chain_price )/ (self.input - self.chain_balance()))
 
+    def account_cnt(self):
+        return self.accounts.count()
+
     def __unicode__(self):
         return self.name
 
