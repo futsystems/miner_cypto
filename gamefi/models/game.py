@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from .choices import CHAIN_TYPE
+from .choices import CHAIN_TYPE, GAME_STAGE
+
 
 class Game(models.Model):
     """
@@ -16,6 +17,12 @@ class Game(models.Model):
         max_length=10,
         choices=CHAIN_TYPE,
         default='BSC',
+    )
+
+    stage = models.CharField(
+        max_length=10,
+        choices=GAME_STAGE,
+        default='Pre',
     )
 
     token_price = models.FloatField('Token Price', default=0)
