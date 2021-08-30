@@ -30,6 +30,19 @@ class BSCAPI(object):
         loop.run_until_complete(task)
         return float(task.result())
 
+
+    async def async_get_txn(self,address,start_block,end_block):
+        async with BscScan(self._api_key) as bsc:
+            return await bsc.get_normal_txs_by_address(address=address, startblock=start_block,endblock=end_block)
+
+
+    def get_txn(self,address,start_block, end_block=99999999):
+        loop = asyncio.get_event_loop()
+        task = loop.create_task(self.async_get_txn(address, start_block, end_block))
+        loop.run_until_complete(task)
+        return task.result()
+
+
     def get_zoon_balance(self, address):
         """
         zoon contact address 0x9D173E6c594f479B4d47001F8E6A95A7aDDa42bC
