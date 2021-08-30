@@ -33,7 +33,7 @@ class BSCAPI(object):
 
     async def async_get_txn(self,address,start_block,end_block):
         async with BscScan(self._api_key) as bsc:
-            return await bsc.get_normal_txs_by_address(address=address, startblock=start_block,endblock=end_block)
+            return await bsc.get_normal_txs_by_address(address=address, startblock=start_block,endblock=end_block,sort='asc')
 
 
     def get_txn(self,address,start_block, end_block=99999999):
