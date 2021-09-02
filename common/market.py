@@ -24,3 +24,14 @@ class MarketAPI(object):
     def _get_price(self, currency_id):
         data = self._cg.get_price(ids=currency_id, vs_currencies='usd')
         return data[currency_id]['usd']
+
+    def get_price(self, price_symbols, price_source='CoinGecko'):
+        if price_source == 'CoinGecko':
+            data = self._cg.get_price(ids=price_symbols, vs_currencies='usd')
+            result = {}
+            for symbol in price_symbols:
+                if symbol in data:
+                    result[symbol] = data[symbol]['usd']
+            return result
+
+        return {}
