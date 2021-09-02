@@ -10,7 +10,7 @@ from .models import Token
 
 
 class TokenAdmin(admin.ModelAdmin):
-    list_display = ('name', 'symbol', 'price_source', 'price_symbol', 'current_price')
+    list_display = ('name', 'symbol', 'chain_type', 'price_source', 'price_symbol', 'current_price')
 
 
 admin.site.register(Token, TokenAdmin)

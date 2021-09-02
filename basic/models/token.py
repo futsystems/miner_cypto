@@ -8,6 +8,12 @@ price_source = (
     ('CoinGecko', 'CoinGecko'),
 )
 
+chain_type = (
+    ('MAIN', 'MAIN'),
+    ('ETH', 'ETH'),
+    ('BNB', 'BNB'),
+)
+
 
 class Token(models.Model):
     """
@@ -15,11 +21,18 @@ class Token(models.Model):
     """
     name = models.CharField('Name', max_length=50, default='Token')
     symbol = models.CharField('Symbol', max_length=50, default='Symbol')
+    chain_type = models.CharField(
+        max_length=10,
+        choices=chain_type,
+        default='MAIN',
+    )
     price_source = models.CharField(
         max_length=10,
         choices=price_source,
         default='CoinGecko',
     )
+
+
     price_symbol = models.CharField('Price Symbol', max_length=50, default='Symbol')
     current_price = models.FloatField('Current Price', default=0)
     description = models.CharField('Description', max_length=1000, default='', blank=True)
