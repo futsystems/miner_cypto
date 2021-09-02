@@ -250,6 +250,18 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False
         },
+
+        'ido': {
+            'handlers': ['tinyconsole', 'default'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
+
+        'basic': {
+            'handlers': ['tinyconsole', 'default'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
     }
 }
 
