@@ -1,12 +1,12 @@
 mysqlclient
 
-django==1.11.29
+django==3.2.7
 
 redis==3.2.0
-celery==4.2.1
-django-celery==3.3.1
-django-celery-beat==1.4.0
-django-celery-results==1.0.1
+celery==4.4.7
+django-celery
+django-celery-beat
+django_celery_results
 
 requests
 gunicorn
