@@ -31,10 +31,11 @@ class Token(models.Model):
         choices=price_source,
         default='CoinGecko',
     )
-
+    contract_address = models.CharField('Contract Address', max_length=50, default='Contract')
 
     price_symbol = models.CharField('Price Symbol', max_length=50, default='Symbol')
     current_price = models.FloatField('Current Price', default=0)
+
     description = models.CharField('Description', max_length=1000, default='', blank=True)
 
     class Meta:
