@@ -3,17 +3,28 @@
 
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
+
+import logging
+logger = logging.getLogger(__name__)
+
+
+@shared_task
+def log_task2():
+    logger.info('log task information')
+
+
 from django.utils import timezone
 from common.mail import get_stuff_emails
 from common.mail import send_email as _send_email
 
 import time
-import logging
-logger = logging.getLogger(__name__)
+
 
 from common.bsc import BSCAPI
 from common.market import MarketAPI
 from .models import Game, GameSettlement
+
+
 
 
 @shared_task

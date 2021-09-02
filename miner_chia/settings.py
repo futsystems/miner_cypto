@@ -47,7 +47,6 @@ INSTALLED_APPS = [
 
     'common',
     'server',
-    #'server.apps.SignalsConfig',
     'gamefi',
     'ido',
 ]
@@ -166,10 +165,10 @@ CORS_ALLOW_HEADERS = (
 #############################
 # celery 配置信息 start
 #############################
-import djcelery
-djcelery.setup_loader()
+#import djcelery
+#djcelery.setup_loader()
 BROKER_URL = 'redis://127.0.0.1:6379/1'
-CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_BACKEND = 'django-cache'
 CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 

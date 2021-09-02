@@ -11,6 +11,9 @@ from common.mail import send_email as _send_email
 import logging
 logger = logging.getLogger(__name__)
 
+@shared_task
+def log_task2():
+    logger.info('log task information')
 
 
 @shared_task
