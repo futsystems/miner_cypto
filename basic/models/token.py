@@ -11,7 +11,7 @@ price_source = (
 chain_type = (
     ('MAIN', 'MAIN'),
     ('ETH', 'ETH'),
-    ('BNB', 'BNB'),
+    ('BSC', 'BSC'),
 )
 
 
