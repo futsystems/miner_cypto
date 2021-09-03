@@ -32,7 +32,7 @@ def sync_game_account_balance():
         if game.chain == 'BSC':
             api = BSCAPI()
             for account in game.game_accounts.all():
-                game_token_balance = api.get_token_balance(account.address.address, game.token.contract_address)
+                game_token_balance = api.get_token_balance(account.address.address, game.token.contract_address)*pow(10, -1*game.token.precision)
                 account.game_token_balance = round(game_token_balance, 4)
                 account.save()
 
