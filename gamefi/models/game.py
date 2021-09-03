@@ -3,6 +3,7 @@
 
 from django.db import models
 from .choices import CHAIN_TYPE, GAME_STAGE
+from basic.models import Token
 
 
 class Game(models.Model):
@@ -12,7 +13,11 @@ class Game(models.Model):
     name = models.CharField('Name', max_length=50, default='Game')
     url = models.CharField('Url', max_length=250, default='')
     input = models.FloatField('Input', default=0)
-    token = models.CharField('Token', max_length=100, default='')
+    #token = models.CharField('Token', max_length=100, default='')
+    token = models.ForeignKey(Token, related_name='games', verbose_name='Token',
+                             on_delete=models.SET_NULL,
+                             default=None,
+                             blank=True, null=True)
     chain = models.CharField(
         max_length=10,
         choices=CHAIN_TYPE,
@@ -52,7 +57,7 @@ class Game(models.Model):
         return "{0:.2%}".format((self.game_balance_chain() + self.output_game_token * self.token_price / self.chain_price )/ (self.input - self.chain_balance()))
 
     def account_cnt(self):
-        return self.accounts.count()
+        return self.game_accounts.count()
 
     def __unicode__(self):
         return self.name

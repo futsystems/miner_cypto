@@ -21,6 +21,7 @@ class Token(models.Model):
     """
     name = models.CharField('Name', max_length=50, default='Token')
     symbol = models.CharField('Symbol', max_length=50, default='Symbol')
+    precision = models.IntegerField('Precision', default=18)
     chain_type = models.CharField(
         max_length=10,
         choices=chain_type,
@@ -31,7 +32,7 @@ class Token(models.Model):
         choices=price_source,
         default='CoinGecko',
     )
-    contract_address = models.CharField('Contract Address', max_length=50, default='--')
+    contract_address = models.CharField('Contract Address', max_length=50, blank=True, default='')
 
     price_symbol = models.CharField('Price Symbol', max_length=50, default='Symbol')
     current_price = models.FloatField('Current Price', default=0)
@@ -43,7 +44,7 @@ class Token(models.Model):
         ordering = ['symbol', ]
 
     def __unicode__(self):
-        return 'Token-%s' % self.symbol
+        return '%s' % self.symbol
 
     def __str__(self):
         return self.__unicode__()

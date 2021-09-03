@@ -37,3 +37,5 @@ def sync_price():
                 logger.error(traceback.format_exc())
 
 
+
+

@@ -26,6 +26,19 @@ from .models import Game, GameSettlement
 
 
 
+def sync_game_account_balance():
+    logger.info('sync account balance')
+    for game in Game.objects.all():
+        if game.chain == 'BSC':
+            api = BSCAPI()
+            for account in game.game_accounts.all():
+                game_token_balance = api.get_token_balance(account.address.address, game.token.contract_address)
+                account.game_token_balance = round(game_token_balance, 4)
+                account.save()
+
+                logger.info('account address:%s token:%s token balance:%s' % (account.address.address, game.token, game_token_balance))
+                time.sleep(0.5)
+
 
 @shared_task
 def sync_account_balance():
