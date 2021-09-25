@@ -22,3 +22,8 @@ gevent
 
 pycoingecko
 bscscan-python
+
+numpy
+pandas
+scipy
+py_vollib
